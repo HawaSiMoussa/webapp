@@ -1,0 +1,18 @@
+title: Webapp
+remote_theme: just-the-docs/just-the-docs
+mermaid:
+  version: "11.12.0"
+callouts:
+  tip:
+    title: 🤍 Tip
+    color: purple
+  info:
+    title: ℹ️ Info
+    color: blue
+  attention:
+    title: ❕ Attention
+    color: yellow
+  download:
+    title: 💾 Download
+    color: grey-dk
+    
