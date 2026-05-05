@@ -1,4 +1,4 @@
-# Webapp Project
+# Project
 LostAndFound
 # Titel der WebApp: LostAndFound
 
