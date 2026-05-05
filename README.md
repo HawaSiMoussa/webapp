@@ -41,8 +41,8 @@ Meine Zielnote in diesem Kurs liegt ebenfalls zwischen 1,3 und 1,7. Ich selber h
 
 ## Bereits erarbeite Arbeitsbereiche + Zuteilung 
 
-1. Datenbankverwaltung (Nutzer und Beiträge)
+1. Datenbankverwaltung (Nutzer und Beiträge) --> Sarah
 
-2. ⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS
+2. ⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS --> Hawa
 
-3. ⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen)
+3. ⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen) --> Fatme
