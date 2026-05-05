@@ -3,26 +3,36 @@ title: Home
 nav_order: 0
 ---
 
-# Titel der WebApp: LostAndFound
+# Project Name: LostAndFound
+Dinge gehen verloren.
+Lost&Found bringt sie zurück. Unser Projekt Lost&Found ist eine Webanwendung, die Studienerende und Fundbüros miteinander verbindet, um verlorene Gegenstände durch eine zentrale Plattform schnell und effizient wiederzufinden.
 
 
 ## Gruppe: CampusFinder
 
 •⁠  ⁠77204183234, Hawa Si Moussa 
+
 •⁠  ⁠77209887107, Fatme Berjaoui
+
 •⁠  ⁠77209886771, Sarah Tayem
 
 
-## Problemuntersuchung
+## Value Proposition
 
-Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lage befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fündbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Auch führt es zu Entlastung beim Personal. 
+ The Problem
+
+Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lange befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fundbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Auch führt es zu Entlastung beim Personal. 
 
 ## LostAndFound
+
+Our Solution 
+
  Mit LostAndFound wollen wir dieses Problem lösen. Eine App in der Leute einen Post veröffentlichen mit einer Beschreibung der verlorenen Sache. Falls jemand diesen Post sieht bzw nach einem Post dazu sucht und auch den Gegenstand gefunden hat, dann kann diese Person den Suchenden kontaktieren. Des Weiteren, kann das Fundbüro auch die Suchenden kontaktieren, falls der Gegenstand sich dort befindet. Gedacht ist diese Platform nur für Personen mit einer hwr domain, sodass es ein digitales HWR-Fundbüro ist.
  
-Es handelt sich um eine zweisetige Platform: Die Suchenden und die Finder
+### Es handelt sich um eine two-sided Platform: Die Suchenden und die Finder 
 
-## Unsere Persönlichen Ziele
+
+## Target Users
 
 Fatme Berjaoui:
 Mein Ziel ist es, eine Note von 1,3 oder 1,7 zu erreichen. Während der Erstellung der Web-App 
@@ -44,10 +54,11 @@ Meine Zielnote in diesem Kurs liegt ebenfalls zwischen 1,3 und 1,7. Ich selber h
 
 ## Bereits erarbeite Arbeitsbereiche + Zuteilung 
 
-1.⁠ ⁠Datenbankverwaltung (Nutzer und Beiträge)
+1.⁠ ⁠Datenbankverwaltung (Nutzer und Beiträge) --> Sarah Tayem 
 
-2.⁠ ⁠⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS
+2.⁠ ⁠⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS --> Hawa Si Moussa
 
-3.⁠ ⁠⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen)
+3.⁠ ⁠⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen)--> Fatme Berjaoui
+
 ## 
 
