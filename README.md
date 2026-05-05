@@ -12,7 +12,7 @@ LostAndFound
 
 ## Problemuntersuchung
 
-Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lage befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fündbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Auch führt es zu Entlastung beim Personal. 
+Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lange befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fundbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Auch führt es zu Entlastung beim Personal. 
 
 ## LostAndFound
  Mit LostAndFound wollen wir dieses Problem lösen. Eine App in der Leute einen Post veröffentlichen mit einer Beschreibung der verlorenen Sache. Falls jemand diesen Post sieht bzw nach einem Post dazu sucht und auch den Gegenstand gefunden hat, dann kann diese Person den Suchenden kontaktieren. Des Weiteren, kann das Fundbüro auch die Suchenden kontaktieren, falls der Gegenstand sich dort befindet. Gedacht ist diese Platform nur für Personen mit einer hwr domain, sodass es ein digitales HWR-Fundbüro ist.
