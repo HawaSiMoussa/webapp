@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 
 app = Flask(__name__)
 
@@ -11,9 +11,9 @@ members = [
     "77209886771, Sarah Tayem"
 ]
 
- tasks= [
+tasks= [
     "Hawa: Benutzeroberfläche Login button posts Darstellung mit HTML, CSS",
-    "Fatme: Git hub Repo's ( pull commit push und aufgaben zusammenfügen), Organisieren/dokumentieren der verschiedenen Ideen"
+    "Fatme: Git hub Repo's ( pull commit push und aufgaben zusammenfügen), Organisieren/dokumentieren der verschiedenen Ideen",
     "Sarah: Datenbankverwaltung (Nutzer und Beiträge), sowie Analyse geplanter Funktionen bezüglich technischer Machbarkeit und Aufwand"
 ]
 
