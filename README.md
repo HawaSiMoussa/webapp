@@ -11,17 +11,52 @@ LostAndFound
 
 - 77209886771, Sarah Tayem
 
+# Project Name: LostAndFound
+Dinge gehen verloren.
+Lost&Found bringt sie zurück. Unser Projekt Lost&Found ist eine Webanwendung, die Studienerende und Fundbüros miteinander verbindet, um verlorene Gegenstände durch eine zentrale Plattform schnell und effizient wiederzufinden.
 
-## Problemuntersuchung
 
-Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lange befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fundbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Auch führt es zu Entlastung beim Personal. 
+## Gruppe: CampusFinder
+
+•⁠  ⁠77204183234, Hawa Si Moussa 
+
+•⁠  ⁠77209887107, Fatme Berjaoui
+
+•⁠  ⁠77209886771, Sarah Tayem
+
+
+## Value Proposition
+
+ The Problem
+
+Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lange befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fundbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Viele der Studierenden und Dozenten wissen oftmals nicht wohin mit gefundenen Sachen. Gebe ich diese beim Pförtner ab oder lasse ich sie einfach liegen falls jemand zurückkommt...? Die Existenz unseres Fundbüros ist nicht einmal jedem bewusst. Mit unserer Web App entlasten wir nicht nur die Studierenden bei ihrer ständigen stressvollen Suche nach verlorenen Sachen, sondern Unterstützen auch das Fundbüro Personal. Ständige Anrufe von Studierenden und Dozenten die gestresst auf der Suche sind beeinträchtigen das vorangehen der Mitarbeiter. Nicht nur müssen sie mehrfache Anrufe tätigen sondern  zusätzlich mitteilen wo sie sich befinden und anwesend sein damit Sachen abgeholt werden. Mithilfe unserer Web App LostAndFound sorgen wir dafür, dass dieser ganze Prozess vereinfacht und verschnellert wird. SO muss dass Fundbüro nur prüfen ob es sich wirklich um den Gegenstand handelt der gesucht wird den Status von Posts angeben und aktualliesieren. Der Nutzer weiß somit durch den Status was sein nächster Schritt ist und spart dem Fundbüro jegliche Kopfschmerzen.   
 
 ## LostAndFound
+
+Our Solution 
+
  Mit LostAndFound wollen wir dieses Problem lösen. Eine App in der Leute einen Post veröffentlichen mit einer Beschreibung der verlorenen Sache. Falls jemand diesen Post sieht bzw nach einem Post dazu sucht und auch den Gegenstand gefunden hat, dann kann diese Person den Suchenden kontaktieren. Des Weiteren, kann das Fundbüro auch die Suchenden kontaktieren, falls der Gegenstand sich dort befindet. Gedacht ist diese Platform nur für Personen mit einer hwr domain, sodass es ein digitales HWR-Fundbüro ist.
  
-Es handelt sich um eine zweisetige Platform: Die Suchenden und die Finder
+#### Es handelt sich hierbei um eine two-sided Platform:  Sucher(Nutzer-Hwr-Mitglied) interagiert mit dem Fundbüro der Hwr
+Die Web App verbindet die Nutzer (Suchenden) mit dem Fundbüro.Die Suchenden erstellen Posts mit ihren verlorenen Sachen, währen diese mit den gefundenen Objekten im Fundbüro abgeglichen werden. Das Fundburö verwaltet dann diese Gegenstände, aktualisiert den Status der Posts und informiert die Besitzer sobald ein Objekt abholbereit ist. Dadurch ensteht der direkte Austausch zwischen beiden Seiten über die Webapp. 
 
-## Unsere Persönlichen Ziele
+
+## Funktionen 
+Alle Posts haben einen Status zur besseren Übersicht. 
+1. Grün: zeigt an dass der Gegenstand gefunden wurde und im Fundbüro abgeholt werden kann 
+2. Rot: zeigt an dass der Gegenstand noch nicht gefunden wurde bzw. nicht im Fundbüro liegt
+3. Grau: zeigt an dass der Post archiviert ist
+
+Wenn ein Gegenstand gefunden wurde erhält der Nutzer eine Benachrichtigung,dass der Artikel im Fundbüro liegt und abgeholt werden kann. Eun Post ist nur für 15 Tage aktiv mit dem Status grün, sodass der Nutzer genug Zeit hat seinen Gegenstand im Fundbüro abzuholen. Wird dieser in der festgelegten Zeit nicht abgeholt, wird der Post automatisch archiviert. Zusätzlich gibt es ein Erstelungsdatum und ein Ablaufdatum von 30 Tagen. Läuft diese Frist ab wird auch dieser Post archiviert, um die App so einfach und übersichtlich zu halten. Die Frist kann jedoch manuell verlängert werden, falls der Gegenstand weiterhin gesucht wird und nict in vergessenheit geraten ist. Nach der Archivierung ist der Post für die Nutzer nicht mehr sichtbar. Der Zugriff ist nur dem Fundbüro und den Web-App Entwicklern gewährleistet um alles unter Kontrolle zu haben. 
+
+## Regeln 
+Jeder Nutzer darf nur eine Suchanzeige erstellen. Somit soll verhindert werden dass die Web App missbraucht wird und unrealistische Spam Posts erstellt werden. Außerdem ist die wahrscheinlichkeit dass mehrere Sachen innerhalb kurzer Zeit verloren gehen recht unglaunwürdig bzw. unwahrscheinlich. Oft kommt es vor dass sich bestimmte Sachen ähneln. So können 4 identische Adapter verloren werden und es wird unbekannt bzw. unsicher wem dieser überhaupt gehört, gilt die Regel wer zu erst kommt erhält diesen. 
+
+## Nicht umgesetzte Designentscheidung 
+Die Idee Kategorien für die verlorenen Gegenstände einzuführen, um die Benutzerfreundlichkeit und Übersicht für die Nutzer zu verbessern entfiel aufgrund mehrerer möglihcer Probleme die entstehen könnten. Darunter zählen falsche Eingaben weshalb somit mehrere Kategorien möglicherweise falsch Eingeordnet werden oder der Suchprozess im allgemeinen ungenau und unvollständig werden könnte. Unser Ziel ist eine Web App die erleichterung bringen soll anstatt Verwirrung, dehsalb haben wir uns als gruppe dagegen entschieden.
+
+
+## Target Users
 
 Fatme Berjaoui:
 Mein Ziel ist es, eine Note von 1,3 oder 1,7 zu erreichen. Während der Erstellung der Web-App 
@@ -43,8 +78,12 @@ Meine Zielnote in diesem Kurs liegt ebenfalls zwischen 1,3 und 1,7. Ich selber h
 
 ## Bereits erarbeite Arbeitsbereiche + Zuteilung 
 
-1. Datenbankverwaltung (Nutzer und Beiträge) --> Sarah
+1.⁠ ⁠Datenbankverwaltung (Nutzer und Beiträge) --> Sarah Tayem 
 
-2. ⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS --> Hawa
+2.⁠ ⁠⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS --> Hawa Si Moussa
 
-3. ⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen) --> Fatme
+3.⁠ ⁠⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen)--> Fatme Berjaoui
+
+
+
+
