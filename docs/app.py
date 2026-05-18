@@ -3,7 +3,7 @@ app= Flask(__name__)
 
 @app.route ("/")
 def home():
-    return ("Lost & Found Website")
+    return ("Lost & Found")
 
 if __name__ == "__main__":
     app.run(debug=True)
