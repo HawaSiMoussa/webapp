@@ -79,4 +79,4 @@ Meine Zielnote in diesem Kurs liegt ebenfalls zwischen 1,3 und 1,7. Ich selber h
 ## Scribbles of UI screens
 
 
-<img src="../images/PHOTO-2026-05-18-23-34-40-1.jpg" width="500">
+![LostAndFound](../images/PHOTO-2026-05-18-23-34-40-1.jpg)
