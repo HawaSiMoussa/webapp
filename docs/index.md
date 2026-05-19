@@ -19,13 +19,13 @@ Lost&Found bringt sie zurück. Unser Projekt Lost&Found ist eine Webanwendung, d
 
 ## Value Proposition
 
- The Problem
+ *The Problem*
 
 Wir haben schon alle einmal unsere Sachen verloren. Vor allem in der Uni, wo wir uns so oft und so lange befinden, verliert man unter dem Stress auch Gegenstände. Jedoch wenige gehen wirklich ins Fundbüro: Ist gerade jemand da? Habe ich gerade Zeit? ... etc. Diese Gedanken spielen keine Rolle mehr, wenn alles digital ist. Viele der Studierenden und Dozenten wissen oftmals nicht wohin mit gefundenen Sachen. Gebe ich diese beim Pförtner ab oder lasse ich sie einfach liegen falls jemand zurückkommt...? Die Existenz unseres Fundbüros ist nicht einmal jedem bewusst. Mit unserer Web App entlasten wir nicht nur die Studierenden bei ihrer ständigen stressvollen Suche nach verlorenen Sachen, sondern Unterstützen auch das Fundbüro Personal. Ständige Anrufe von Studierenden und Dozenten die gestresst auf der Suche sind beeinträchtigen das vorangehen der Mitarbeiter. Nicht nur müssen sie mehrfache Anrufe tätigen sondern  zusätzlich mitteilen, wo sie sich befinden und anwesend sein damit Sachen abgeholt werden. Mithilfe unserer Web App LostAndFound sorgen wir dafür, dass dieser ganze Prozess vereinfacht und verschnellert wird. So muss das Fundbüro nur prüfen, ob es sich wirklich um den Gegenstand handelt der gesucht wird, den Status von Posts angeben und aktualiesieren. Der Nutzer weiß somit durch den Status, was sein nächster Schritt ist und spart dem Fundbüro jegliche Kopfschmerzen.   
 
 ## LostAndFound
 
-Our Solution 
+*Our Solution* 
 
  Mit LostAndFound wollen wir dieses Problem lösen. Eine App in der Leute einen Post veröffentlichen mit einer Beschreibung der verlorenen Sache. Falls jemand diesen Post sieht bzw. nach einem Post dazu sucht und auch den Gegenstand gefunden hat dann kann diese Person den Suchenden kontaktieren. Des Weiteren, kann das Fundbüro auch die Suchenden kontaktieren, falls der Gegenstand sich dort befindet. Gedacht ist diese Platform nur für Personen mit einer HWR domain, sodass es ein digitales HWR-Fundbüro ist. Dies gilt für beide Campusse in Berlin.
  
@@ -50,7 +50,7 @@ Die Idee Kategorien für die verlorenen Gegenstände einzuführen, um die Benutz
 
 ## Target Users
 
-Fatme Berjaoui:
+**Fatme Berjaoui:**
 Mein Ziel ist es, eine Note von 1,3 oder 1,7 zu erreichen. Während der Erstellung der Web-App 
 möchte ich sehr viel über das Programmieren mit Python lernen, vor allem da diese Sprache neu 
 für mich ist. Am Ende des Kurses möchte ich zu den einen sicheren Umgang mit HTML, Git, 
@@ -58,23 +58,24 @@ GitHub sowie Python erreichen. Das aller wichtigste ist allerdings das ich die n
 Kenntnisse mit meinen bisherigen Erfahrungen verbinden möchte, um in der Zukunft noch mehr 
 Projekte umsetzen zu können. 
 
-Hawa Si Moussa :
+**Hawa Si Moussa :**
 Meine Zielnote liegt bei 1,3 oder 1,7. Ich möchte verstehen wovon eine Web App abhängt und die 
 einzelnen Schritte vollständig nachvollziehen, um somit in der Zukunft weitere Web-Apps 
 entwickeln zu können. Zudem erhoffe ich mir viele Erfahrungen mit Python und HTML sammeln zu 
 können. Am Ende des Kurses möchte ich eine erfolgreiche und für mich sinnvolle Web App erstellt 
 haben, die ich mit meinem später erweiterten Wissen und Ideen ausbauen kann. 
 
-Sarah Tayem:
+**Sarah Tayem:**
 Meine Zielnote in diesem Kurs liegt ebenfalls zwischen 1,3 und 1,7. Ich selber hab nicht viel Wissen über WebApps genau und habe nur ein paar mal davon gehört, deshalb möchte ich mithilfe dieses Kurses, wenn mich jemand fragt "Was genau ist eine webApp, wie funktioniert sie und was unetrscheidet sie von einer normalen App?" Mit Leichtigkeit und Richtigkeit beantworten können. Ich möchte auch stolz auf mein erarbeites Projekt sein und, wie ich es auch bei restlichen Projekten in anderen Kursen tat, immer wieder was neues bezüglich des arbeiten in Projekten lernen (Projektmanagement). Ich möchte auch Python erlernen, ohne dass ich ständig eine KI fragen stellen muss. Mein Ziel ist es Python so zu erlernen, dass ich die Syntaxt völlig verstehe und Fehler in fremden Codes z.B. erkennen kann. Ich denke diese Kenntnisse snd besonders hilfreich für meine Zukunft, da ich nicht jemand sein möchte der nur "weiß" sondern sich auch auskennt.
 
 ## Bereits erarbeite Arbeitsbereiche + Zuteilung 
 
-1.⁠ ⁠Datenbankverwaltung (Nutzer und Beiträge) --> Sarah Tayem 
+| Name | Matrikelnummer | Aufgabe |
+|---|---|---|
+| Hawa Si Moussa | 77204183234 | Benutzeroberfläche (Frontend) |
+| Fatme Berjaoui | 77209887107 | GitHub & Repository |
+| Sarah Tayem | 77209886771 | Datenbankverwaltung (Nutzer und Beiträge) |
 
-2.⁠ ⁠⁠Benutzeroberfläche Login button posts Darstellung mit HTML, CSS --> Hawa Si Moussa
-
-3.⁠ ⁠⁠Git hub Repo's ( pull commit push und aufgaben zusammenfügen)--> Fatme Berjaoui
 
 ## Scribbles of UI screens
 
