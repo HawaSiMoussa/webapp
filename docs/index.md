@@ -5,7 +5,7 @@ nav_order: 0
 
 # Project Name: LostAndFound
 Dinge gehen verloren.
-Lost&Found bringt sie zurück. Unser Projekt Lost&Found ist eine Webanwendung, die Studienerende an der HWR und Fundbüros miteinander verbindet, um verlorene Gegenstände durch eine zentrale Plattform schnell und effizient wiederzufinden.
+LostAndFound bringt sie zurück. Unser Projekt LostAndFound ist eine Webanwendung, die Studienerende an der HWR und Fundbüros miteinander verbindet, um verlorene Gegenstände durch eine zentrale Plattform schnell und effizient wiederzufinden.
 
 
 ## Gruppe: CampusFinder
