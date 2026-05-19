@@ -45,7 +45,7 @@ Wenn ein Gegenstand gefunden wurde erhält der Nutzer eine Benachrichtigung,dass
 Jeder Nutzer darf nur eine Suchanzeige erstellen. Somit soll verhindert werden dass die Web App missbraucht wird und unrealistische Spam Posts erstellt werden. Außerdem ist die wahrscheinlichkeit dass mehrere Sachen innerhalb kurzer Zeit verloren gehen recht unglaunwürdig bzw. unwahrscheinlich. Oft kommt es vor dass sich bestimmte Sachen ähneln. So können 4 identische Adapter verloren werden und es wird unbekannt bzw. unsicher wem dieser überhaupt gehört, gilt die Regel wer zu erst kommt erhält diesen. 
 
 ## Nicht umgesetzte Designentscheidung 
-Die Idee Kategorien für die verlorenen Gegenstände einzuführen, um die Benutzerfreundlichkeit und Übersicht für die Nutzer zu verbessern entfiel aufgrund mehrerer möglihcer Probleme die entstehen könnten. Darunter zählen falsche Eingaben weshalb somit mehrere Kategorien möglicherweise falsch Eingeordnet werden oder der Suchprozess im allgemeinen ungenau und unvollständig werden könnte. Unser Ziel ist eine Web App die erleichterung bringen soll anstatt Verwirrung, dehsalb haben wir uns als gruppe dagegen entschieden.
+Die Idee Kategorien für die verlorenen Gegenstände einzuführen, um die Benutzerfreundlichkeit und Übersicht für die Nutzer zu verbessern entfiel aufgrund mehrerer möglicher Probleme die entstehen könnten. Darunter zählen falsche Eingaben weshalb somit mehrere Kategorien möglicherweise falsch Eingeordnet werden oder der Suchprozess im allgemeinen ungenau und unvollständig werden könnte. Unser Ziel ist eine Web App die erleichterung bringen soll anstatt Verwirrung, dehsalb haben wir uns als gruppe dagegen entschieden.
 
 
 ## Target Users
