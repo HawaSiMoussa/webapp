@@ -1,0 +1,11 @@
+<form action="{{ url_for('todos') }}" method="post">
+    <input type="text" name="description" />
+    <input type="submit" value="Create" />
+</form>
+
+<form action="{{ url_for('todos') }}" method="post">
+    {{ form.csrf_token }}
+    {{ form.description }}
+    {{ form.submit }}
+</form>
+
