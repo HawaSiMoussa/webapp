@@ -30,18 +30,20 @@ def index():
         tasks=tasks
     )
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 
 @app.route('/logins/', methods=['GET', 'POST'])
 def login():
-    form = forms.CreateLogin()  # (1.)
-    if request.method == 'GET':
-        return render_template('login.html')  # (2.)
-    else:  # request.method == 'POST'
+    form = forms.CreateLogin(request.form)  # (1.)
+    if request.method == 'POST':
         if form.validate():  # (3.)
             flash('Login war erfolgreich!', 'success')  # (5.)
-        else:
-            flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')
         return redirect(url_for('login'))
+    else:
+            flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')
+    return render_template('login.html',form=form)
+    print("START APP")
+    if __name__ == "__main__":
+        app.run(debug=True)
+        
+        
+      
