@@ -1,6 +1,6 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, flash,forms 
-
+from flask import Flask, render_template, redirect, url_for, request, flash
+import forms 
 
 app = Flask(__name__)
 app.config.from_mapping(
@@ -45,4 +45,3 @@ def login():
         else:
             flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')
         return redirect(url_for('login'))
-    
