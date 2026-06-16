@@ -31,3 +31,21 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route('/create/', methods=['GET', 'POST'])
+def create_post():
+    #db_con = db.get_db_con()
+    form= forms.CreatePostForm()
+
+    if request.method == 'GET':
+        #sql_query = 'SELECT * FROM todo ORDER BY id;'
+        #create_post = db_con.execute(sql_query).fetchall()
+        return render_template('create_pst.html',
+            form=form
+        )
+    else :
+        if form.validate():
+            
+            
+
+
