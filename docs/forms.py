@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
 from wtforms.validators import InputRequired, Length  
 
+#Kontaktformular 1.2
 class ContactForm(FlaskForm):
     name = StringField("Name", validators=[InputRequired()])
     username = StringField("Benutzername", validators=[InputRequired()])
