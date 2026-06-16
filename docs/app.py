@@ -49,6 +49,8 @@ def create_post():
            print(form.descrption.data)
            print(form.loss_date.data)   #TEST
            print(form.location.data)
+
+           return redirect(url_for('create_post'))
             
             
 
