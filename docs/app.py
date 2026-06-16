@@ -1,8 +1,14 @@
 from flask import Flask,render_template, request, redirect, url_for, flash
 import forms
-from flask import request
+
 
 app = Flask(__name__)
+
+app.config.from_mapping(
+    SECRET_KEY='secret_key_just_for_dev_environment',
+    #DATABASE=os.path.join(app.instance_path, 'todos.sqlite')
+)
+
 
 title = "LostAndFound"
 group = "CampusFinder"
@@ -29,8 +35,6 @@ def index():
         tasks=tasks
     )
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
 # Post erstellen
 @app.route('/create/', methods=['GET', 'POST'])
@@ -47,7 +51,7 @@ def create_post():
         if form.validate():
            #sql_query = 'INSERT INTO todo (description) VALUES (?);' 
            print(form.title.data)
-           print(form.descrption.data)
+           print(form.description.data)
            print(form.lost_date.data)   #TEST
            print(form.lost_area.data)
            flash('Post created succesfully.', 'congrats')
@@ -57,5 +61,7 @@ def create_post():
         return redirect(url_for('create_post'))
             
             
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
