@@ -1,9 +1,8 @@
 import os
 
-from flask import Flask, render_template, redirect, url_for
-from requests import post
+from flask import Flask, render_template
+from requests import 
 from flask_bootstrap import Bootstrap5  # (1.)
-import db, forms
 
 app = Flask(__name__)
 
