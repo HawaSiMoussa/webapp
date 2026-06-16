@@ -50,7 +50,7 @@ def create_post():
            print(form.descrption.data)
            print(form.lost_date.data)   #TEST
            print(form.lost_area.data)
-           flash('Psot created succesfully.', 'congrats')
+           flash('Post created succesfully.', 'congrats')
         else:
             flash('No todo creation: validation error.', 'warning')
 
