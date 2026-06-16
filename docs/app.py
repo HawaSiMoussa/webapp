@@ -15,18 +15,21 @@ def index():
             "title": "Schwarzer Rucksack",
             "views": 12,
             "DateOfLoss": "2024-06-01",
+             "LocationOfLoss": " Haus C Raum 1.08"
         },
         {
             "username": "Max",
             "title": "Laptop",
             "views": 5,
             "DateOfLoss": "2024-04-01",
+             "LocationOfLoss": "Cafeteria Haus B"
         },
         {
             "username": "Laura",
             "title": "Schlüsselbund",
             "views": 8,
             "DateOfLoss": "2024-05-01",
+            "LocationOfLoss": "Bibliothek Haus A"
         }
     ]
 
