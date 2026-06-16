@@ -49,6 +49,9 @@ def create_post():
            print(form.descrption.data)
            print(form.loss_date.data)   #TEST
            print(form.location.data)
+           flash('Psot created succesfully.', 'congrats')
+        else:
+            flash('No todo creation: validation error.', 'warning')
 
            return redirect(url_for('create_post'))
             
