@@ -1,3 +1,7 @@
-<!DOCTYPE html>
-<html>
-
+<form action="{{url_for('create_post')}}" method="post">
+{{form.csrf_token}}
+{{form.title}}
+{{form.description}}
+{{form.loss_date}}
+{{form.submit}}
+</form>
