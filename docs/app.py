@@ -42,12 +42,12 @@ def contact():
     form=forms.ContactForm()
     if request.method == 'GET':
         return render_template('contact''.html',form=form)
-    else 
-    if form.validate():
+    else:
+      if form.validate():
         print(form.name.data)
         print(form.username.data)
         print(form.phone_number.data)
-        
+
         return redirect(
             url_for('contact')
         )

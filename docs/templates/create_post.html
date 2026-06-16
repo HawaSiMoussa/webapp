@@ -1,16 +1,17 @@
 <form action="{{url_for('create_post')}}" method="post">
-{{form.csrf_token}}  
+{{form.csrf_token}}
+
 {{ form.title.label }}
 {{form.title}}
-
+<br><br>
 {{ form.description.label }}
 {{form.description}}
-
+<br><br>
 {{ form.lost_date.label }}
 {{form.lost_date}}
-
+<br><br>
 {{ form.lost_area.label }}
 {{form.lost_area}}
-
+<br><br>
 {{form.submit}}
 </form>
