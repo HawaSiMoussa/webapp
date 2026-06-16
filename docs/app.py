@@ -53,7 +53,7 @@ def create_post():
         else:
             flash('No todo creation: validation error.', 'warning')
 
-           return redirect(url_for('create_post'))
+        return redirect(url_for('create_post'))
             
             
 
