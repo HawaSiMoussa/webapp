@@ -1,7 +1,8 @@
 <form action="{{url_for('create_post')}}" method="post">
-{{form.csrf_token}}
+{{form.csrf_token}}  #security feature
 {{form.title}}
 {{form.description}}
 {{form.loss_date}}
+{{form.loss_area}}
 {{form.submit}}
 </form>
