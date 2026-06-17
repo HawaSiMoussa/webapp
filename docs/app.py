@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
-    DATABASE=os.path.join(app.instance_path, 'todos.sqlite')
+    #DATABASE=os.path.join(app.instance_path, 'todos.sqlite')
     BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
 )
 #Bootstrap implementieren
