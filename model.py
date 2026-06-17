@@ -13,4 +13,4 @@ class Post(db.Model):
     locationOfLoss = post.locationOfLoss
     dateOfLoss = post.dateOfLoss
     status= post.status
-    mail = post.hwrMail
+    hwrMail = post.hwrMail
