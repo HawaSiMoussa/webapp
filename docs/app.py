@@ -6,10 +6,10 @@ from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
 
-bootstrap = Bootstrap5(app)
 app.config.from_mapping(
-    SECRET_KEY = 'secret_key_just_for_dev_environment'),
+    SECRET_KEY = 'secret_key_just_for_dev_environment',
     BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
+)
 bootstrap = Bootstrap5(app)
 
 @app.route("/")
