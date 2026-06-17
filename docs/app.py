@@ -1,14 +1,18 @@
 from flask import Flask,render_template, request, redirect, url_for, flash
 import forms
+from flask_bootstrap import Bootstrap5
 
 
 app = Flask(__name__)
 
-app.config.from_mapping(
-    SECRET_KEY='secret_key_just_for_dev_environment',
+#app.config.from_mapping(
+   # SECRET_KEY='secret_key_just_for_dev_environment',
     #DATABASE=os.path.join(app.instance_path, 'todos.sqlite')
-)
-
+#)
+#Bootstrap implementieren
+app.config['SECRET_KEY'] = 'lostandfound123'
+app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'pulse'
+bootstrap = Bootstrap5(app)
 
 title = "LostAndFound"
 group = "CampusFinder"
