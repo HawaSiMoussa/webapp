@@ -3,7 +3,6 @@ from wtforms.fields import SelectField, EmailField, PasswordField, BooleanField,
 from wtforms.validators import InputRequired, Email, Length, Regexp
 
 class CreateLogin(FlaskForm):
- 
 
   campus = SelectField(
   "Campus",
@@ -27,7 +26,7 @@ submit = SubmitField("Login")
 
 class Suchleiste(FlaskForm):
   suchbegriff = StringField( "Suchbegriff", 
-                            validators=[InputRequired()]
+       validators=[InputRequired()]
   )
   submit= SubmitField("Suchen")
 
