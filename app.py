@@ -1,10 +1,13 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_bootstrap import Bootstrap5
 import forms 
 
 app = Flask(__name__)
 app.config.from_mapping(
-    SECRET_KEY='secret_key_just_for_dev_environment')
+    SECRET_KEY='secret_key_just_for_dev_environment',BOOTSTRAP_BOOTSWATCH_THEME='pulse'
+    )
+bootstrap = Bootstrap5(app)
 title = "LostAndFound"
 group = "CampusFinder"
 
@@ -33,17 +36,31 @@ def index():
 
 @app.route('/logins/', methods=['GET', 'POST'])
 def login():
-    form = forms.CreateLogin(request.form)  # (1.)
-    if request.method == 'POST':
-        if form.validate():  # (3.)
-            flash('Login war erfolgreich!', 'success')  # (5.)
-        return redirect(url_for('login'))
-    else:
-            flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')
-    return render_template('login.html',form=form)
-    print("START APP")
-    if __name__ == "__main__":
-        app.run(debug=True)
-        
-        
-      
+    form = forms.CreateLogin()  # (1.)
+    if request.method == 'GET': # (3.)
+            
+            return render_template('login.html',form=form)
+    
+    else: 
+            if form.validate():
+               flash('Login war erfolgreich!', 'success')  # (5.)
+                   
+            else: 
+               flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')     
+           
+            return redirect(url_for('login'))
+    
+
+@app.route('/suche/', methods=['GET', 'POST'])
+def suche():
+ 
+ form = forms.Suchleiste()
+          
+ if request.method == 'GET':
+   return render_template('suche.html', form=form)
+ else:
+     if form.validate():
+         flash('wird gesucht', 'success')
+     else:
+         flash('Suche ist nicht korrekt', 'warning')
+         return redirect(url_for('suche'))

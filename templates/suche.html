@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+<meta charset="utf-8">
+<title>Suche-LostAndFound</title>
+
+{{ bootstrap.load_css() }}
+</head>
+<body>
+<nav class="navbar navbar-light bg-light px-3">
+<a class="navbar-brand" href="/">LostAndFound</a>
+<form class="d-flex" method="post"> 
+{{ form.hidden_tag() }}
+{{ form.suchbegriff(class="form-control me-2", placeholder="Suchen...")}}
+<button class="btn btn-primary" type="submit">
+Suchen
+</button>
+</form>
+<a class="btn btn-outline-secondary"href="/">
+☰
+</a>
+</nav>
+{{ bootstrap.load_js() }}
+</body>
+</html>

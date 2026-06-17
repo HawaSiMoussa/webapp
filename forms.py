@@ -1,19 +1,34 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import SelectField, EmailField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import InputRequired, Email, Regexp, Length
+from wtforms.fields import SelectField, EmailField, PasswordField, BooleanField, SubmitField,StringField
+from wtforms.validators import InputRequired, Email, Length, Regexp
 
 class CreateLogin(FlaskForm):
- campus = SelectField("Campus",choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")], validators=[InputRequired()])
+ 
 
-HWRmail = EmailField("Hwr-Mail", validators=[InputRequired(),Email(), Regexp("@hwr-berlin.de")])
-passwort = PasswordField("passwort", validators=[InputRequired(), Length(min=8)])
+  campus = SelectField(
+  "Campus",
+  choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")],
+  validators=[InputRequired()]
+ )
 
-benachrichtigung = BooleanField("Hwr-Mail Benachrichtigungen erlauben", )
+  hwrmail = EmailField(
+  "Hwr-Mail",
+  validators=[InputRequired(),Email(),Regexp("@hwr-berlin.de|@stud.hwr-berlin.de|@dot.hwr-berlin.de", message="bitte eine gültige hwr-mail angeben")]
+)
+
+  passwort = PasswordField(
+  "passwort", 
+  validators=[InputRequired(), Length(min=8)]
+ )
+
+  benachrichtigung = BooleanField("Hwr-Mail Benachrichtigungen erlauben", 
+)
+submit = SubmitField("Login")
+
+class Suchleiste(FlaskForm):
+  suchbegriff = StringField( "Suchbegriff", 
+                            validators=[InputRequired()]
+  )
+  submit= SubmitField("Suchen")
 
 
-
-
-
-
-
-submit = SubmitField('Login')
