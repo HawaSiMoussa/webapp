@@ -10,8 +10,9 @@
 
     <title>LostAndFound</title>
 
-    {{ bootstrap.load_css() }} #We don’t hard-code a link to the Bootstrap CSS file, but rather let Bootstrap-Flask do this.
-The CSS file is pulled from an internet resource hosted by Bootstrap.
+    {{ bootstrap.load_css() }}
+    <!--We don’t hard-code a link to the Bootstrap CSS file, but rather let Bootstrap-Flask do this.
+The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
 </head>
 
@@ -124,7 +125,7 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.
 
 </div>
 
-{{ bootstrap.load_js() }} #The same applies to the Bootstrap JavaScript code, which by convention is placed right before the </body> end tag.
+{{ bootstrap.load_js() }} <!--The same applies to the Bootstrap JavaScript code, which by convention is placed right before the </body> end tag.-->
 
 </body>
 </html>
