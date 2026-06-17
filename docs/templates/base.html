@@ -1,15 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-<div class="container mt-3">
-
-    <img src="{{ url_for('static', filename='LogoLostAndFound.jpeg') }}" alt="Lost&Found Logo" width="150">
-
-    {% block CONTENT %}
-    {% endblock %}
-
-</div>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +14,11 @@
 
 <body>
 
-<div class="container mt-5">
+<div class="container mt-3">
+
+    <img src="{{ url_for('static', filename='LogoLostAndFound.jpeg') }}"
+         alt="LostAndFound Logo"
+         width="200">
 
     {% block CONTENT %}
     {% endblock %}
