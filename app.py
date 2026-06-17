@@ -22,7 +22,8 @@ def index():
             "views": 12,
             "DateOfLoss": "2024-06-01",
              "LocationOfLoss": " Haus C Raum 1.08",
-             "description": "Ein schwarzer Rucksack mit großem Logo."
+             "description": "Ein schwarzer Rucksack mit großem Logo.",
+             "hwrMail": "sarah@hwr-berlin.de"
         },
         {
             "username": "Max",
@@ -30,7 +31,8 @@ def index():
             "views": 5,
             "DateOfLoss": "2024-04-01",
              "LocationOfLoss": "Cafeteria Haus B",
-             "description": "Ein schwarzes Laptop mit großem Logo."
+             "description": "Ein schwarzes Laptop mit großem Logo.",
+             "hwrMail": "max@hwr-berlin.de"
         },
         {
             "username": "Laura",
@@ -38,7 +40,8 @@ def index():
             "views": 8,
             "DateOfLoss": "2024-05-01",
             "LocationOfLoss": "Bibliothek Haus A",
-            "description": "Ein schwarzer Rucksack mit großem Logo."
+            "description": "Ein schwarzer Rucksack mit großem Logo.",
+            "hwrMail": "laura@hwr-berlin.de"
         }
     ]
 

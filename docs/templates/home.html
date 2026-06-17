@@ -67,7 +67,12 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
             <!-- Nachricht -->
             <button class="btn btn-outline-primary btn-sm border-0">
-                <i class="bi bi-envelope"></i>
+                <!-- Nachricht -->
+                <a href="mailto:{{ post.email }}?subject=Bezüglich: {{ post.title }}"
+                class="btn btn-outline-primary btn-sm border-0">
+                      <i class="bi bi-envelope"></i>
+                </a>
+
             </button>
 
             <!-- Views -->
