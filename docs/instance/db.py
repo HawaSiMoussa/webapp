@@ -39,8 +39,7 @@ class StandardUser(db.Model):
 
     campus = db.relationship("Campus",back_populates="users")
 
-    posts = db.relationship("Post",back_populates="user"
-    )
+    posts = db.relationship("Post",back_populates="user")
 
 
 class Fundbuero(db.Model):
@@ -89,9 +88,10 @@ class Post(db.Model):
 
     status = db.Column( db.String, default="laufend")
 
-    user = db.relationship("StandardUser",,back_populates="posts")
+    user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship( "Fundbuero", back_populates="posts")
 
     with app.app_context():
-    db.create_all()
+     db.create_all()
+
