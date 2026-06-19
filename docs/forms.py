@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
 from wtforms.validators import InputRequired, Length  
+from datetime import date
 
 #Kontaktformular 1.2
 class ContactForm(FlaskForm):
@@ -21,3 +22,4 @@ class CreatePostForm(FlaskForm):
     lost_date = DateField("Verlustdatum", validators=[InputRequired()])
     lost_area = StringField("Verlustort", validators=[InputRequired()])
     submit = SubmitField("Veröffentlichen")
+    meldedatum = date.today()
