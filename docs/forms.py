@@ -12,7 +12,12 @@ class ContactForm(FlaskForm):
 #Post erstellen
 class CreatePostForm(FlaskForm):
     title = StringField("Titel", validators=[InputRequired()])
-    description = TextAreaField("Beschreibung", validators=[InputRequired()])
+    description = TextAreaField(
+    "Beschreibung",
+    validators=[
+        InputRequired(),
+        Length(max=500)]
+)
     lost_date = DateField("Verlustdatum", validators=[InputRequired()])
     lost_area = StringField("Verlustort", validators=[InputRequired()])
     submit = SubmitField("Veröffentlichen")
