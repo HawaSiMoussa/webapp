@@ -39,14 +39,7 @@ class StandardUser(db.Model):
 
     campus = db.relationship("Campus",back_populates="users")
 
-<<<<<<< HEAD
-posts = db.relationship(
-    "Post",
-    back_populates="user"
-)
-=======
     posts = db.relationship("Post",back_populates="user")
->>>>>>> 69012f8b8a3269225c3627e6b86f50f43439b798
 
 
 class Fundbuero(db.Model):
@@ -95,17 +88,12 @@ class Post(db.Model):
 
     status = db.Column( db.String, default="laufend")
 
-<<<<<<< HEAD
-<user = db.relationship(
+user = db.relationship(
     "StandardUser",
     back_populates="posts"
 )
-=======
-    user = db.relationship("StandardUser",back_populates="posts")
->>>>>>> 69012f8b8a3269225c3627e6b86f50f43439b798
-
     fundbuero = db.relationship( "Fundbuero", back_populates="posts")
 
-    with app.app_context():
+with app.app_context():
      db.create_all()
 
