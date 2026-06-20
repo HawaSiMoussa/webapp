@@ -52,14 +52,9 @@ with app.app_context():
 def index():
 
     # Read all posts from database and pass them to home.html template
-    posts = db.session.execute(
-        db.select(Post)
-    ).scalars()
+    posts = db.session.execute( db.select(Post) ).scalars()
 
-    return render_template(
-        "home.html",
-        posts=posts
-    )
+    return render_template("home.html", posts=posts)
 
 
 if __name__ == "__main__":
