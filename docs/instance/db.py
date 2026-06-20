@@ -1,11 +1,10 @@
 
-from flask_sqlalchemy import SQLAlchemy  
-
+from flask_sqlalchemy import SQLAlchemy
 from app import app
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
-
 db = SQLAlchemy()  
+ 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
 db.init_app(app)
 
 class Campus(db.Model):

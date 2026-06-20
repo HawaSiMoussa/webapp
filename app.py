@@ -1,13 +1,21 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_bootstrap import Bootstrap5
+from db import db, Post
 import forms 
 
 app = Flask(__name__)
-app.config.from_mapping(
-    SECRET_KEY='secret_key_just_for_dev_environment',BOOTSTRAP_BOOTSWATCH_THEME='pulse'
-    )
+
+app.config['SECRET_KEY'] = 'secret_key_just_for_dev_environment'
+app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///lostandfound.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+ 
 bootstrap = Bootstrap5(app)
+db.init_app(app)
+with app.app_context():
+    db.create_all()
+     
+
 title = "LostAndFound"
 group = "CampusFinder"
 
@@ -49,18 +57,24 @@ def login():
                flash('Ihr Login war nicht möglich. Bitte versuchen sie es erneut!', 'warning')     
            
             return redirect(url_for('login'))
-    
 
-@app.route('/suche/', methods=['GET', 'POST'])
+@app.route('/suche/', methods=['GET', 'POST']) 
 def suche():
+form = forms.Suchleiste()
+posts = []
+
+if request.method == 'GET':
+   return render_template('suche.html', form=forms, posts=[])
  
- form = forms.Suchleiste()
-          
- if request.method == 'GET':
-   return render_template('suche.html', form=form)
- else:
-     if form.validate():
-         flash('wird gesucht', 'success')
-     else:
-         flash('Suche ist nicht korrekt', 'warning')
-         return redirect(url_for('suche'))
+if forms.validate_on_submit():
+         suchwort = forms.suchbegriff.data
+
+posts = db.session.execute(
+     db.select(Post).where(
+          Post.titel.ilike(f"%{suchwort}")
+     )
+        ).scalars()
+return render_template('suche.html',form=forms,posts=posts)
+flash('Suche ist nicht korrekt', 'warning')
+
+return redirect(url_for('suche'))
