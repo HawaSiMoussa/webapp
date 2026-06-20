@@ -81,7 +81,7 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
         <!-- Username -->
         <strong>
             <i class="bi bi-person-circle"></i>
-            {{ post.username }}
+            {{ post.user.benutzername }}
         </strong>
 
         <!-- Titel -->
@@ -105,7 +105,7 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
             </button>
 
             <!-- Nachricht -->
-          <a href="mailto:{{ post['hwrMail'] }}?subject={{ ('Bezüglich: ' ~ post['title'])|urlencode }}"
+          <a href="mailto:{{ post.user.hwrMail }}?subject={{ ('Bezüglich: ' ~ post.title)|urlencode }}"
    class="btn btn-outline-primary btn-sm border-0">
     <i class="bi bi-envelope"></i>
 </a>
@@ -135,17 +135,17 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
                 <p>
                     <strong>Beschreibung:</strong><br>
-                    {{ post.description }}
+                    {{ post.beschreibung }}
                 </p>
 
                 <p>
                     <strong>Verlustort:</strong><br>
-                    {{ post.LocationOfLoss }}
+                    {{ post.verlustort }}
                 </p>
 
                 <p>
                     <strong>Verlustdatum:</strong><br>
-                    {{ post.DateOfLoss }}
+                    {{ post.verlustdatum}}
                 </p>
 
                 <button
