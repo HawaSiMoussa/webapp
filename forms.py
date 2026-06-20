@@ -29,6 +29,7 @@ class Suchleiste(FlaskForm):
   suchbegriff = StringField( "Suchbegriff", 
        validators=[InputRequired()]
   )
+  
   submit= SubmitField("Suchen")
 
 
