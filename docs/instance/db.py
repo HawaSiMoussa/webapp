@@ -1,15 +1,14 @@
 
 from flask_sqlalchemy import SQLAlchemy  
+#from app import app
 
-from app import app
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
 
 db = SQLAlchemy()  
-db.init_app(app)
+#db.init_app(app)
 
 class Campus(db.Model):
-
+    __tablename__ = "campus"
     campus_id = db.Column( db.String,primary_key=True)
 
     ort = db.Column( db.String, nullable=False)
@@ -20,7 +19,7 @@ class Campus(db.Model):
 
 
 class StandardUser(db.Model):
-
+    __tablename__ = "standarduser"
     user_id = db.Column( db.Integer, primary_key=True )
 
     campus_id = db.Column( db.String, db.ForeignKey("campus.campus_id") )
@@ -44,7 +43,7 @@ class StandardUser(db.Model):
 
 
 class Fundbuero(db.Model):
-
+    __tablename__ = "fundbuero"
     fundbuero_id = db.Column(db.Integer,primary_key=True)
 
     campus_id = db.Column(db.String,db.ForeignKey("campus.campus_id"))
@@ -66,7 +65,7 @@ class Fundbuero(db.Model):
 
 class Post(db.Model):
 
-
+    __tablename__ = "post"
     post_id = db.Column(db.Integer, primary_key=True )
 
     user_id = db.Column(db.Integer,db.ForeignKey("standarduser.user_id") )
@@ -89,9 +88,9 @@ class Post(db.Model):
 
     status = db.Column( db.String, default="laufend")
 
-    user = db.relationship("StandardUser",,back_populates="posts")
+    user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship( "Fundbuero", back_populates="posts")
 
-    with app.app_context():
-    db.create_all()
+    #with app.app_context():
+     #db.create_all()
