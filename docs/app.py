@@ -1,9 +1,11 @@
 from flask import Flask,render_template, request, redirect, url_for, flash
 import forms
+from instance.db import db, Post
 from flask_bootstrap import Bootstrap5
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
@@ -14,6 +16,7 @@ app.config.from_mapping(
 #app.config['SECRET_KEY'] = 'lostandfound123'
 
 bootstrap = Bootstrap5(app)
+db.init_app(app)
 
 title = "LostAndFound"
 group = "CampusFinder"
@@ -81,7 +84,9 @@ def create_post():
 
         return redirect(url_for('create_post'))
             
-            
+with app.app_context():
+    db.create_all()
+              
 if __name__ == "__main__":
     app.run(debug=True)
 
