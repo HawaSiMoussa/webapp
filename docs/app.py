@@ -63,31 +63,45 @@ def contact():
 # Post erstellen
 @app.route('/create/', methods=['GET', 'POST'])
 def create_post():
-    #db_con = db.get_db_con()
-    form= forms.CreatePostForm()
+
+    form = forms.CreatePostForm()
 
     if request.method == 'GET':
-        #sql_query = 'SELECT * FROM todo ORDER BY id;'
-        #create_post = db_con.execute(sql_query).fetchall()
-        return render_template('create_post.html',form=form) #Instanz wird automatisch mit Daten aus request.form gefüllt
-           
-    else :
+
+        return render_template(
+            'create_post.html',
+            form=form
+        )
+
+    else:
+
         if form.validate():
-           #sql_query = 'INSERT INTO todo (description) VALUES (?);' 
-           print(form.title.data)
-           print(form.description.data)
-           print(form.lost_date.data)   #TEST
-           print(form.lost_area.data)
-           flash('Post created succesfully.', 'congrats')
+
+            post = Post(
+                user_id=1,  # vorläufig bis Login angebunden ist
+                titel=form.title.data,
+                beschreibung=form.description.data,
+                verlustdatum=form.lost_date.data,
+                verlustort=form.lost_area.data,
+                status="laufend"
+            )
+
+            db.session.add(post)
+            db.session.commit()
+
+            flash('Post erfolgreich erstellt.', 'success')
+
         else:
-            flash('No todo creation: validation error.', 'warning')
+
+            flash(
+                'Es konnte kein Post erstellt werden.: validation error.',
+                'warning'
+            )
 
         return redirect(url_for('create_post'))
             
 with app.app_context():
     db.create_all()
-              
+
 if __name__ == "__main__":
     app.run(debug=True)
-
-
