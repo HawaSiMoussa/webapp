@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
-from wtforms.validators import InputRequired, Length  
+from wtforms.validators import InputRequired, Length 
+from datetime import date 
 
 #Kontaktformular 1.2
 class ContactForm(FlaskForm):
@@ -12,7 +13,8 @@ class ContactForm(FlaskForm):
 #Post erstellen
 class CreatePostForm(FlaskForm):
     title = StringField("Titel", validators=[InputRequired()])
-    description = TextAreaField("Beschreibung", validators=[InputRequired()])
+    # begrenzte Anzahl an Zeichen
+    description = TextAreaField("Beschreibung",validators=[InputRequired(),Length(max=500)])
     lost_date = DateField("Verlustdatum", validators=[InputRequired()])
     lost_area = StringField("Verlustort", validators=[InputRequired()])
     submit = SubmitField("Veröffentlichen")
