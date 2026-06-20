@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-from flask import Flask, render_template
-
-app = Flask(__name__)
-@app.route("/")
-def home():
-    return "Flask funktioniert!"
-=======
 from flask import Flask,render_template, request, redirect, url_for, flash
 import forms
 from flask_bootstrap import Bootstrap5
@@ -37,7 +29,6 @@ tasks= [
     "Fatme: Git hub Repo's ( pull commit push und aufgaben zusammenfügen), Organisieren/dokumentieren der verschiedenen Ideen",
     "Sarah: Datenbankverwaltung (Nutzer und Beiträge), sowie Analyse geplanter Funktionen bezüglich technischer Machbarkeit und Aufwand"
 ]
->>>>>>> 69012f8b8a3269225c3627e6b86f50f43439b798
 
 @app.route("/")
 def index():
