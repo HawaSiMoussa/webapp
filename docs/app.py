@@ -92,11 +92,9 @@ def create_post():
             flash('Post erfolgreich erstellt.', 'success')
 
         else:
-
-            flash(
-                'Es konnte kein Post erstellt werden.: validation error.',
-                'warning'
-            )
+            print(form.errors)
+            flash(form.errors['lost_date'][0], 'warning')      
+            
 
         return redirect(url_for('create_post'))
             

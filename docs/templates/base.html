@@ -19,6 +19,15 @@
     <img src="{{ url_for('static', filename='LogoLostAndFound.jpeg') }}" 
          width="100">
 <!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+   {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
     {% block CONTENT %}
     {% endblock %}
 
