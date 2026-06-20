@@ -18,3 +18,7 @@ class CreatePostForm(FlaskForm):
     lost_date = DateField("Verlustdatum", validators=[InputRequired()])
     lost_area = StringField("Verlustort", validators=[InputRequired()])
     submit = SubmitField("Veröffentlichen")
+
+    def validate_lost_date(self, field):
+        if field.data > date.today():
+            raise ValidationError("Verlustdatum darf nicht ind der Zukunft liegen")
