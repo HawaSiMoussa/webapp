@@ -14,12 +14,14 @@ Verlust melden
 
     <div class="mb-3">
         {{ form.title.label }}
-        {{ form.title(class="form-control") }}
+        {{ form.title(class="form-control"
+                       placeholder="z.B. Portemonnaie") }}
     </div>
 
     <div class="mb-3">
         {{ form.description.label }}
-        {{ form.description(class="form-control") }}
+        {{ form.description(class="form-control"
+                            placeholder="Beschreibe den verlorenen Gegenstand...") }}
     </div>
 
     <div class="mb-3">
@@ -29,7 +31,8 @@ Verlust melden
 
     <div class="mb-3">
         {{ form.lost_area.label }}
-        {{ form.lost_area(class="form-control") }}
+        {{ form.lost_area(class="form-control"
+                           placeholder="B.404") }}
     </div>
 
     <div class="text-end">
