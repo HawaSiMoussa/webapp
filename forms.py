@@ -4,6 +4,7 @@ from wtforms.validators import InputRequired, Email, Length, Regexp
 
 class CreateLogin(FlaskForm):
 
+
   campus = SelectField(
   "Campus",
   choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")],
