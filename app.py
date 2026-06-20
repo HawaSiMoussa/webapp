@@ -11,14 +11,41 @@ app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
-from instance.db import db, Post
 
-bootstrap = Bootstrap5(app)
+
+from db import db, Post, StandardUser
 
 db.init_app(app)
+bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
+
+    if StandardUser.query.count() == 0:
+
+        user = StandardUser(
+            benutzername="Sarah",
+            passwort="test",
+            hwr_mail="sarah@hwr-berlin.de"
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+    user = StandardUser.query.first()
+
+    if Post.query.count() == 0:
+
+        post = Post(
+            titel="Schwarzer Rucksack",
+            beschreibung="Großer schwarzer Rucksack",
+            verlustort="Haus C",
+            views=0,
+            user_id=user.user_id
+        )
+
+        db.session.add(post)
+        db.session.commit()
 
 
 @app.route("/")
