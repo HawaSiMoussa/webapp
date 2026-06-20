@@ -11,28 +11,35 @@ Verlust melden
 <form action="{{ url_for('create_post') }}" method="post">
 
     {{ form.csrf_token }}
+    <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-outline-dark">
+        + Erstellen
+    </button>
+</div>
 
     <div class="mb-3">
-        {{ form.title.label }}
-        {{ form.title(class="form-control"
+        {{ form.title.label(class="form-label fw-bold") }}
+        {{ form.title(class="form-control",
                        placeholder="z.B. Portemonnaie") }}
     </div>
 
     <div class="mb-3">
-        {{ form.description.label }}
-        {{ form.description(class="form-control"
-                            placeholder="Beschreibe den verlorenen Gegenstand...") }}
+        {{ form.description.label(class="form-label fw-bold")}}
+        {{ form.description(class="form-control",
+                            rows="5",
+                            placeholder="Beschreibe den verlorenen Gegenstand...")
+                           }}
     </div>
 
     <div class="mb-3">
-        {{ form.lost_date.label }}
+        {{ form.lost_date.label(class="form-label fw-bold") }}
         {{ form.lost_date(class="form-control") }}
     </div>
 
     <div class="mb-3">
-        {{ form.lost_area.label }}
-        {{ form.lost_area(class="form-control"
-                           placeholder="B.404") }}
+        {{ form.lost_area.label(class="form-label fw-bold") }}
+        {{ form.lost_area(class="form-control",
+                           placeholder="z.B. B.404") }}
     </div>
 
     <div class="text-end">
