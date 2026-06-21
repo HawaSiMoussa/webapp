@@ -78,8 +78,8 @@ def register():
 
 
 # Login
-@app.route('/login/', methods=['GET', 'POST'])
-def login():
+@app.route('/home/', methods=['GET', 'POST'])
+def home():
 
     form = forms.CreateLogin()
 
@@ -103,7 +103,7 @@ def login():
         session["user_id"] = user.user_id
 
         flash("Login erfolgreich!", "success")
-        return redirect(url_for("index"))
+        return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
 
