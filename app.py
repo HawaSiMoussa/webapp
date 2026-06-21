@@ -89,34 +89,6 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
-
-title = "LostAndFound"
-group = "CampusFinder"
-
-members = [
-    "77204183234, Hawa Si Moussa",
-    "77209887107, Fatme Berjaoui",
-    "77209886771, Sarah Tayem"
-]
-
-tasks = [
-    "Hawa: Benutzeroberfläche Login button posts Darstellung mit HTML, CSS",
-    "Fatme: Git hub Repo's (pull commit push und Aufgaben zusammenfügen), Organisieren/Dokumentieren der verschiedenen Ideen",
-    "Sarah: Datenbankverwaltung (Nutzer und Beiträge), Analyse geplanter Funktionen"
-]
-
-
-@app.route("/")
-def index():
-    return render_template(
-        "index.html",
-        title=title,
-        group=group,
-        members=members,
-        tasks=tasks
-    )
-
-
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
