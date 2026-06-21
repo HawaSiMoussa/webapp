@@ -64,24 +64,15 @@ def register():
             hwr_mail=form.hwrmail.data,
             passwort=form.password.data
         )
-().scalar_one_or_none()
-if existing_user:
-    flash("Diese E-Mail wird bereits verwendet!","warning")
 
-    return redirect(url_for("register"))
-user= StandardUser(
-        hwr_mail=forms.hwrmail.data,
-        passwort=forms.password.data
-    )
-db.session.add(user)
-db.session.commit()
-db.session.add(user)
-db.session.commit()
+        db.session.add(user)
+        db.session.commit()
 
-flash("Account erstellt!", "success")
-return redirect(url_for("login"))
+        flash("Account erstellt!", "success")
+        return redirect(url_for("login"))
 
-return render_template("register.html", form=form)
+    return render_template("register.html", form=form)
+
 
 @app.route('/logins/', methods=['GET', 'POST'])
 def login():
@@ -136,3 +127,4 @@ def suche():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
