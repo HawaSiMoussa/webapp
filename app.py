@@ -71,6 +71,9 @@ def register():
 #Kontaktformular
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
