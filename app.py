@@ -1,15 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import forms
+import os
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
+app.config['MAIL_USERNAME'] = 'useto.test.169@gmail.com'
+app.config['MAIL_PASSWORD'] = 'famr lhrw ysyr wbvn'
+app.config['MAIL_DEFAULT_SENDER'] = 'useto.test.169@gmail.com'
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
@@ -20,7 +23,7 @@ app.config.from_mapping(
 
 db.init_app(app)
 bootstrap = Bootstrap5(app)
-
+mail = Mail(app)
 with app.app_context():
     db.create_all()
 
@@ -104,6 +107,19 @@ def login():
         return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
+@app.route("/testmail")
+def testmail():
+
+    msg = Message(
+        subject="Flask-Mail Test",
+        recipients=["useto.test.169@gmail.com"]
+    )
+
+    msg.body = "FlaskMail wurde für diese Mail genutzt :)."
+
+    mail.send(msg)
+
+    return "Mail wurde verschickt."
 
 if __name__ == "__main__":
     app.run(debug=True)
