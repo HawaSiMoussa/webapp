@@ -90,32 +90,6 @@ def create_post():
     
 if __name__ == "__main__":
     app.run(debug=True)
-from flask import Flask, render_template, redirect, url_for, flash
-from flask_bootstrap import Bootstrap5
-from db import db, Post, StandardUser
-import forms
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'secret_key_just_for_dev_environment'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-bootstrap = Bootstrap5(app)
-
-db.init_app(app)
-
-with app.app_context():
-    db.create_all()
-
-title = "LostAndFound"
-group = "CampusFinder"
-
-members = [
-    "77204183234, Hawa Si Moussa",
-    "77209887107, Fatme Berjaoui",
-    "77209886771, Sarah Tayem"
-]
 
 tasks = [
     "Hawa: Benutzeroberfläche Login button posts Darstellung mit HTML, CSS",
