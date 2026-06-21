@@ -16,7 +16,7 @@
 <div class="mb-3">
 {{ form.hwrmail.label(class="form-label") }}
  {{ form.hwrmail(class="form-control")}}
- {% for error in forms.hwrmail.errors %}
+ {% for error in form.hwrmail.errors %}
  <div class="text-danger">
  {{error}}
  </div>
@@ -25,7 +25,7 @@
  <div class="mb-3">
 {{ form.passwort.label(class="form-label")}}
  {{ form.passwort(class="form-control")}}
- {%for error in forms.passwort.errors %}
+ {%for error in form.passwort.errors %}
  <div class="text-danger">
  {{ error }}
  </div>
