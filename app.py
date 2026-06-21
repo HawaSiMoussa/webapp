@@ -65,8 +65,9 @@ def register():
 
     return render_template("register.html", form=form)
 
+
 #Kontaktformular
-@app.route("/contact/", methods=["GET", "POST"])
+@app.route("/contact/", methods=["GET","POST"])
 def contact():
 
     form = forms.ContactForm()
@@ -88,13 +89,14 @@ def contact():
 
         return redirect(url_for("home"))
 
+
     return render_template(
         "contact.html",
         form=form
     )
 
 #Post erstellen(Fatme)
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route("/create_post", methods=["GET", "POST"])
 def create_post():
 
     form = forms.CreatePostForm()
@@ -146,6 +148,7 @@ def create_post():
                 flash(form.errors['lost_date'][0], 'warning')
 
         return redirect(url_for('create_post'))
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
