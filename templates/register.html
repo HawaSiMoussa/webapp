@@ -1,89 +1,53 @@
 {% extends "base.html" %}
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Registrieren - LostAndFound</title>
-{{ bootstrap.load_css() }}
-</head>
 
-<body>
-<div class="container mt-3">
+{% block TITLE %}
+Registrieren
+{% endblock %}
 
-    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
-     width="100">
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
-    {% block CONTENT %}
-    {% endblock %}
+{% block CONTENT %}
 
+<div class="text-center mb-4">
+    <img src="{{ url_for('static', filename='images/LogoLostAndFound.jpeg') }}"
+         width="100">
 </div>
 
-<div class="container mt-5" style="max-width: 450px;">
+<h2 class="text-center mb-4">Registrieren</h2>
 
-    <h2 class="text-center mb-4">Registrieren</h2>
-
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endwith %}
-
-    <form method="post">
-
-        {{ form.hidden_tag() }}
-
-        <!-- Campus -->
-        <div class="mb-3">
-            {{ form.campus.label(class="form-label") }}
-            {{ form.campus(class="form-select") }}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
         </div>
+    {% endfor %}
+{% endwith %}
 
-        <!-- Email -->
-        <div class="mb-3">
-            {{ form.hwrmail.label(class="form-label") }}
-            {{ form.hwrmail(class="form-control") }}
+<form method="post">
 
-            {% for error in form.hwrmail.errors %}
-                <div class="text-danger">{{ error }}</div>
-            {% endfor %}
-        </div>
+    {{ form.hidden_tag() }}
 
-        <!-- Passwort -->
-        <div class="mb-3">
-            {{ form.passwort.label(class="form-label") }}
-            {{ form.passwort(class="form-control") }}
+    <div class="mb-3">
+        {{ form.campus.label(class="form-label") }}
+        {{ form.campus(class="form-select") }}
+    </div>
 
-            {% for error in form.passwort.errors %}
-                <div class="text-danger">{{ error }}</div>
-            {% endfor %}
-        </div>
+    <div class="mb-3">
+        {{ form.hwrmail.label(class="form-label") }}
+        {{ form.hwrmail(class="form-control") }}
+    </div>
 
-        <!-- Checkbox -->
-        <div class="mb-3 form-check">
-            {{ form.benachrichtigung(class="form-check-input") }}
-            {{ form.benachrichtigung.label(class="form-check-label") }}
-        </div>
+    <div class="mb-3">
+        {{ form.passwort.label(class="form-label") }}
+        {{ form.passwort(class="form-control") }}
+    </div>
 
-        <!-- Submit -->
-        <button type="submit" class="btn btn-success w-100">
-            Registrieren
-        </button>
+    <div class="mb-3 form-check">
+        {{ form.benachrichtigung(class="form-check-input") }}
+        {{ form.benachrichtigung.label(class="form-check-label") }}
+    </div>
 
-        <!-- Login Link -->
-        <div class="text-center mt-3">
-            <a href="{{ url_for('login') }}">
-                Bereits registriert? Zum Login
-            </a>
-        </div>
+    {{ form.submit(class="btn btn-success w-100") }}
 
-    </form>
+</form>
 
-</div>
+{% endblock %}
 
-{{ bootstrap.load_js() }}
-
-</body>
-</html>

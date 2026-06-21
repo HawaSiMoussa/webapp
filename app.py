@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, session
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
+from flask import request 
 
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ def home():
 
     posts = db.session.execute(db.select(Post)).scalars()
     return render_template("home.html", posts=posts)
+
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -64,14 +66,32 @@ def register():
     return render_template("register.html", form=form)
 
 #Kontaktformular
-@app.route("/contact/", methods=["GET","POST"])
+@app.route("/contact/", methods=["GET", "POST"])
 def contact():
+
     form = forms.ContactForm()
+
     if form.validate_on_submit():
-        flash("Kontakt gespeichert!", "success")
+
+        user = db.session.get(
+            StandardUser,
+            session["user_id"]
+        )
+
+        user.name = form.name.data
+        user.benutzername = form.username.data
+        user.telefonnummer = form.phone_number.data
+
+        db.session.commit()
+
+        flash("Daten erfolgreich gespeichert!", "success")
 
         return redirect(url_for("home"))
-    return render_template("contact.html", form=form)
+
+    return render_template(
+        "contact.html",
+        form=form
+    )
 
 #Post erstellen(Fatme)
 @app.route('/create/', methods=['GET', 'POST'])
@@ -89,40 +109,43 @@ def create_post():
     else:
 
         if form.validate():
-            
+
             aktiver_post = db.session.execute(
-            db.select(Post).where(
-            Post.user_id == session["user_id"],
-            Post.status == "laufend"
-            )
-         ).scalar_one_or_none()
+                db.select(Post).where(
+                    Post.user_id == session["user_id"],
+                    Post.status == "laufend"
+                )
+            ).scalar_one_or_none()
 
-        if aktiver_post:
-         flash("Du hast bereits eine aktive Suchanzeige.","warning")
-         return redirect(url_for("create_post"))
+            if aktiver_post:
+                flash(
+                    "Du hast bereits eine aktive Suchanzeige.",
+                    "warning"
+                )
+                return redirect(url_for("create_post"))
 
-    post = Post(
-                user_id=1,  
+            post = Post(
+                user_id=session["user_id"],
                 titel=form.title.data,
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
                 verlustort=form.lost_area.data,
                 status="laufend"
             )
-    
-db.session.add(post)
-db.session.commit()
 
-flash('Post erfolgreich erstellt.', 'success')
-  
-else:
+            db.session.add(post)
+            db.session.commit()
 
-    print(form.errors)
+            flash('Post erfolgreich erstellt.', 'success')
 
-    if 'lost_date' in form.errors:
-        flash(form.errors['lost_date'][0], 'warning')
+        else:
 
-    return redirect(url_for('create_post'))
+            print(form.errors)
+
+            if 'lost_date' in form.errors:
+                flash(form.errors['lost_date'][0], 'warning')
+
+        return redirect(url_for('create_post'))
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -152,10 +175,5 @@ def login():
 
     return render_template("login.html", form=form)
 
-@app.route("/logout/")
-def logout():
-    session.clear()
-    flash("Du bist ausgeloggt!", "info")
-    return redirect(url_for("login"))
 if __name__ == "__main__":
     app.run(debug=True)
