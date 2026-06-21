@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
+import forms
+from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 
 
@@ -13,40 +15,12 @@ app.config.from_mapping(
 )
 
 
-from db import db, Post, StandardUser
-
 db.init_app(app)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
-
-    if StandardUser.query.count() == 0:
-
-        user = StandardUser(
-            benutzername="Sarah",
-            passwort="test",
-            hwr_mail="sarah@hwr-berlin.de"
-        )
-
-        db.session.add(user)
-        db.session.commit()
-
-    user = StandardUser.query.first()
-
-    if Post.query.count() == 0:
-
-        post = Post(
-            titel="Schwarzer Rucksack",
-            beschreibung="Großer schwarzer Rucksack",
-            verlustort="Haus C",
-            views=0,
-            user_id=user.user_id
-        )
-
-        db.session.add(post)
-        db.session.commit()
-
+   
 
 @app.route("/")
 def index():
@@ -56,6 +30,44 @@ def index():
 
     return render_template("home.html", posts=posts)
 
+@app.route('/create/', methods=['GET', 'POST'])
+def create_post():
 
+    form = forms.CreatePostForm()
+
+    if request.method == 'GET':
+
+        return render_template(
+            'create_post.html',
+            form=form
+        )
+
+    else:
+
+        if form.validate():
+
+            post = Post(
+                user_id=1,  # später durch echten Login ersetzen
+                titel=form.title.data,
+                beschreibung=form.description.data,
+                verlustdatum=form.lost_date.data,
+                verlustort=form.lost_area.data,
+                status="laufend"
+            )
+
+            db.session.add(post)
+            db.session.commit()
+
+            flash('Post erfolgreich erstellt.', 'success')
+
+        else:
+
+            print(form.errors)
+
+            if 'lost_date' in form.errors:
+                flash(form.errors['lost_date'][0], 'warning')
+
+        return redirect(url_for('create_post'))
+    
 if __name__ == "__main__":
     app.run(debug=True)
