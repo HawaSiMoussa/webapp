@@ -98,7 +98,6 @@ user= StandardUser(
         passwort=forms.password.data
     )
 db.session.add(user)
-
 db.session.commit()
 
 flash("Account erstellt!", "success")
