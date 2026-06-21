@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, redirect, url_for, flash, session
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
-
 
 app = Flask(__name__)
 
@@ -10,7 +9,9 @@ app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
     #BOOTSTRAP_BOOTSWATCH_THEME='pulse',
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
-    SQLALCHEMY_TRACK_MODIFICATIONS=False
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=False
 )
 
 db.init_app(app)
@@ -19,34 +20,23 @@ bootstrap = Bootstrap5(app)
 with app.app_context():
     db.create_all()
 
-
-# Beim Aufruf der Seite zuerst Login anzeigen
 @app.route("/")
 def start():
     return redirect(url_for("login"))
 
-
-# Home-Seite
-@app.route("/home/")
-def index():
-
-   
+@app.route("/home")
+def home():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
-    posts = db.session.execute(
-        db.select(Post)
-    ).scalars()
-
+    posts = db.session.execute(db.select(Post)).scalars()
     return render_template("home.html", posts=posts)
 
-
-# Registrierung
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
-    form = forms.CreateLogin()
+    form = forms.RegisterForm()
 
     if form.validate_on_submit():
 
@@ -69,15 +59,25 @@ def register():
         db.session.commit()
 
         flash("Account erstellt!", "success")
+        return redirect(url_for("contact"))
+
+    return render_template("register.html", form=form)
+
+@app.route("/contact/", methods=["GET","POST"])
+def contact():
+    form = forms.ContactForm()
+    if form.validate_on_submit():
+        flash("Kontakt gespeichert!", "success")
+
+        return redirect(url_for("home"))
+    return render_template("contact.html", form=form)
+
+@app.route("/create_post", methods=["GET", "POST"])
+def create_post():
+    if "user_id" not in session:
         return redirect(url_for("login"))
+    return render_template("create_post.html")
 
-    return render_template(
-        "register.html",
-        form=form
-    )
-
-
-# Login
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
 
@@ -99,11 +99,10 @@ def login():
             flash("Falsches Passwort!", "warning")
             return redirect(url_for("login"))
 
-       
         session["user_id"] = user.user_id
 
         flash("Login erfolgreich!", "success")
-        return redirect(url_for("index"))
+        return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
 
