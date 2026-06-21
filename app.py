@@ -6,6 +6,7 @@ from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
 
+
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
     BOOTSTRAP_BOOTSWATCH_THEME='pulse',
@@ -18,29 +19,14 @@ bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
-
-
-# Beim Aufruf der Seite zuerst Login anzeigen
-@app.route("/")
-def start():
-    return redirect(url_for("login"))
-
-
-# Home-Seite
 @app.route("/")
 def home():
-
-   
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
-    posts = db.session.execute(
-        db.select(Post)
-    ).scalars()
-
+    posts = db.session.execute(db.select(Post)).scalars()
     return render_template("home.html", posts=posts)
-
 
 # Registrierung
 @app.route('/register/', methods=['GET', 'POST'])
@@ -103,7 +89,7 @@ def login():
         session["user_id"] = user.user_id
 
         flash("Login erfolgreich!", "success")
-        return redirect(url_for("home"))
+        return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
 
