@@ -30,6 +30,7 @@ def index():
 
     return render_template("home.html", posts=posts)
 
+
 @app.route('/create/', methods=['GET', 'POST'])
 def create_post():
 

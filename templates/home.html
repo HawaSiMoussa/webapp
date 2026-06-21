@@ -51,7 +51,7 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
     <div class="collapse" id="navbarToggleExternalContent">
 
         <div class="border rounded p-3" style="width:300px;">
-            <a href="#" class="d-block mb-2">
+            <a <a href="{{ url_for('index') }}" class="d-block mb-2">
                 <i class="bi bi-house"></i> Home
             </a>
 
@@ -59,7 +59,7 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
                 <i class="bi bi-person"></i> Profil
             </a>
 
-            <a href="#" class="d-block mb-2">
+            <a href="{{ url_for('create_post') }}" class="d-block mb-2">
                 <i class="bi bi-plus-lg"></i> Post erstellen
             </a>
 
