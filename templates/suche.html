@@ -5,34 +5,30 @@
 <title>Suche-LostAndFound</title>
 
 {{ bootstrap.load_css() }}
-<link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-<header>
-<h1>LostAndFound</h1>
-<nav>
-<a href="/">Home</a>
-<a href="/suche"> Suche</a>
-</nav>
+<div class="container mt-5" style="max-width: 450px;">
+<h2 class="text-center mb-4">Suche</h2>
 
 <form method="post">
 {{ form.hidden_tag() }}
-{{ form.suchbegriff(class="form-control", placeholder="Suchen...")}}
-<button type="submit">Suchen</button>
+
+    
+   <div class="mb-3">
+   {{ form.suchbegriff.label(class="form.label") }}
+   {{ form.suchbegriff(class="form-control", placeholder="Suchen...") }}
+   </div>
+<button type="submit" class="btn btn-primary w-100">Suchen</button>
 </form>
-</header>
+
 <main>
-<div class="left">
+
 {%for post in posts%}
-<div>
-<h3> {{post.titel}}</h3>
-<p> {{post.beschreibung}}</p>
-</div>
+<div class="border rounded p-3 mb-2">
+<h5 class="mb-1"> {{ post.titel}} </h5>
+<p class="mb-0"> {{post.beschreibung}}</p>
 {%endfor%}
 </div>
-<div class="right">
-</div>
-</main>
 {{ bootstrap.load_js() }}
 </body>
 </html>

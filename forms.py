@@ -30,6 +30,6 @@ class Suchleiste(FlaskForm):
        validators=[InputRequired()]
   )
   
-  submit= SubmitField("Suchen")
+  submit = SubmitField("Suchen")
 
 
