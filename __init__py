@@ -1,0 +1,6 @@
+from flask_mail import Mail
+mail = Mail()
+
+def create_app(config_name):
+    # ...
+    mail.init_app(app)
