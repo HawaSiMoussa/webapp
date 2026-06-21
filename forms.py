@@ -68,10 +68,35 @@ class CreateLogin(FlaskForm):
   "passwort", 
   validators=[InputRequired(), Length(min=8)]
  )
+  
 
-  benachrichtigung = BooleanField("Hwr-Mail Benachrichtigungen erlauben", 
-)
+
 submit = SubmitField("Login")
+
+
+class RegisterForm(FlaskForm):
+
+
+  campus = SelectField(
+  "Campus",
+  choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")],
+  validators=[InputRequired()]
+ )
+
+  hwrmail = EmailField(
+  "Hwr-Mail",
+  validators= [InputRequired(),Email(),
+               ]
+)
+
+  passwort = PasswordField(
+  "passwort", 
+  validators=[InputRequired(), Length(min=8)]
+ )
+  
+  benachrichtigung = BooleanField("Benachrichtigung erlauben")
+
+submit = SubmitField("Registrieren")
 
 class Suchleiste(FlaskForm):
   suchbegriff = StringField( "Suchbegriff", 
