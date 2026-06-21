@@ -34,18 +34,40 @@ def index():
 @app.route('/contact/', methods=['GET', 'POST'])
 def contact():
 
-    form=forms.ContactForm()
-    if request.method == 'GET':
-        return render_template('contact''.html',form=form)
-    else:
-      if form.validate():
-        print(form.name.data)
-        print(form.username.data)
-        print(form.phone_number.data)
+    form = forms.ContactForm()
 
-        return redirect(
-            url_for('contact')
-        )
+    if request.method == 'GET':
+        return render_template('contact.html', form=form)
+
+    else:
+
+        if form.validate():
+
+            user = db.session.execute(
+                db.select(StandardUser)
+                .order_by(StandardUser.user_id.desc())
+            ).scalar()
+
+            if user:
+                user.name = form.name.data
+                user.benutzername = form.username.data
+                user.telefonnummer = form.phone_number.data
+
+                db.session.commit()
+
+                flash(
+                    "Kontaktdaten erfolgreich gespeichert.",
+                    "success"
+                )
+
+            else:
+
+                flash(
+                    "Kein registrierter Benutzer gefunden.",
+                    "warning"
+                )
+
+        return redirect(url_for('contact'))
       
 
 #Post erstellen(Fatme)
@@ -90,12 +112,6 @@ def create_post():
     
 if __name__ == "__main__":
     app.run(debug=True)
-
-tasks = [
-    "Hawa: Benutzeroberfläche Login button posts Darstellung mit HTML, CSS",
-    "Fatme: Git hub Repo's (pull commit push und Aufgaben zusammenfügen), Organisieren/Dokumentieren der verschiedenen Ideen",
-    "Sarah: Datenbankverwaltung (Nutzer und Beiträge), Analyse geplanter Funktionen"
-]
 
 
 @app.route("/")
