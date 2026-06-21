@@ -4,7 +4,6 @@ import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 
-
 app = Flask(__name__)
 
 app.config.from_mapping(
@@ -14,63 +13,76 @@ app.config.from_mapping(
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 
-
 db.init_app(app)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
-   
 
+
+# Startseite -> Login zuerst anzeigen
 @app.route("/")
+def start():
+    return redirect(url_for("login"))
+
+
+# Home-Seite nach Login
+@app.route("/home/")
 def index():
 
-    # Read all posts from database and pass them to home.html template
-    posts = db.session.execute( db.select(Post) ).scalars()
+    posts = db.session.execute(
+        db.select(Post)
+    ).scalars()
 
-    return render_template("home.html", posts=posts)
+    return render_template(
+        "home.html",
+        posts=posts
+    )
 
-#Kontaktformular(Fatme)
+
+# Kontaktformular
 @app.route('/contact/', methods=['GET', 'POST'])
 def contact():
 
     form = forms.ContactForm()
 
     if request.method == 'GET':
-        return render_template('contact.html', form=form)
+        return render_template(
+            'contact.html',
+            form=form
+        )
 
-    else:
+    if form.validate():
 
-        if form.validate():
+        user = db.session.execute(
+            db.select(StandardUser)
+            .order_by(StandardUser.user_id.desc())
+        ).scalar()
 
-            user = db.session.execute(
-                db.select(StandardUser)
-                .order_by(StandardUser.user_id.desc())
-            ).scalar()
+        if user:
 
-            if user:
-                user.name = form.name.data
-                user.benutzername = form.username.data
-                user.telefonnummer = form.phone_number.data
+            user.name = form.name.data
+            user.benutzername = form.username.data
+            user.telefonnummer = form.phone_number.data
 
-                db.session.commit()
+            db.session.commit()
 
-                flash(
-                    "Kontaktdaten erfolgreich gespeichert.",
-                    "success"
-                )
+            flash(
+                "Kontaktdaten erfolgreich gespeichert.",
+                "success"
+            )
 
-            else:
+        else:
 
-                flash(
-                    "Kein registrierter Benutzer gefunden.",
-                    "warning"
-                )
+            flash(
+                "Kein registrierter Benutzer gefunden.",
+                "warning"
+            )
 
-        return redirect(url_for('contact'))
-      
+    return redirect(url_for('contact'))
 
-#Post erstellen(Fatme)
+
+# Post erstellen
 @app.route('/create/', methods=['GET', 'POST'])
 def create_post():
 
@@ -83,38 +95,39 @@ def create_post():
             form=form
         )
 
+    if form.validate():
+
+        post = Post(
+            user_id=1,
+            titel=form.title.data,
+            beschreibung=form.description.data,
+            verlustdatum=form.lost_date.data,
+            verlustort=form.lost_area.data,
+            status="laufend"
+        )
+
+        db.session.add(post)
+        db.session.commit()
+
+        flash(
+            'Post erfolgreich erstellt.',
+            'success'
+        )
+
     else:
 
-        if form.validate():
+        print(form.errors)
 
-            post = Post(
-                user_id=1,  # später durch echten Login ersetzen
-                titel=form.title.data,
-                beschreibung=form.description.data,
-                verlustdatum=form.lost_date.data,
-                verlustort=form.lost_area.data,
-                status="laufend"
+        if 'lost_date' in form.errors:
+            flash(
+                form.errors['lost_date'][0],
+                'warning'
             )
 
-            db.session.add(post)
-            db.session.commit()
-
-            flash('Post erfolgreich erstellt.', 'success')
-
-        else:
-
-            print(form.errors)
-
-            if 'lost_date' in form.errors:
-                flash(form.errors['lost_date'][0], 'warning')
-
-        return redirect(url_for('create_post'))
-    
-if __name__ == "__main__":
-    app.run(debug=True)
+    return redirect(url_for('create_post'))
 
 
-#Registrieren 1.1
+# Registrierung
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
@@ -129,7 +142,12 @@ def register():
         ).scalar_one_or_none()
 
         if existing_user:
-            flash("Diese E-Mail wird bereits verwendet!", "warning")
+
+            flash(
+                "Diese E-Mail wird bereits verwendet!",
+                "warning"
+            )
+
             return redirect(url_for("register"))
 
         user = StandardUser(
@@ -140,13 +158,21 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash("Account erstellt!", "success")
+        flash(
+            "Account erstellt!",
+            "success"
+        )
+
         return redirect(url_for("login"))
 
-    return render_template("register.html", form=form)
+    return render_template(
+        "register.html",
+        form=form
+    )
 
 
-@app.route('/logins/', methods=['GET', 'POST'])
+# Login
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
 
     form = forms.CreateLogin()
@@ -160,8 +186,13 @@ def login():
                 "@dot.hwr-berlin.de"
             )
         ):
-            flash("Bitte eine gültige HWR-Mail angeben.", "warning")
-            return redirect(url_for("register"))
+
+            flash(
+                "Bitte eine gültige HWR-Mail angeben.",
+                "warning"
+            )
+
+            return redirect(url_for("login"))
 
         user = db.session.execute(
             db.select(StandardUser).where(
@@ -170,19 +201,37 @@ def login():
         ).scalar_one_or_none()
 
         if not user:
-            flash("User existiert nicht.", "warning")
+
+            flash(
+                "User existiert nicht.",
+                "warning"
+            )
+
             return redirect(url_for("login"))
 
         if user.passwort != form.passwort.data:
-            flash("Falsches Passwort!", "warning")
+
+            flash(
+                "Falsches Passwort!",
+                "warning"
+            )
+
             return redirect(url_for("login"))
 
-        flash("Login erfolgreich!", "success")
+        flash(
+            "Login erfolgreich!",
+            "success"
+        )
+
         return redirect(url_for("index"))
 
-    return render_template("login.html", form=form)
+    return render_template(
+        "login.html",
+        form=form
+    )
 
 
+# Suche
 @app.route('/suche/', methods=['GET', 'POST'])
 def suche():
 
@@ -204,5 +253,7 @@ def suche():
         form=form,
         posts=posts
     )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
