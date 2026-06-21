@@ -1,0 +1,8 @@
+:root {
+  --color-main: rgb(235, 250, 248);
+  --color-shadow: rgb(180, 220, 215);
+
+  --color-highlight: rgb(13, 92, 99);
+  --color-accent1: rgb(46, 196, 182);
+  --color-accent2: rgb(29, 78, 137);
+}
