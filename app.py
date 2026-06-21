@@ -1,9 +1,7 @@
-
-import os
-from flask_mail import Mail, Message
-
-from flask import Flask, render_template
-from flask_bootstrap import Bootstrap5  
+from flask import Flask, render_template, request, redirect, url_for, flash
+import forms
+from db import db, Post, StandardUser
+from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -14,64 +12,98 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 
 app.config.from_mapping(
-    SECRET_KEY = 'secret_key_just_for_dev_environment',
-    BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
+    SECRET_KEY='secret_key_just_for_dev_environment',
+    BOOTSTRAP_BOOTSWATCH_THEME='pulse',
+    SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
+    SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
+
 db.init_app(app)
 bootstrap = Bootstrap5(app)
-mail = Mail(app)
 
+with app.app_context():
+    db.create_all()
+
+
+# Beim Aufruf der Seite zuerst Login anzeigen
 @app.route("/")
-def index():
+def start():
+    return redirect(url_for("login"))
 
-    posts = [
-        {
-            "username": "Sarah",
-            "title": "Schwarzer Rucksack",
-            "views": 12,
-            "DateOfLoss": "2024-06-01",
-             "LocationOfLoss": " Haus C Raum 1.08",
-             "description": "Ein schwarzer Rucksack mit großem Logo.",
-             "hwrMail": "sarah@hwr-berlin.de"
-        },
-        {
-            "username": "Max",
-            "title": "Laptop",
-            "views": 5,
-            "DateOfLoss": "2024-04-01",
-             "LocationOfLoss": "Cafeteria Haus B",
-             "description": "Ein schwarzes Laptop mit großem Logo.",
-             "hwrMail": "max@hwr-berlin.de"
-        },
-        {
-            "username": "Laura",
-            "title": "Schlüsselbund",
-            "views": 8,
-            "DateOfLoss": "2024-05-01",
-            "LocationOfLoss": "Bibliothek Haus A",
-            "description": "Ein schwarzer Rucksack mit großem Logo.",
-            "hwrMail": "laura@hwr-berlin.de"
-        }
-    ]
+
+# Home-Seite
+@app.route("/home/")
+def index():
+    posts = db.session.execute(
+        db.select(Post)
+    ).scalars()
 
     return render_template(
         "home.html",
         posts=posts
     )
-#links: name der an html übergeben wird, rechts name der variable in python
-@app.route('/testmail')
-def testmail():
 
-    msg = Message(
-        subject="Flask-Mail Test",
-        recipients=["useto.test.169@gmail.com"]
+
+# Registrierung
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+
+    form = forms.CreateLogin()
+
+    if form.validate_on_submit():
+
+        existing_user = db.session.execute(
+            db.select(StandardUser).where(
+                StandardUser.hwr_mail == form.hwrmail.data
+            )
+        ).scalar_one_or_none()
+
+        if existing_user:
+            flash("Diese E-Mail wird bereits verwendet!", "warning")
+            return redirect(url_for("register"))
+
+        user = StandardUser(
+            hwr_mail=form.hwrmail.data,
+            passwort=form.passwort.data
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Account erstellt!", "success")
+        return redirect(url_for("login"))
+
+    return render_template(
+        "register.html",
+        form=form
     )
 
-    msg.body = "Hallo, diese Mail wurde über Flask-Mail versendet."
 
-    mail.send(msg)
+# Login
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
 
-    return "Mail verschickt!"
+    form = forms.CreateLogin()
+
+    if form.validate_on_submit():
+
+        user = db.session.execute(
+            db.select(StandardUser).where(
+                StandardUser.hwr_mail == form.hwrmail.data
+            )
+        ).scalar_one_or_none()
+
+        if user is None:
+            flash("User existiert nicht.", "warning")
+            return redirect(url_for("login"))
+
+        if user.passwort != form.passwort.data:
+            flash("Falsches Passwort!", "warning")
+            return redirect(url_for("login"))
+
+        return redirect(url_for("index"))
+
+    return render_template("login.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)

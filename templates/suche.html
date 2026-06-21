@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Suche-LostAndFound</title>
+
+{{ bootstrap.load_css() }}
+</head>
+<body>
+<div class="container mt-5" style="max-width: 450px;">
+<h2 class="text-center mb-4">Suche</h2>
+
+<form method="post">
+{{ form.hidden_tag() }}
+
+    
+   <div class="mb-3">
+   {{ form.suchbegriff.label(class="form.label") }}
+   {{ form.suchbegriff(class="form-control", placeholder="Suchen...") }}
+   </div>
+<button type="submit" class="btn btn-primary w-100">Suchen</button>
+</form>
+
+<main>
+
+{%for post in posts%}
+<div class="border rounded p-3 mb-2">
+<h5 class="mb-1"> {{ post.titel}} </h5>
+<p class="mb-0"> {{post.beschreibung}}</p>
+{%endfor%}
+</div>
+{{ bootstrap.load_js() }}
+</body>
+</html>
