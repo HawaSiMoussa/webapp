@@ -27,8 +27,8 @@ def start():
 
 
 # Home-Seite
-@app.route("/home/")
-def index():
+@app.route("/")
+def home():
 
    
     if "user_id" not in session:
@@ -78,8 +78,8 @@ def register():
 
 
 # Login
-@app.route('/home/', methods=['GET', 'POST'])
-def home():
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
 
     form = forms.CreateLogin()
 
