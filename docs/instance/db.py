@@ -5,11 +5,22 @@ from app import app
 db = SQLAlchemy()  
  
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
+from flask_sqlalchemy import SQLAlchemy  
+
+from app import app
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
+
+db = SQLAlchemy()  
+
 db.init_app(app)
 
 class Campus(db.Model):
 
+
     campus_id = db.Column(db.String,primary_key=True)
+
+    campus_id = db.Column( db.String,primary_key=True)
 
     ort = db.Column( db.String, nullable=False)
 
@@ -60,10 +71,8 @@ class Fundbuero(db.Model):
     campus = db.relationship("Campus",back_populates="fundbueros")
 
     posts = db.relationship("Post", back_populates="fundbuero")
-
-
+    
 class Post(db.Model):
-
 
     post_id = db.Column(db.Integer, primary_key=True )
 
@@ -92,5 +101,11 @@ class Post(db.Model):
     fundbuero = db.relationship( "Fundbuero", back_populates="posts")
 
     with app.app_context():
-     db.create_all()
+     user = db.relationship(
+    "StandardUser",
+    back_populates="posts"
+)
+fundbuero = db.relationship( "Fundbuero", back_populates="posts")
 
+with app.app_context():
+     db.create_all()
