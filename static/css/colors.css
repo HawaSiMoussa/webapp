@@ -1,8 +1,36 @@
 :root {
-  --color-main: rgb(247, 243, 233);      /* Beige Hintergrund */
-  --color-shadow: rgb(215, 205, 190);    /* Beige Schatten */
+  --color-main: rgb(247, 243, 233);
+  --color-shadow: rgb(215, 205, 190);
 
-  --color-highlight: rgb(13, 92, 99);    /* Dunkeltürkis */
-  --color-accent1: rgb(46, 196, 182);    /* Helltürkis */
-  --color-accent2: rgb(29, 78, 137);     /* Dunkelblau */
+  --color-highlight: rgb(13, 92, 99);
+  --color-accent1: rgb(46, 196, 182);
+  --color-accent2: rgb(29, 78, 137);
+}
+
+body {
+  background-color: var(--color-main) !important;
+}
+
+h1, h2, h3 {
+  color: var(--color-highlight) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-accent1) !important;
+  border-color: var(--color-accent1) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-highlight) !important;
+  border-color: var(--color-highlight) !important;
+}
+
+.btn-outline-secondary {
+  color: var(--color-accent2) !important;
+  border-color: var(--color-accent2) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-accent2) !important;
+  color: white !important;
 }
