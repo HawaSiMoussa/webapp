@@ -20,25 +20,6 @@ class Campus(db.Model):
 
 
 class StandardUser(db.Model):
-
-    __tablename__ = "standardUser"
-
-    user_id = db.Column(db.Integer, primary_key=True)
-
-    campus_id = db.Column( db.String,db.ForeignKey("campus.campus_id"))
-
-    benutzername = db.Column(db.String,nullable=False,unique=True)
-
-    campus_id = db.Column( db.String,primary_key=True)
-
-    ort = db.Column( db.String, nullable=False)
-
-    users = db.relationship("StandardUser",back_populates="campus" ) #points to the relationship attribute of the other class - this is optional but avoids errors
-
-    fundbueros = db.relationship( "Fundbuero", back_populates="campus")
-
-
-class StandardUser(db.Model):
     
     __tablename__ = "standardUser"
 
@@ -46,7 +27,10 @@ class StandardUser(db.Model):
 
     campus_id = db.Column( db.String, db.ForeignKey("campus.campus_id") )
 
-    benutzername = db.Column( db.String, nullable=False, unique=True)
+    name = db.Column( db.String)
+
+    benutzername = db.Column( db.String, unique=True)
+
     telefonnummer = db.Column(db.String)
 
     standardtext = db.Column(db.Text)
