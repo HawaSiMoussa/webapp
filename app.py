@@ -2,6 +2,8 @@ from flask import Flask, render_template, redirect, url_for, flash, session
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
+from flask import request 
+
 
 app = Flask(__name__)
 
@@ -33,10 +35,17 @@ def home():
     posts = db.session.execute(db.select(Post)).scalars()
     return render_template("home.html", posts=posts)
 
+from flask import request
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
     form = forms.RegisterForm()
+
+    print("REQUEST:", request.method)
+
+    if request.method == "POST":
+        print("FORM ERRORS:", form.errors)
 
     if form.validate_on_submit():
 
