@@ -115,11 +115,11 @@ db.select(StandardUser).where(StandardUser.hwr_mail == forms.hwrmail.data)
     ).scalar_one_or_none()
 if not user:
         flash ("User existiert nicht", "warning")
-        return redirect(url_for("login"))
+return redirect(url_for("login"))
 
 if user.passwort != form.passwort.data:
         flash ("Falsches Passwort!","warning")
-        return redirect(url_for("login"))
+return redirect(url_for("login"))
 
         flash("Login erfolgreich!","success")
         return redirect(url_for("index"))
@@ -142,7 +142,7 @@ def suche():
         ).scalars().all()
 
     if request.method == 'GET':
-        return render_template(
+          return render_template(
             'suche.html',
             form=form,
             posts=[]
@@ -192,7 +192,6 @@ def suche():
                 Post.titel.ilike(f"%{suchwort}%")
             )
         ).scalars().all()
-
     return render_template(
             'suche.html',
             form=form,
