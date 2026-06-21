@@ -1,24 +1,35 @@
+
 body {
-  background: var(--color-main);
+  background-color: var(--color-main) !important;
 }
 
 h1, h2, h3 {
-  color: var(--color-highlight);
+  color: var(--color-highlight) !important;
 }
 
-main {
+.btn-primary {
+  background-color: var(--color-accent1) !important;
+  border-color: var(--color-accent1) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-highlight) !important;
+  border-color: var(--color-highlight) !important;
+}
+
+.btn-outline-secondary {
+  color: var(--color-accent2) !important;
+  border-color: var(--color-accent2) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-accent2) !important;
+  color: white !important;
+}
+
+.container {
   background: white;
   border-radius: 15px;
   box-shadow: 0px 8px 20px 2px var(--color-shadow);
   padding: 25px;
-}
-
-.btn-success {
-  background: var(--color-accent1);
-  border-color: var(--color-accent1);
-}
-
-.btn-success:hover {
-  background: var(--color-highlight);
-  border-color: var(--color-highlight);
 }
