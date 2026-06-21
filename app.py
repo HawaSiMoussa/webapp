@@ -50,7 +50,7 @@ def login():
             return render_template('login.html',form=form)
     
     else: 
-            if form.validate():
+            if form.validate_on_submit():
                flash('Login war erfolgreich!', 'success')  # (5.)
                    
             else: 
@@ -58,23 +58,26 @@ def login():
            
             return redirect(url_for('login'))
 
-@app.route('/suche/', methods=['GET', 'POST']) 
+@app.route('/suche/', methods=['GET', 'POST'])
 def suche():
-    form = forms.Suchleiste() 
-    posts = []
+    form = forms.Suchleiste()
+    posts=[]
+        
 
-if request.method == 'GET':
-     return render_template('suche.html', form=forms, posts=[])
- 
-if forms.validate_on_submit():
-         suchwort = forms.suchbegriff.data
+    if form.validate_on_submit():
+        suchwort = form.suchbegriff.data
 
-posts = db.session.execute(
-     db.select(Post).where(
-          Post.titel.ilike(f"%{suchwort}")
-     )
-        ).scalars() 
-return render_template('suche.html',form=forms,posts=posts) 
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.ilike(f"%{suchwort}%")
+            )
+        ).scalars().all()
 
-flash('Suche ist nicht korrekt', 'warning') 
-return redirect(url_for('suche'))
+        return render_template(
+            'suche.html',
+            form=form,
+            posts=posts
+        )
+
+    flash('Suche ist nicht korrekt', 'warning')
+    return redirect(url_for('suche'))

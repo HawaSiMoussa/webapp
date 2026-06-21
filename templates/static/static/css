@@ -1,0 +1,15 @@
+header {
+    padding: 15px;
+    border-bottom: 1px solid;
+}
+main {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+}
+.left {
+    width: 65%
+}
+.right{
+    width: 35%;
+}

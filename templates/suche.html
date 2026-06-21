@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Suche-LostAndFound</title>
 
 {{ bootstrap.load_css() }}
+<link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-light bg-light px-3">
-<a class="navbar-brand" href="/">LostAndFound</a>
-<form class="d-flex" method="post"> 
-{{ form.hidden_tag() }}
-{{ form.suchbegriff(class="form-control me-2", placeholder="Suchen...")}}
-<button class="btn btn-primary" type="submit">
-Suchen
-</button>
-</form>
-<a class="btn btn-outline-secondary"href="/">
-☰
-</a>
+<header>
+<h1>LostAndFound</h1>
+<nav>
+<a href="/">Home</a>
+<a href="/suche"> Suche</a>
 </nav>
+
+<form method="post">
+{{ form.hidden_tag() }}
+{{ form.suchbegriff(class="form-control", placeholder="Suchen...")}}
+<button type="submit">Suchen</button>
+</form>
+</header>
+<main>
+<div class="left">
+{%for post in posts%}
+<div>
+<h3> {{post.titel}}</h3>
+<p> {{post.beschreibung}}</p>
+</div>
+{%endfor%}
+</div>
+<div class="right">
+</div>
+</main>
 {{ bootstrap.load_js() }}
 </body>
 </html>
