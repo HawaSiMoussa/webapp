@@ -53,7 +53,7 @@ class CreateLogin(FlaskForm):
 
     campus = SelectField(
         "Campus",
-        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg")],
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
         validators=[InputRequired()]
     )
 
@@ -78,7 +78,7 @@ class RegisterForm(FlaskForm):
 
     campus = SelectField(
         "Campus",
-        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg")],
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
         validators=[InputRequired()]
     )
 
