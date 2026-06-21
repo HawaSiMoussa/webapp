@@ -114,7 +114,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-
+#Registrieren 1.1
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
