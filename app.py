@@ -95,14 +95,9 @@ def login():
             flash("Falsches Passwort!", "warning")
             return redirect(url_for("login"))
 
-        flash("Login erfolgreich!", "success")
         return redirect(url_for("index"))
 
-    return render_template(
-        "login.html",
-        form=form
-    )
-
+    return render_template("login.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
