@@ -72,6 +72,7 @@ def register():
 
     return render_template("register.html", form=form)
 
+
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
     form = forms.ContactForm()
@@ -81,11 +82,13 @@ def contact():
         return redirect(url_for("home"))
     return render_template("contact.html", form=form)
 
+
 @app.route("/create_post", methods=["GET", "POST"])
 def create_post():
     if "user_id" not in session:
         return redirect(url_for("login"))
     return render_template("create_post.html")
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
