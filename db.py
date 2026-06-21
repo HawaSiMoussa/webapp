@@ -1,25 +1,25 @@
 
 from flask_sqlalchemy import SQLAlchemy  
 
-from app import app
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
-
-db = SQLAlchemy()  
-db.init_app(app)
+db = SQLAlchemy() #create SQLAlchemy object to be able to use it in other files, e.g. to define the data model in db.py
 
 class Campus(db.Model):
+
+    _tablename_ = "campus"
 
     campus_id = db.Column( db.String,primary_key=True)
 
     ort = db.Column( db.String, nullable=False)
 
-    users = db.relationship("StandardUser",back_populates="campus" )
+    users = db.relationship("StandardUser",back_populates="campus" ) #points to the relationship attribute of the other class - this is optional but avoids errors
 
     fundbueros = db.relationship( "Fundbuero", back_populates="campus")
 
 
 class StandardUser(db.Model):
+    
+    _tablename_ = "standardUser"
 
     user_id = db.Column( db.Integer, primary_key=True )
 
@@ -39,17 +39,12 @@ class StandardUser(db.Model):
 
     campus = db.relationship("Campus",back_populates="users")
 
-<<<<<<< HEAD
-posts = db.relationship(
-    "Post",
-    back_populates="user"
-)
-=======
     posts = db.relationship("Post",back_populates="user")
->>>>>>> 69012f8b8a3269225c3627e6b86f50f43439b798
 
 
 class Fundbuero(db.Model):
+
+    _tablename_ = "fundbuero"
 
     fundbuero_id = db.Column(db.Integer,primary_key=True)
 
@@ -72,10 +67,11 @@ class Fundbuero(db.Model):
 
 class Post(db.Model):
 
+    _tablename_ = "post"
 
     post_id = db.Column(db.Integer, primary_key=True )
 
-    user_id = db.Column(db.Integer,db.ForeignKey("standarduser.user_id") )
+    user_id = db.Column(db.Integer,db.ForeignKey("standardUser.user_id") )
 
     fundbuero_id = db.Column( db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
 
@@ -94,18 +90,3 @@ class Post(db.Model):
     beschreibung = db.Column(db.Text)
 
     status = db.Column( db.String, default="laufend")
-
-<<<<<<< HEAD
-<user = db.relationship(
-    "StandardUser",
-    back_populates="posts"
-)
-=======
-    user = db.relationship("StandardUser",back_populates="posts")
->>>>>>> 69012f8b8a3269225c3627e6b86f50f43439b798
-
-    fundbuero = db.relationship( "Fundbuero", back_populates="posts")
-
-    with app.app_context():
-     db.create_all()
-
