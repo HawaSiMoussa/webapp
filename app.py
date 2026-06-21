@@ -30,7 +30,7 @@ def index():
 
     return render_template("home.html", posts=posts)
 
-#Kontaktformular
+#Kontaktformular(Fatme)
 @app.route('/contact/', methods=['GET', 'POST'])
 def contact():
 
@@ -47,8 +47,8 @@ def contact():
             url_for('contact')
         )
       
-      
-#Post erstellem
+
+#Post erstellen(Fatme)
 @app.route('/create/', methods=['GET', 'POST'])
 def create_post():
 
