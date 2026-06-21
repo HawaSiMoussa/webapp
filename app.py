@@ -63,6 +63,7 @@ def register():
 
     return render_template("register.html", form=form)
 
+#Kontaktformular
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
     form = forms.ContactForm()
@@ -72,11 +73,56 @@ def contact():
         return redirect(url_for("home"))
     return render_template("contact.html", form=form)
 
-@app.route("/create_post", methods=["GET", "POST"])
+#Post erstellen(Fatme)
+@app.route('/create/', methods=['GET', 'POST'])
 def create_post():
-    if "user_id" not in session:
-        return redirect(url_for("login"))
-    return render_template("create_post.html")
+
+    form = forms.CreatePostForm()
+
+    if request.method == 'GET':
+
+        return render_template(
+            'create_post.html',
+            form=form
+        )
+
+    else:
+
+        if form.validate():
+            
+            aktiver_post = db.session.execute(
+            db.select(Post).where(
+            Post.user_id == session["user_id"],
+            Post.status == "laufend"
+            )
+         ).scalar_one_or_none()
+
+        if aktiver_post:
+         flash("Du hast bereits eine aktive Suchanzeige.","warning")
+         return redirect(url_for("create_post"))
+
+    post = Post(
+                user_id=1,  
+                titel=form.title.data,
+                beschreibung=form.description.data,
+                verlustdatum=form.lost_date.data,
+                verlustort=form.lost_area.data,
+                status="laufend"
+            )
+    
+db.session.add(post)
+db.session.commit()
+
+flash('Post erfolgreich erstellt.', 'success')
+  
+else:
+
+    print(form.errors)
+
+    if 'lost_date' in form.errors:
+        flash(form.errors['lost_date'][0], 'warning')
+
+    return redirect(url_for('create_post'))
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
