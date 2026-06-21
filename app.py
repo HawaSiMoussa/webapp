@@ -60,6 +60,8 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        session["user_id"] = user.user_id
+
         flash("Account erstellt!", "success")
         return redirect(url_for("contact"))
 
@@ -84,6 +86,7 @@ def contact():
         user.telefonnummer = form.phone_number.data
 
         db.session.commit()
+        
 
         flash("Daten erfolgreich gespeichert!", "success")
 
