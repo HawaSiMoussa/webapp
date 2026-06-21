@@ -102,7 +102,7 @@ def contact():
     )
 
 #Post erstellen(Fatme)
-@app.route("/create_post", methods=["GET", "POST"])
+@app.route("/create/", methods=["GET", "POST"])
 def create_post():
 
     form = forms.CreatePostForm()
