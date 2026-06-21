@@ -99,10 +99,27 @@ def login():
 
     return render_template("login.html", form=form)
 
+#Profil anzeigen
 @app.route('/profile/')
 def profile():
     user = db.session.get(StandardUser, session["user.id"] ) 
     return render_template("profil.html", user=user)
+
+#Profil bearbeiten
+@app.route('/profile/edit/', methods=['GET', 'POST'])
+def edit_profile():
+    user = db.session.get(StandardUser, session["user.id"])
+   user = db.session.get(StandardUser, session["user.id"])
+   
+   if request.method == "POST":
+        user.name = request.form["name"]
+        user.telefonnummer = request.form["telefonnummer"]
+        user.standardtext = request.form["standardtext"]
+        user.campus_id = request.form["campus_id"]
+        db.session.commit()
+        flash("Profil aktualisiert!", "success")
+    return render_template("profile_edit.html", user=user)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
