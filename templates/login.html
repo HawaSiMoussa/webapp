@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <title>Login - LostAndFound</title>
+{{ bootstrap.load_css() }}
+</head>
+ <body>
+ <div class="container mt-5" style="max-width: 450px;">
+ <h2 class="text-center mb-4">Login</h2>
+ <form method="post"> {{ form.hidden_tag() }}
+ <div class="mb-3">
+ {{ form.campus.label(class="form-label") }}
+ {{ form.campus(class="form-select") }}
+ </div>
+<div class="mb-3">
+{{ form.hwrmail.label(class="form-label") }}
+ {{ form.hwrmail(class="form-control")}}
+ {% for error in form.hwrmail.errors %}
+ <div class="text-danger">
+ {{error}}
+ </div>
+ {% endfor %}
+ </div>
+ <div class="mb-3">
+{{ form.passwort.label(class="form-label")}}
+ {{ form.passwort(class="form-control")}}
+ {%for error in form.passwort.errors %}
+ <div class="text-danger">
+ {{ error }}
+ </div>
+ {% endfor%}
+ </div>
+ <div class="mb-3">
+{{ form.benachrichtigung(class="form-check-input") }}
+ {{ form.benachrichtigung.label(class="form-check-label")}}
+ </div>
+ <button type="submit" class="btn btn-primary w-100"> 
+ Login 
+ </button>
+ </form>
+ <div>
+ {{ bootstrap.load_js()}}
+ </body>
+ </html>
