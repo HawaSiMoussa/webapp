@@ -121,18 +121,17 @@ if user.passwort != form.passwort.data:
         flash ("Falsches Passwort!","warning")
 return redirect(url_for("login"))
 
-        flash("Login erfolgreich!","success")
-        return redirect(url_for("index"))
+flash("Login erfolgreich!","success")
+return redirect(url_for("index"))
 
-        return render_template("login-html", form=forms)
+return render_template("login-html", form=forms)
 
 @app.route('/suche/', methods=['GET', 'POST'])
 def suche():
-    form = forms.Suchleiste()
+form = forms.Suchleiste()
+posts=[]
 
-    posts=[]
-
-    if form.validate_on_submit():
+if form.validate_on_submit():
         suchwort = form.suchbegriff.data
 
         posts = db.session.execute(
@@ -161,7 +160,6 @@ def suche():
             form=form,
             posts=posts
         )
-
 @app.route('/suche/', methods=['GET', 'POST'])
 def suche():
     form = forms.Suchleiste()
