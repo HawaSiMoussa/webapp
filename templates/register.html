@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,6 +8,15 @@
 </head>
 
 <body>
+<div class="container mt-3">
+
+    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
+     width="100">
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+    {% block CONTENT %}
+    {% endblock %}
+
+</div>
 
 <div class="container mt-5" style="max-width: 450px;">
 
