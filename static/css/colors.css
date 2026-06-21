@@ -1,8 +1,8 @@
 :root {
-  --color-main: rgb(235, 250, 248);
-  --color-shadow: rgb(180, 220, 215);
+  --color-main: rgb(247, 243, 233);      /* Beige Hintergrund */
+  --color-shadow: rgb(215, 205, 190);    /* Beige Schatten */
 
-  --color-highlight: rgb(13, 92, 99);
-  --color-accent1: rgb(46, 196, 182);
-  --color-accent2: rgb(29, 78, 137);
+  --color-highlight: rgb(13, 92, 99);    /* Dunkeltürkis */
+  --color-accent1: rgb(46, 196, 182);    /* Helltürkis */
+  --color-accent2: rgb(29, 78, 137);     /* Dunkelblau */
 }

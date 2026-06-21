@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
-    BOOTSTRAP_BOOTSWATCH_THEME='pulse',
+    #BOOTSTRAP_BOOTSWATCH_THEME='pulse',
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
