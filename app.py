@@ -1,5 +1,4 @@
-import os
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 from db import db, Post, StandardUser
 import forms
@@ -11,6 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lostandfound.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 bootstrap = Bootstrap5(app)
+
 db.init_app(app)
 
 with app.app_context():
@@ -27,8 +27,8 @@ members = [
 
 tasks = [
     "Hawa: Benutzeroberfläche Login button posts Darstellung mit HTML, CSS",
-    "Fatme: Git hub Repo's ( pull commit push und aufgaben zusammenfügen), Organisieren/dokumentieren der verschiedenen Ideen",
-    "Sarah: Datenbankverwaltung (Nutzer und Beiträge), sowie Analyse geplanter Funktionen bezüglich technischer Machbarkeit und Aufwand"
+    "Fatme: Git hub Repo's (pull commit push und Aufgaben zusammenfügen), Organisieren/Dokumentieren der verschiedenen Ideen",
+    "Sarah: Datenbankverwaltung (Nutzer und Beiträge), Analyse geplanter Funktionen"
 ]
 
 
@@ -46,9 +46,9 @@ def index():
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
-    form = forms.RegisterForm()
+    form = forms.CreateLogin()
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
 
         existing_user = db.session.execute(
             db.select(StandardUser).where(
@@ -62,7 +62,7 @@ def register():
 
         user = StandardUser(
             hwr_mail=form.hwrmail.data,
-            passwort=form.password.data
+            passwort=form.passwort.data
         )
 
         db.session.add(user)
@@ -81,6 +81,16 @@ def login():
 
     if form.validate_on_submit():
 
+        if not form.hwrmail.data.endswith(
+            (
+                "@hwr-berlin.de",
+                "@stud.hwr-berlin.de",
+                "@dot.hwr-berlin.de"
+            )
+        ):
+            flash("Bitte eine gültige HWR-Mail angeben.", "warning")
+            return redirect(url_for("register"))
+
         user = db.session.execute(
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
@@ -88,7 +98,7 @@ def login():
         ).scalar_one_or_none()
 
         if not user:
-            flash("User existiert nicht", "warning")
+            flash("User existiert nicht.", "warning")
             return redirect(url_for("login"))
 
         if user.passwort != form.passwort.data:
@@ -105,7 +115,6 @@ def login():
 def suche():
 
     form = forms.Suchleiste()
-
     posts = []
 
     if form.validate_on_submit():
@@ -119,7 +128,7 @@ def suche():
         ).scalars().all()
 
     return render_template(
-        'suche.html',
+        "suche.html",
         form=form,
         posts=posts
     )
