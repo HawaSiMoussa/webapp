@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
-
+import os
 
 app = Flask(__name__)
 
@@ -19,6 +19,12 @@ bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
+
+
+@app.route("/")
+def start():
+    return redirect(url_for("login"))
+
 @app.route("/")
 def home():
     if "user_id" not in session:
@@ -62,6 +68,9 @@ def register():
         form=form
     )
 
+@app.route("/create_post", methods=["GET", "POST"])
+def create_post():
+    return render_template("create_post.html")
 
 # Login
 @app.route('/login/', methods=['GET', 'POST'])
@@ -89,7 +98,7 @@ def login():
         session["user_id"] = user.user_id
 
         flash("Login erfolgreich!", "success")
-        return redirect(url_for("index"))
+        return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
 
