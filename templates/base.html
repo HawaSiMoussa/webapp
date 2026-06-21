@@ -13,13 +13,20 @@
     <link rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}">
 
-<link rel="stylesheet"
+   <link rel="stylesheet"
       href="{{ url_for('static', filename='css/color.css') }}">
-      
 </head>
 
 <body>
 
+<div class="container mt-3">
+
+    
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+    {% block CONTENT %}
+    {% endblock %}
+
+</div>
 
 {{ bootstrap.load_js() }}
 
