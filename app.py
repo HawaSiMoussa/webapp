@@ -61,6 +61,7 @@ def login():
 @app.route('/suche/', methods=['GET', 'POST'])
 def suche():
     form = forms.Suchleiste()
+<<<<<<< HEAD
     posts=[]
         
 
@@ -73,6 +74,25 @@ def suche():
             )
         ).scalars().all()
 
+=======
+
+    if request.method == 'GET':
+        return render_template(
+            'suche.html',
+            form=form,
+            posts=[]
+        )
+
+    if form.validate_on_submit():
+        suchwort = form.suchbegriff.data
+
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.ilike(f"%{suchwort}%")
+            )
+        ).scalars()
+
+>>>>>>> 66e986dc800d49d1f15ba7cf26a9ec6a9cadf00e
         return render_template(
             'suche.html',
             form=form,
@@ -80,4 +100,8 @@ def suche():
         )
 
     flash('Suche ist nicht korrekt', 'warning')
+<<<<<<< HEAD
     return redirect(url_for('suche'))
+=======
+    return redirect(url_for('suche'))
+>>>>>>> 66e986dc800d49d1f15ba7cf26a9ec6a9cadf00e
