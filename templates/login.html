@@ -1,23 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Login - LostAndFound</title>
-{{ bootstrap.load_css() }}
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block TITLE %}
+Login
+{% endblock %}
+
+{% block CONTENT %}
+
+
+<div class="text-center mb-4">
+    <img src="{{ url_for('static', filename='images/LogoLostAndFound.jpeg') }}"
+         width="180">
+</div>
+
+
 <div class="container mt-5" style="max-width: 450px;">
 
     <h2 class="text-center mb-4">Login</h2>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endwith %}
 
     <form method="post">
 
@@ -31,28 +29,17 @@
         <div class="mb-3">
             {{ form.hwrmail.label(class="form-label") }}
             {{ form.hwrmail(class="form-control") }}
-
-            {% for error in form.hwrmail.errors %}
-                <div class="text-danger">
-                    {{ error }}
-                </div>
-            {% endfor %}
         </div>
 
         <div class="mb-3">
             {{ form.passwort.label(class="form-label") }}
             {{ form.passwort(class="form-control") }}
-
             {% for error in form.passwort.errors %}
                 <div class="text-danger">
                     {{ error }}
                 </div>
             {% endfor %}
-        </div>
 
-        <div class="mb-3">
-            {{ form.benachrichtigung(class="form-check-input") }}
-            {{ form.benachrichtigung.label(class="form-check-label") }}
         </div>
 
         <button type="submit" class="btn btn-primary w-100">
@@ -72,6 +59,4 @@
 
 </div>
 
-{{ bootstrap.load_js() }}
-</body>
-</html>
+{% endblock %}

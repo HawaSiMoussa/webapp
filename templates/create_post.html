@@ -58,6 +58,15 @@ Verlust melden
 
 </div>
 
+<div class="container mt-3">
+
+    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
+     width="100">
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+    {% block CONTENT %}
+    {% endblock %}
+
+</div>
 
 <form action="{{ url_for('create_post') }}" method="post">
 

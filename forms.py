@@ -51,28 +51,53 @@ from wtforms.validators import InputRequired, Email, Length, Regexp
 
 class CreateLogin(FlaskForm):
 
+    campus = SelectField(
+        "Campus",
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
+        validators=[InputRequired()]
+    )
 
-  campus = SelectField(
-  "Campus",
-  choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")],
-  validators=[InputRequired()]
- )
+    hwrmail = EmailField(
+        "HWR-Mail",
+        validators=[InputRequired(), Email()]
+    )
 
-  hwrmail = EmailField(
-  "Hwr-Mail",
-  validators= [InputRequired(),Email(),
-               ]
-)
+    passwort = PasswordField(
+        "Passwort",
+        validators=[InputRequired(), Length(min=8)]
+    )
 
-  passwort = PasswordField(
-  "passwort", 
-  validators=[InputRequired(), Length(min=8)]
- )
+    benachrichtigung = BooleanField(
+        "Benachrichtigungen erlauben"
+    )
 
-  benachrichtigung = BooleanField("Hwr-Mail Benachrichtigungen erlauben", 
-)
-submit = SubmitField("Login")
+    submit = SubmitField("Login")
 
+
+class RegisterForm(FlaskForm):
+
+    campus = SelectField(
+        "Campus",
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
+        validators=[InputRequired()]
+    )
+
+    hwrmail = EmailField(
+        "HWR-Mail",
+        validators=[InputRequired(), Email()]
+    )
+
+    passwort = PasswordField(
+        "Passwort",
+        validators=[InputRequired(), Length(min=8)]
+    )
+
+    benachrichtigung = BooleanField(
+        "Benachrichtigung erlauben"
+    )
+
+    submit = SubmitField("Registrieren")
+    
 class Suchleiste(FlaskForm):
   suchbegriff = StringField( "Suchbegriff", 
        validators=[InputRequired()]
