@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
@@ -98,6 +98,11 @@ def login():
         return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
+
+@app.route('/profile/')
+def profile():
+    user = db.session.get(StandardUser, session["user.id"] ) 
+    return render_template("profil.html", user=user)
 
 if __name__ == "__main__":
     app.run(debug=True)
