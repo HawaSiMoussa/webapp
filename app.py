@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
+
 
 app = Flask(__name__)
 
@@ -28,14 +29,17 @@ def start():
 # Home-Seite
 @app.route("/home/")
 def index():
+
+   
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
     posts = db.session.execute(
         db.select(Post)
     ).scalars()
 
-    return render_template(
-        "home.html",
-        posts=posts
-    )
+    return render_template("home.html", posts=posts)
 
 
 # Registrierung
@@ -95,9 +99,18 @@ def login():
             flash("Falsches Passwort!", "warning")
             return redirect(url_for("login"))
 
+       
+        session["user_id"] = user.user_id
+
+        flash("Login erfolgreich!", "success")
         return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
 
+@app.route("/logout/")
+def logout():
+    session.clear()
+    flash("Du bist ausgeloggt!", "info")
+    return redirect(url_for("login"))
 if __name__ == "__main__":
     app.run(debug=True)
