@@ -46,7 +46,7 @@ def index():
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
-    form = forms.CreateLogin()
+    form = forms.RegisterForm()
 
     if form.validate_on_submit():
 
