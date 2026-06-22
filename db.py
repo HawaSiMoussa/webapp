@@ -1,11 +1,11 @@
-
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date, timedelta
+db = SQLAlchemy()
+ 
 
 db = SQLAlchemy()
-from flask_sqlalchemy import SQLAlchemy  
-
-
-db = SQLAlchemy() #create SQLAlchemy object to be able to use it in other files, e.g. to define the data model in db.py
+migrate = Migrate()
 
 class Campus(db.Model):
 
@@ -39,20 +39,12 @@ class StandardUser(db.Model):
 
     hwr_mail = db.Column(db.String, unique=True,nullable=False ) 
 
-    ist_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     campus = db.relationship("Campus",back_populates="users")
 
     posts = db.relationship( "Post",back_populates="user")
-    hwr_mail = db.Column(db.String,unique=True, nullable=False)
-
-    ist_admin = db.Column(db.Boolean,default=False)
-
-    campus = db.relationship("Campus",back_populates="users")
-
-    posts = db.relationship("Post",back_populates="user")
-
-
+   
 class Fundbuero(db.Model):
 
     __tablename__ = "fundbuero"
@@ -69,12 +61,13 @@ class Fundbuero(db.Model):
 
     email = db.Column(db.String)
 
+    meldedatum = db.Column(db.Date,default=date.today)
+
+    verfallsdatum = db.Column(db.Date)
+
     standardtext = db.Column(db.Text)
 
     campus = db.relationship("Campus",back_populates="fundbueros")
-
-
-    posts = db.relationship("Post",back_populates="fundbuero")
 
     posts = db.relationship("Post", back_populates="fundbuero")
 
@@ -91,6 +84,7 @@ class Post(db.Model):
     fundbuero_id = db.Column(db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
 
     titel = db.Column(db.String,nullable=False)
+    
     post_id = db.Column(db.Integer, primary_key=True )
 
     user_id = db.Column(db.Integer,db.ForeignKey("standardUser.user_id") )
@@ -98,7 +92,6 @@ class Post(db.Model):
     fundbuero_id = db.Column( db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
 
     titel = db.Column(db.String,nullable=False )
-
 
     meldedatum = db.Column(db.Date)
 
@@ -119,10 +112,4 @@ class Post(db.Model):
     user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship("Fundbuero",back_populates="posts")
-    status = db.Column( db.String, default="laufend")
-
-    views = db.Column(db.Integer, default=0 )
-
-    user = db.relationship("StandardUser",back_populates="posts")
-
-    fundbuero = db.relationship( "Fundbuero", back_populates="posts")
+    

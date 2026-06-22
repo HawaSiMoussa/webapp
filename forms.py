@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-
-from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.fields import StringField, TextAreaField, DateField, SubmitField, SelectField, EmailField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Length, ValidationError, Email
 from datetime import date
 
 # Kontaktformular 1.2
@@ -46,36 +45,84 @@ class CreatePostForm(FlaskForm):
             raise ValidationError(
                 "Verlustdatum darf nicht in der Zukunft liegen."
             )
-from wtforms.fields import SelectField, EmailField, PasswordField, BooleanField, SubmitField,StringField
-from wtforms.validators import InputRequired, Email, Length, Regexp
+
 
 class CreateLogin(FlaskForm):
 
+    campus = SelectField(
+        "Campus",
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
+        validators=[InputRequired()]
+    )
 
-  campus = SelectField(
-  "Campus",
-  choices=[("Schöneberg","Schöneberg"),("Lichtenberg","Lichtenberg")],
-  validators=[InputRequired()]
- )
+    hwrmail = EmailField(
+        "HWR-Mail",
+        validators=[InputRequired(), Email()]
+    )
 
-  hwrmail = EmailField(
-  "Hwr-Mail",
-  validators= [InputRequired(),Email(),
-               ]
-)
+    passwort = PasswordField(
+        "Passwort",
+        validators=[InputRequired(), Length(min=8)]
+    )
 
-  passwort = PasswordField(
-  "passwort", 
-  validators=[InputRequired(), Length(min=8)]
- )
+    benachrichtigung = BooleanField(
+        "Benachrichtigungen erlauben"
+    )
 
-  benachrichtigung = BooleanField("Hwr-Mail Benachrichtigungen erlauben", 
-)
-submit = SubmitField("Login")
+    submit = SubmitField("Login")
 
+
+class RegisterForm(FlaskForm):
+
+    campus = SelectField(
+        "Campus",
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
+        validators=[InputRequired()]
+    )
+
+    hwrmail = EmailField(
+        "HWR-Mail",
+        validators=[InputRequired(), Email()]
+    )
+
+    passwort = PasswordField(
+        "Passwort",
+        validators=[InputRequired(), Length(min=8)]
+    )
+
+    benachrichtigung = BooleanField(
+        "Benachrichtigung erlauben"
+    )
+
+    submit = SubmitField("Registrieren")
+    
 class Suchleiste(FlaskForm):
   suchbegriff = StringField( "Suchbegriff", 
        validators=[InputRequired()]
   )
   
-submit = SubmitField("Suchen")
+  submit = SubmitField("Suchen")
+
+class EditProfileForm(FlaskForm):
+    
+    benutzername = StringField( "Benutzername", validators=[InputRequired()])
+
+    name = StringField(
+        "Name",
+        validators=[InputRequired()]
+    )
+
+    telefonnummer = StringField(
+        "Telefonnummer"
+    )
+
+    campus_id = SelectField(
+        "Campus",
+        choices=[
+            ("Schöneberg", "Schöneberg"),
+            ("Lichtenberg", "Lichtenberg"),
+            ("Startup Incubator", "Startup Incubator")
+        ]
+    )
+
+    submit = SubmitField("Änderungen speichern")

@@ -1,81 +1,36 @@
-
-{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_messages %}
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>LostAndFound</title>
-
-    {{ bootstrap.load_css() }}
-    <!--We donâ€™t hard-code a link to the Bootstrap CSS file, but rather let Bootstrap-Flask do this.
-The CSS file is pulled from an internet resource hosted by Bootstrap.-->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!--we dont't need a link for bootstrap css to the style sheet but we need it for bootstrap icons-->
-</head>
-
-<body>
-
-<div class="container mt-4">
 
 
-<!-- Navbar bzw collapse menü -->
-<!-- Menüinhalt -->
-<nav class="navbar border-bottom mb-3">
+{% block TITLE %}
+LostAndFound
+{% endblock %}
 
-    <div class="container-fluid">
+{% block CONTENT %}
 
-        <a class="navbar-brand" href="{{ url_for('index') }}">
-            LostAndFound
-        </a>
+<form method="POST" class="mb-4">
 
-        <button
-            class="btn btn-outline-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarToggleExternalContent">
+    {{ form.hidden_tag() }}
 
-            <i class="bi bi-list"></i>
+    <div class="input-group">
 
-        </button>
+        {{ form.suchbegriff(
+            class="form-control",
+            placeholder="Suchen..."
+        ) }}
+
+        {{ form.submit(
+            class="btn btn-primary"
+        ) }}
 
     </div>
 
-</nav>
+</form>
 
-<div class="d-flex justify-content-end">
-
-    <div class="collapse" id="navbarToggleExternalContent">
-
-        <div class="border rounded p-3" style="width:300px;">
-            <a <a href="{{ url_for('index') }}" class="d-block mb-2">
-                <i class="bi bi-house"></i> Home
-            </a>
-
-            <a href="#" class="d-block mb-2">
-                <i class="bi bi-person"></i> Profil
-            </a>
-
-            <a href="{{ url_for('create_post') }}" class="d-block mb-2">
-                <i class="bi bi-plus-lg"></i> Post erstellen
-            </a>
-
-            <a href="#" class="d-block">
-                <i class="bi bi-exclamation-circle"></i> Hilfe & Kontakt
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
 
     <!-- Posts -->
     {% for post in posts %}
-
+        {%if post.user.campus_id == user.campus_id%}
     <div class="border rounded p-3 mb-4">
 
         <!-- Username -->
@@ -105,7 +60,14 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
             </button>
 
             <!-- Nachricht -->
-          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Bezüglich: ' ~ post.titel)|urlencode }}"
+          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Bezüglich: ' ~ post.titel)|urlencode }}
+          &body={{('Hallo,' ~'\n\n' ~
+           'ich habe möglciherweise Ihren verlorenen Gegenstand gefunden' ~ '\n\n' ~
+           'Gegenstand: ' ~post.titel ~'\n' ~
+           'Verlustort: ' ~ post.verlustort ~ '\n\n' ~
+            'Bitte melden Sie sich bei mir.' ~ '\n\n' ~
+            'Viele Grüße'
+            )|urlencode }}">
    class="btn btn-outline-primary btn-sm border-0">
     <i class="bi bi-envelope"></i>
 </a>
@@ -148,6 +110,14 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
                     {{ post.verlustdatum}}
                 </p>
 
+            <small>
+             {{ post.meldedatum.strftime('%d.%m.%Y') }}
+            </small>
+
+            <small class="text-danger">
+             {{ post.verfallsdatum.strftime('%d.%m.%Y') }}
+            </small>
+
                 <button
                     class="btn btn-outline-secondary btn-sm w-auto"
                     type="button"
@@ -164,11 +134,9 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
     </div>
 
+
+        {%endif%}
+
     {% endfor %}
 
-</div>
-
-{{ bootstrap.load_js() }} <!--The same applies to the Bootstrap JavaScript code, which by convention is placed right before the </body> end tag.-->
-
-</body>
-</html>
+{% endblock %}

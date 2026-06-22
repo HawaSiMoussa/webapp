@@ -4,11 +4,18 @@
 Profil
 {% endblock %}
 
+
+
 {% block CONTENT %}
+
+
 
 <h2 class="mb-4">
     <i class="bi bi-person-circle"></i>
     Profil
+     <a href="{{ url_for('edit_profile') }}">
+            <i class="bi bi-pencil ms-2"  style="font-size: 1.4rem;"></i>
+            </a>
 </h2>
 
 <div class="border rounded p-4">
@@ -20,6 +27,7 @@ Profil
 
         <div class="col">
             {{ user.benutzername }}
+            
         </div>
     </div>
 
@@ -30,7 +38,7 @@ Profil
 
         <div class="col">
             {{ user.name }}
-            <i class="bi-bi-pencil ms-2"></i>
+           
         </div>
     </div>
 
@@ -51,7 +59,8 @@ Profil
 
         <div class="col">
             {{ user.telefonnummer }}
-            <i class="bi-bi-pencil ms-2"></i>
+
+        
         </div>
     </div>
 
@@ -62,8 +71,16 @@ Profil
 
         <div class="col">
             {{ user.campus_id }}
-            <i class="bi-bi-pencil ms-2"></i>
+
+         
         </div>
+        <a href="{{ url_for('logout') }}"
+            class="btn btn-danger mt-3">
+
+            <i class="bi bi-box-arrow-right"></i>
+         Ausloggen
+
+        </a>
     </div>
 
 </div>
