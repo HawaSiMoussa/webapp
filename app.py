@@ -214,6 +214,7 @@ def edit_profile():
     form = forms.EditProfileForm(obj=user)
     if form.validate_on_submit():
 
+        user.benutzername = form.benutzername.data
         user.name = form.name.data
         user.telefonnummer = form.telefonnummer.data
         user.campus_id = form.campus_id.data
