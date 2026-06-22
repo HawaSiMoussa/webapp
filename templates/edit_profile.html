@@ -10,6 +10,10 @@
 <form method="POST">
 
     {{ form.csrf_token }}
+     <div class="mb-3">
+        {{ form.benutzername.label }}
+        {{ form.benutzername(class="form-control") }}
+    </div>
 
     <div class="mb-3">
         {{ form.name.label }}

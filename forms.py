@@ -105,17 +105,13 @@ class Suchleiste(FlaskForm):
   
 submit = SubmitField("Suchen")
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, SubmitField
-from wtforms.validators import DataRequired
-
-
-
 class EditProfileForm(FlaskForm):
+    
+    benutzername = StringField( 'Benutzername', validators=[DataRequired()}])
 
     name = StringField(
         "Name",
-        validators=[DataRequired()]
+        validators=[InputRequired()]
     )
 
     telefonnummer = StringField(
