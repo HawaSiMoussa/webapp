@@ -85,6 +85,14 @@ LostAndFound
                     {{ post.verlustdatum}}
                 </p>
 
+            <small>
+             {{ post.meldedatum.strftime('%d.%m.%Y') }}
+            </small>
+
+            <small class="text-danger">
+             {{ post.verfallsdatum.strftime('%d.%m.%Y') }}
+            </small>
+
                 <button
                     class="btn btn-outline-secondary btn-sm w-auto"
                     type="button"

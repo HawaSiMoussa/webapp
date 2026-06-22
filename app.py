@@ -27,13 +27,14 @@ def start():
     return redirect(url_for("login"))
 
 
-@app.route("/home")
+@app.route("/home/")
 def home():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
-    posts = db.session.execute(db.select(Post)).scalars()
+    posts = db.session.execute(db.select(Post).where(Post.verfallsdatum>=date.today())
+                               ).scalars()
     return render_template("home.html", posts=posts)
 
 
@@ -141,7 +142,7 @@ def create_post():
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
                 verlustort=form.lost_area.data,
-                
+
                 meldedatum=heute,
                 verfallsdatum=heute + timedelta(days=30),
 

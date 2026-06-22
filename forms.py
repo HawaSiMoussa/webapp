@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import date
@@ -46,8 +45,7 @@ class CreatePostForm(FlaskForm):
             raise ValidationError(
                 "Verlustdatum darf nicht in der Zukunft liegen."
             )
-from wtforms.fields import SelectField, EmailField, PasswordField, BooleanField, SubmitField,StringField
-from wtforms.validators import InputRequired, Email, Length, Regexp
+
 
 class CreateLogin(FlaskForm):
 
