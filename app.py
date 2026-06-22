@@ -3,6 +3,7 @@ import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 from flask import request 
+from flask import jsonify
 
 app = Flask(__name__)
 
