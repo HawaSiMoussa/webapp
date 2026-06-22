@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import date
@@ -103,7 +102,7 @@ class Suchleiste(FlaskForm):
        validators=[InputRequired()]
   )
   
-submit = SubmitField("Suchen")
+  submit = SubmitField("Suchen")
 
 class EditProfileForm(FlaskForm):
     

@@ -9,7 +9,6 @@ app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
-    #BOOTSTRAP_BOOTSWATCH_THEME='pulse',
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SAMESITE="Lax",
@@ -22,22 +21,54 @@ bootstrap = Bootstrap5(app)
 with app.app_context():
     db.create_all()
 
+
+
+    admin_exists = db.session.execute(
+        db.select(StandardUser).where(StandardUser.hwr_mail == "s_tayem24@stud.hwr-berlin.de")
+    ).scalar_one_or_none()
+
+    if not admin_exists:
+        admin = StandardUser(
+            hwr_mail="s_tayem24@stud.hwr-berlin.de",
+            passwort="Sarah12345678",
+            is_admin=True
+        )
+        db.session.add(admin)
+        db.session.commit()
+
 @app.route("/")
 def start():
     return redirect(url_for("login"))
 
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
-   
 
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-    
 
-    posts = db.session.execute(db.select(Post)).scalars()
+    form = forms.Suchleiste()
 
-    return render_template("home.html", posts=posts, user =current_user)
+    posts = db.session.execute(
+        db.select(Post)
+    ).scalars()
+
+    if form.validate_on_submit():
+
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.contains(
+                    form.suchbegriff.data
+                )
+            )
+        ).scalars()
+
+    return render_template(
+        "home.html",
+        form=form,
+        posts=posts
+    )
+
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -157,8 +188,26 @@ def create_post():
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
-
         return redirect(url_for('create_post'))
+    
+@app.route("/post/delete/<int:post_id>")
+def delete_post(post_id):
+
+    post = db.session.get(Post, post_id)
+
+    if post is None:
+        flash("Post nicht gefunden", "warning")
+        return redirect(url_for("home"))
+
+    if not session.get("is_admin"):
+        flash("Keine Berechtigung!", "danger")
+        return redirect(url_for("home"))
+
+    db.session.delete(post)
+    db.session.commit()
+
+    flash("Post gelöscht", "success")
+    return redirect(url_for("home"))
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -183,6 +232,7 @@ def login():
             return redirect(url_for("login"))
 
         session["user_id"] = user.user_id
+        session["is_admin"] = user.is_admin
 
         flash("Login erfolgreich!", "success")
         return redirect(url_for("home"))
