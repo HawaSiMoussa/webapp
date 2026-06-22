@@ -165,7 +165,7 @@ def create_post():
                 verlustort=form.lost_area.data,
 
                 meldedatum=heute,
-                verfallsdatum=heute + timedelta(days=30),
+                ablaufdatum=heute + timedelta(days=30),
 
                 status="laufend"
             )

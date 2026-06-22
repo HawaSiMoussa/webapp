@@ -63,7 +63,7 @@ class Fundbuero(db.Model):
 
     meldedatum = db.Column(db.Date,default=date.today)
 
-    verfallsdatum = db.Column(db.Date)
+    ablaufdatum = db.Column(db.Date)
 
     standardtext = db.Column(db.Text)
 
