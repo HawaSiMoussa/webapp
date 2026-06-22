@@ -95,7 +95,6 @@ class Post(db.Model):
 
     titel = db.Column(db.String,nullable=False )
 
-
     meldedatum = db.Column(db.Date)
 
     verlustdatum = db.Column(db.Date)

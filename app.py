@@ -42,7 +42,7 @@ def start():
     return redirect(url_for("login"))
 
 
-@app.route("/home/")
+@app.route("/home")
 def home():
 
     if "user_id" not in session:
