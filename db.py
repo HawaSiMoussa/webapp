@@ -85,13 +85,6 @@ class Post(db.Model):
 
     titel = db.Column(db.String,nullable=False)
     
-    post_id = db.Column(db.Integer, primary_key=True )
-
-    user_id = db.Column(db.Integer,db.ForeignKey("standardUser.user_id") )
-
-    fundbuero_id = db.Column( db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
-
-    titel = db.Column(db.String,nullable=False )
 
     meldedatum = db.Column(db.Date)
 
