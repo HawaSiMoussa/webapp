@@ -107,7 +107,7 @@ submit = SubmitField("Suchen")
 
 class EditProfileForm(FlaskForm):
     
-    benutzername = StringField( 'Benutzername', validators=[DataRequired()}])
+    benutzername = StringField( "Benutzername", validators=[InputRequired()])
 
     name = StringField(
         "Name",
