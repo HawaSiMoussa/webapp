@@ -4,8 +4,8 @@ from datetime import date, timedelta
 db = SQLAlchemy()
  
 
-
-db = SQLAlchemy() #create SQLAlchemy object to be able to use it in other files, e.g. to define the data model in db.py
+db = SQLAlchemy()
+migrate = Migrate()
 
 class Campus(db.Model):
 
@@ -69,9 +69,6 @@ class Fundbuero(db.Model):
 
     campus = db.relationship("Campus",back_populates="fundbueros")
 
-
-    posts = db.relationship("Post",back_populates="fundbuero")
-
     posts = db.relationship("Post", back_populates="fundbuero")
 
 
@@ -87,6 +84,7 @@ class Post(db.Model):
     fundbuero_id = db.Column(db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
 
     titel = db.Column(db.String,nullable=False)
+    
     post_id = db.Column(db.Integer, primary_key=True )
 
     user_id = db.Column(db.Integer,db.ForeignKey("standardUser.user_id") )
@@ -114,11 +112,4 @@ class Post(db.Model):
     user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship("Fundbuero",back_populates="posts")
-    status = db.Column( db.String, default="laufend")
-
-    views = db.Column(db.Integer, default=0 )
-
-    user = db.relationship("StandardUser",back_populates="posts")
-
-    fundbuero = db.relationship( "Fundbuero", back_populates="posts")
-   
+    
