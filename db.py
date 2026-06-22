@@ -1,8 +1,8 @@
 
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import date, timedelta
 db = SQLAlchemy()
-from flask_sqlalchemy import SQLAlchemy  
+ 
 
 
 db = SQLAlchemy() #create SQLAlchemy object to be able to use it in other files, e.g. to define the data model in db.py
@@ -68,6 +68,10 @@ class Fundbuero(db.Model):
     telefonnummer = db.Column(db.String)
 
     email = db.Column(db.String)
+
+    meldedatum = db.Column(db.Date,default=date.today)
+
+    verfallsdatum = db.Column(db.Date)
 
     standardtext = db.Column(db.Text)
 

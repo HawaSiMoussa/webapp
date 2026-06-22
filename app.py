@@ -4,12 +4,12 @@ from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 from flask import request 
 from flask import jsonify
+from datetime import date, timedelta
 
 app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY='secret_key_just_for_dev_environment',
-    #BOOTSTRAP_BOOTSWATCH_THEME='pulse',
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SAMESITE="Lax",
@@ -25,6 +25,7 @@ with app.app_context():
 @app.route("/")
 def start():
     return redirect(url_for("login"))
+
 
 @app.route("/home")
 def home():
@@ -132,13 +133,18 @@ def create_post():
                     "warning"
                 )
                 return redirect(url_for("create_post"))
-
+            
+            heute = date.today()
             post = Post(
                 user_id=session["user_id"],
                 titel=form.title.data,
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
                 verlustort=form.lost_area.data,
+                
+                meldedatum=heute,
+                verfallsdatum=heute + timedelta(days=30),
+
                 status="laufend"
             )
 
