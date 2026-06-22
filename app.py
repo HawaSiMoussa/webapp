@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, flash, session
 import forms
-from db import db, Post, StandardUser
+from db import db, Post, StandardUser, migrate
 from flask_bootstrap import Bootstrap5
 from flask import request 
 from flask import session
@@ -16,6 +16,7 @@ app.config.from_mapping(
 )
 
 db.init_app(app)
+migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
