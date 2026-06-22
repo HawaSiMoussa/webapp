@@ -26,18 +26,35 @@ with app.app_context():
 def start():
     return redirect(url_for("login"))
 
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
-   
 
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-    
 
-    posts = db.session.execute(db.select(Post)).scalars()
+    form = forms.Suchleiste()
 
-    return render_template("home.html", posts=posts)
+    posts = db.session.execute(
+        db.select(Post)
+    ).scalars()
+
+    if form.validate_on_submit():
+
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.contains(
+                    form.suchbegriff.data
+                )
+            )
+        ).scalars()
+
+    return render_template(
+        "home.html",
+        form=form,
+        posts=posts
+    )
+
 
 
 @app.route('/register/', methods=['GET', 'POST'])
