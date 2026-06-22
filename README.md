@@ -44,7 +44,6 @@ Die Web App verbindet die Nutzer (Suchenden) mit dem Fundbüro. Die Suchenden er
 ## Funktionen 
 Alle Posts haben einen Status zur besseren Übersicht. 
 1. Grün: zeigt an dass der Gegenstand gefunden wurde und im Fundbüro abgeholt werden kann oder die Person wurde kontaktiert.
-
 2. Rot: zeigt an dass der Gegenstand noch nicht gefunden wurde bzw. nicht im Fundbüro liegt
 3. Grau: zeigt an dass der Post archiviert ist
 
