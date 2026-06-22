@@ -38,16 +38,20 @@ with app.app_context():
         db.session.add(admin)
         db.session.commit()
 
+
 @app.route("/")
 def start():
     return redirect(url_for("login"))
 
 
+#Feed bzw. Home Seite
 @app.route("/home")
 def home():
 
     if "user_id" not in session:
+
         flash("Bitte zuerst einloggen!", "warning")
+
         return redirect(url_for("login"))
 
     posts = db.session.execute(db.select(Post).where(Post.verfallsdatum>=date.today())
@@ -281,6 +285,20 @@ def logout():
 
     return redirect(url_for("login"))
 
+@app.route("/api/posts")
+def api_posts():
+
+    posts = db.session.execute(
+        db.select(Post)
+    ).scalars()
+
+    return jsonify([
+        {
+            "titel": p.titel,
+            "status": p.status
+        }
+        for p in posts
+    ])
 
 if __name__ == "__main__":
     app.run(debug=True)
