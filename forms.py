@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, TextAreaField, DateField, SubmitField, SelectField, EmailField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.fields import StringField, TextAreaField, DateField, SubmitField, SelectField, EmailField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Length, ValidationError, Email
 from datetime import date
 
 # Kontaktformular 1.2
