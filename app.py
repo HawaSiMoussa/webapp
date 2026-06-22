@@ -3,6 +3,7 @@ import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 from flask import request 
+from flask import session
 
 app = Flask(__name__)
 
@@ -27,12 +28,15 @@ def start():
 
 @app.route("/home")
 def home():
+   
+
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
+    
 
-    posts = db.session.execute(db.select(Post)).scalars().all()
-    print(posts)
+    posts = db.session.execute(db.select(Post)).scalars()
+
     return render_template("home.html", posts=posts)
 
 
@@ -192,7 +196,7 @@ def profile():
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
     user = db.session.get(StandardUser, session["user_id"] ) 
-    return render_template("profil.html", user=user)
+    return render_template("profile.html", user=user)
 
 
 # Profil bearbeiten
@@ -207,26 +211,25 @@ def edit_profile():
         StandardUser,
         session["user_id"]
     )
+    form = forms.EditProfileForm(obj=user)
+    if form.validate_on_submit():
 
-    if request.method == "POST":
-
-        user.name = request.form["name"]
-        user.telefonnummer = request.form["telefonnummer"]
-        user.standardtext = request.form["standardtext"]
-        user.campus_id = request.form["campus_id"]
+        user.name = form.name.data
+        user.telefonnummer = form.telefonnummer.data
+        user.campus_id = form.campus_id.data
 
         db.session.commit()
 
         flash(
-            "Profil aktualisiert!",
+            "Profil erfolgreich aktualisiert!",
             "success"
         )
-
+    
         return redirect(url_for("profile"))
 
     return render_template(
         "edit_profile.html",
-        user=user
+        form=form
     )
 if __name__ == "__main__":
     app.run(debug=True)

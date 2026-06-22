@@ -104,3 +104,31 @@ class Suchleiste(FlaskForm):
   )
   
 submit = SubmitField("Suchen")
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, SelectField, SubmitField
+from wtforms.validators import DataRequired
+
+
+
+class EditProfileForm(FlaskForm):
+
+    name = StringField(
+        "Name",
+        validators=[DataRequired()]
+    )
+
+    telefonnummer = StringField(
+        "Telefonnummer"
+    )
+
+    campus_id = SelectField(
+        "Campus",
+        choices=[
+            ("Schöneberg", "Schöneberg"),
+            ("Lichtenberg", "Lichtenberg"),
+            ("Startup Incubator", "Startup Incubator")
+        ]
+    )
+
+    submit = SubmitField("Änderungen speichern")
