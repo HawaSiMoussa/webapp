@@ -271,8 +271,11 @@ def profile():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
+    
     user = db.session.get(StandardUser, session["user_id"] ) 
-    return render_template("profile.html", user=user)
+
+    post = db.session.execute( db.select(Post).where(Post.user_id == user.user_id)).scalars()
+    return render_template("profile.html", user=user, post= post)
 
 
 # Profil bearbeiten
