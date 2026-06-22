@@ -1,4 +1,4 @@
-{extends "base.html" %}
+{%extends "base.html" %}
 
 {% block TITLE %}
     Profil bearbeiten
@@ -6,47 +6,32 @@
 
 {% block CONTENT %}
 
-<div class="mb-4"
-    <label class="form-label">
-        Name
-    </label>
-    <input type="text" class="form-control" value="{{ user.name }}">
 
+<form method="POST">
+
+    {{ form.csrf_token }}
+     <div class="mb-3">
+        {{ form.benutzername.label }}
+        {{ form.benutzername(class="form-control") }}
     </div>
 
-<div class="mb-4">
-    <label class="form-label">
-        Telefonnummer
-    </label>
-    <input type="text" class="form-control" value="{{ user.telefonnummer }}">
-</div>
-
-<div class="mb-4">
-    <label class="form-label">
-        Campus
-    </label>
-
-    <select name="campus" class="form-select">
-        <option value="Schöneberg" {% if user.campus == "Schöneberg" %}selected{% endif %}>
-            Schöneberg
-        </option>
-
-        <option value="Lichtenberg" {% if user.campus == "Lichtenberg" %}selected{% endif %}>
-            Lichtenberg
-            </option>
-
-            <option value="Startup Incubator" {% if user.campus == "Startup Incubator" %}selected{% endif %}>
-                Startup Incubator
-            </option>
-    </select>
+    <div class="mb-3">
+        {{ form.name.label }}
+        {{ form.name(class="form-control") }}
     </div>
 
-    <button type="submit" class="btn btn-success">
-        Änderungen speichern
-    </button>
-    <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary">
-        Abbrechen
-        </a>
+    <div class="mb-3">
+        {{ form.telefonnummer.label }}
+        {{ form.telefonnummer(class="form-control") }}
     </div>
+
+    <div class="mb-3">
+        {{ form.campus_id.label }}
+        {{ form.campus_id(class="form-select") }}
+    </div>
+
+    {{ form.submit(class="btn btn-success") }}
+
+</form>
 
     {% endblock %}

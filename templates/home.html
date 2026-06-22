@@ -1,13 +1,31 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_messages %}
 
+
 {% block TITLE %}
 LostAndFound
 {% endblock %}
 
 {% block CONTENT %}
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
-   
+
+<form method="POST" class="mb-4">
+
+    {{ form.hidden_tag() }}
+
+    <div class="input-group">
+
+        {{ form.suchbegriff(
+            class="form-control",
+            placeholder="Suchen..."
+        ) }}
+
+        {{ form.submit(
+            class="btn btn-primary"
+        ) }}
+
+    </div>
+
+</form>
 
 
     <!-- Posts -->

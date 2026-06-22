@@ -22,6 +22,21 @@ bootstrap = Bootstrap5(app)
 with app.app_context():
     db.create_all()
 
+
+
+    admin_exists = db.session.execute(
+        db.select(StandardUser).where(StandardUser.hwr_mail == "s_tayem24@stud.hwr-berlin.de")
+    ).scalar_one_or_none()
+
+    if not admin_exists:
+        admin = StandardUser(
+            hwr_mail="s_tayem24@stud.hwr-berlin.de",
+            passwort="Sarah12345678",
+            is_admin=True
+        )
+        db.session.add(admin)
+        db.session.commit()
+
 @app.route("/")
 def start():
     return redirect(url_for("login"))
@@ -29,6 +44,7 @@ def start():
 
 @app.route("/home/")
 def home():
+
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
@@ -160,8 +176,26 @@ def create_post():
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
-
         return redirect(url_for('create_post'))
+    
+@app.route("/post/delete/<int:post_id>")
+def delete_post(post_id):
+
+    post = db.session.get(Post, post_id)
+
+    if post is None:
+        flash("Post nicht gefunden", "warning")
+        return redirect(url_for("home"))
+
+    if not session.get("is_admin"):
+        flash("Keine Berechtigung!", "danger")
+        return redirect(url_for("home"))
+
+    db.session.delete(post)
+    db.session.commit()
+
+    flash("Post gelöscht", "success")
+    return redirect(url_for("home"))
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -186,11 +220,66 @@ def login():
             return redirect(url_for("login"))
 
         session["user_id"] = user.user_id
+        session["is_admin"] = user.is_admin
 
         flash("Login erfolgreich!", "success")
         return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
+
+#Profil anzeigen
+@app.route('/profile/')
+def profile():
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+    user = db.session.get(StandardUser, session["user_id"] ) 
+    return render_template("profile.html", user=user)
+
+
+# Profil bearbeiten
+@app.route('/profile/edit/', methods=['GET', 'POST'])
+def edit_profile():
+
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    user = db.session.get(
+        StandardUser,
+        session["user_id"]
+    )
+    form = forms.EditProfileForm(obj=user)
+    if form.validate_on_submit():
+
+        user.benutzername = form.benutzername.data
+        user.name = form.name.data
+        user.telefonnummer = form.telefonnummer.data
+        user.campus_id = form.campus_id.data
+
+        db.session.commit()
+
+        flash(
+            "Profil erfolgreich aktualisiert!",
+            "success"
+        )
+    
+        return redirect(url_for("profile"))
+
+    return render_template(
+        "edit_profile.html",
+        form=form
+    )
+
+@app.route("/logout")
+def logout():
+
+    session.pop("user_id", None)
+
+    flash( "Erfolgreich ausgeloggt.", "success")
+
+    return redirect(url_for("login"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

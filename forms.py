@@ -101,4 +101,28 @@ class Suchleiste(FlaskForm):
        validators=[InputRequired()]
   )
   
-submit = SubmitField("Suchen")
+  submit = SubmitField("Suchen")
+
+class EditProfileForm(FlaskForm):
+    
+    benutzername = StringField( "Benutzername", validators=[InputRequired()])
+
+    name = StringField(
+        "Name",
+        validators=[InputRequired()]
+    )
+
+    telefonnummer = StringField(
+        "Telefonnummer"
+    )
+
+    campus_id = SelectField(
+        "Campus",
+        choices=[
+            ("Schöneberg", "Schöneberg"),
+            ("Lichtenberg", "Lichtenberg"),
+            ("Startup Incubator", "Startup Incubator")
+        ]
+    )
+
+    submit = SubmitField("Änderungen speichern")

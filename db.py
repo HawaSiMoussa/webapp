@@ -39,20 +39,12 @@ class StandardUser(db.Model):
 
     hwr_mail = db.Column(db.String, unique=True,nullable=False ) 
 
-    ist_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     campus = db.relationship("Campus",back_populates="users")
 
     posts = db.relationship( "Post",back_populates="user")
-    hwr_mail = db.Column(db.String,unique=True, nullable=False)
-
-    ist_admin = db.Column(db.Boolean,default=False)
-
-    campus = db.relationship("Campus",back_populates="users")
-
-    posts = db.relationship("Post",back_populates="user")
-
-
+   
 class Fundbuero(db.Model):
 
     __tablename__ = "fundbuero"
@@ -130,3 +122,4 @@ class Post(db.Model):
     user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship( "Fundbuero", back_populates="posts")
+   

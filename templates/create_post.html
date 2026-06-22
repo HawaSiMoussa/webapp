@@ -1,71 +1,33 @@
 {% extends "base.html" %}
 
-{% block TITLE %}
-Verlust melden
-{% endblock %}
-
-{% block CONTENT %}
-
-<h1>Verlust melden</h1>
-<!-- Navbar bzw collapse menü -->
-<!-- Menüinhalt -->
-<nav class="navbar border-bottom mb-3">
-
-    <div class="container-fluid">
-
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-    LostAndFound
-     </a>
-
-        <button
-            class="btn btn-outline-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarToggleExternalContent">
-
-            <i class="bi bi-list"></i>
-
-        </button>
-
-    </div>
-
-</nav>
-
-<div class="d-flex justify-content-end">
-
-    <div class="collapse" id="navbarToggleExternalContent">
-
-        <div class="border rounded p-3" style="width:300px;">
-            <a href="{{ url_for('home') }}" class="d-block mb-2">
-                <i class="bi bi-house"></i> Home
-            </a>
-
-            <a href="#" class="d-block mb-2">
-                <i class="bi bi-person"></i> Profil
-            </a>
-
-            <a href="{{ url_for('create_post') }}" class="d-block mb-2">
-                <i class="bi bi-plus-lg"></i> Post erstellen
-            </a>
-
-            <a href="#" class="d-block">
-                <i class="bi bi-exclamation-circle"></i> Hilfe & Kontakt
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="container mt-3">
-
-    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
-     width="100">
 <!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
    
 
 </div>
+{% block TITLE %}
+
+Verlust melden
+{% endblock %}
+
+
+{% block CONTENT %}
+<div class="container mt-">
+
+    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
+     width="100">
+</div>
+
+<p>
+</p>
+<p>
+</p>
+
+<h1>Verlust melden</h1>
+<!-- Navbar bzw collapse menü -->
+<!-- Menüinhalt -->
+
+
+
 
 <form action="{{ url_for('create_post') }}" method="post">
 
