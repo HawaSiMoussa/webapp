@@ -11,6 +11,10 @@ Verlust melden
 
 
 {% block CONTENT %}
+
+{% from 'bootstrap5/utils.html' import render_messages %}
+{{ render_messages() }}
+
 <div class="container mt-">
 
     <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
@@ -54,7 +58,7 @@ Verlust melden
     </small>
 
     {{ form.lost_area(class="form-control") }}
-</ div>
+</div>
 
     <div class="text-end">
     {{ form.submit(class="btn btn-success") }}
