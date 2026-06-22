@@ -30,7 +30,7 @@ LostAndFound
 
     <!-- Posts -->
     {% for post in posts %}
-
+        {%if post.user.campus_id == user.campus_id%}
     <div class="border rounded p-3 mb-4">
 
         <!-- Username -->
@@ -60,7 +60,14 @@ LostAndFound
             </button>
 
             <!-- Nachricht -->
-          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Bezüglich: ' ~ post.titel)|urlencode }}"
+          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Bezüglich: ' ~ post.titel)|urlencode }}
+          &body={{('Hallo,' ~'\n\n' ~
+           'ich habe möglciherweise Ihren verlorenen Gegenstand gefunden' ~ '\n\n' ~
+           'Gegenstand: ' ~post.titel ~'\n' ~
+           'Verlustort: ' ~ post.verlustort ~ '\n\n' ~
+            'Bitte melden Sie sich bei mir.' ~ '\n\n' ~
+            'Viele Grüße'
+            )|urlencode }}">
    class="btn btn-outline-primary btn-sm border-0">
     <i class="bi bi-envelope"></i>
 </a>
@@ -126,6 +133,9 @@ LostAndFound
         </div>
 
     </div>
+
+
+        {%endif%}
 
     {% endfor %}
 
