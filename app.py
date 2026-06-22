@@ -349,6 +349,39 @@ def close_post(post_id):
     
     return redirect (url_for("profile"))
 
+@app.route ("/edit_post/<int:post_id>/", methods= ["GET", "POST"])
+def edit_post (post_id):
+
+    post = db.session.get(Post,post_id)
+
+    form = forms.CreatePostForm()
+    if request.method == 'GET':
+
+            form.title.data = post.titel
+            form.description.data = post.beschreibung
+            form.lost_date.data = post.verlustdatum
+            form.lost_area.data = post.verlustort
+
+            return render_template('edit_post.html',form=form)
+    else:
+
+            if form.validate():
+
+                post.titel = form.title.data
+                post.beschreibung = form.description.data
+                post.verlustdatum = form.lost_date.data
+                post.verlustort = form.lost_area.data
+
+                db.session.commit()
+
+                flash('Post erfolgreich aktualisiert.','success')
+            else:
+
+                flash('Post konnte nicht aktualisiert werden.','warning'
+                )
+
+            return redirect(url_for('profile'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
