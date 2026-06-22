@@ -45,17 +45,23 @@ Verlust melden
 
     <div class="mb-3">
     {{ form.lost_date.label(class="form-label") }}
-    <small class="text-muted">
-        ⓘ Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum auch geschätzt angegeben werden.
-    </small>
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum geschätzt angegeben werden.">
+        ⓘ
+    </span>
     {{ form.lost_date(class="form-control") }}
 </div>
 
     <div class="mb-3">
     {{ form.lost_area.label(class="form-label") }}
-    <small class="text-muted">
-        ⓘ Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.
-    </small>
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.">
+        ⓘ
+    </span>
 
     {{ form.lost_area(class="form-control") }}
 </div>
