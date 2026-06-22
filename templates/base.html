@@ -27,6 +27,7 @@ const tooltipList = [...tooltipTriggerList].map(
 </head>
 
 <body>
+
 <nav class="navbar border-bottom mb-4"></nav>
 <div class="container-fluid"></div>
 
@@ -37,7 +38,7 @@ const tooltipList = [...tooltipTriggerList].map(
 
 <nav class="navbar border-bottom mb-3">
 
-    <div class="container-fluid">
+    <div class="container-fluid d-flex align-items-center">
 <!--Logo-->
         <a class="navbar-brand d-flex align-items-center ms-5"
    href="{{ url_for('home') }}">
@@ -47,7 +48,10 @@ const tooltipList = [...tooltipTriggerList].map(
         alt="Logo"
         height="110">
      </a>
-
+        <div class="text-center flex-grow-1">
+            <h1 class="m-0 fw-bold" style ="font-size: 2.5 em ;">Lost & Found</h1>
+            <p class="m-0 text-muted " style="font-size:1.4 em ">Finding connections. Reuniting Things.</p>
+        </div>
         <button
             class="btn btn-outline-secondary ms-auto me-5"
             type="button"

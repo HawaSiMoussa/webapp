@@ -23,21 +23,51 @@ bootstrap = Bootstrap5(app)
 with app.app_context():
     db.create_all()
 
+    admins_to_create = [
+        {
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
+            "passwort": "Sarah12345678",
+            "name": "Sarah Tayem",
+            "benutzername": "Sarahtayem"
+        },
+        {
+            "hwr_mail": "fabian.rauchholz@hwr-berlin.de",
+            "passwort": "Fabian12345678",
+            "name": "Fabian Rauchholz",
+            "benutzername": "FabianLichtenberg"
+        },
+        {
+            "hwr_mail": "verena.dikof@hwr-berlin.de",
+            "passwort": "Verena12345678",
+            "name": "Verena Dikof",
+            "benutzername": "VerenaLichtenberg"
+        },
+        {
+            "hwr_mail": "pforteb@hwr-berlin.de",
+            "passwort": "Pforte12345678",
+            "name": "Pförtner Haus A, B, E",
+            "benutzername": "PforteSchoeneberg"
+        }
+    ]
 
+    for admin_data in admins_to_create:
+        # Prüfen, ob der Admin schon in der DB existiert
+        exists = db.session.execute(
+            db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
+        ).scalar_one_or_none()
 
-    admin_exists = db.session.execute(
-        db.select(StandardUser).where(StandardUser.hwr_mail == "s_tayem24@stud.hwr-berlin.de")
-    ).scalar_one_or_none()
+        
+        if not exists:
+            new_admin = StandardUser(
+                hwr_mail=admin_data["hwr_mail"],
+                passwort=admin_data["passwort"],
+                name=admin_data["name"],
+                benutzername=admin_data["benutzername"],
+                is_admin=True
+            )
+            db.session.add(new_admin)
 
-    if not admin_exists:
-        admin = StandardUser(
-            hwr_mail="s_tayem24@stud.hwr-berlin.de",
-            passwort="Sarah12345678",
-            is_admin=True
-        )
-        db.session.add(admin)
-        db.session.commit()
-
+    db.session.commit()
 
 @app.route("/")
 def start():
