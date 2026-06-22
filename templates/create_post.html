@@ -23,10 +23,6 @@ Verlust melden
 </p>
 
 <h1>Verlust melden</h1>
-<!-- Navbar bzw collapse menü -->
-<!-- Menüinhalt -->
-
-
 
 
 <form action="{{ url_for('create_post') }}" method="post">
@@ -36,22 +32,29 @@ Verlust melden
     <div class="mb-3">
         {{ form.title.label }}
         {{ form.title(class="form-control") }}
-    </div>
+</div>
 
     <div class="mb-3">
         {{ form.description.label }}
         {{ form.description(class="form-control") }}
-    </div>
+</div>
 
     <div class="mb-3">
-        {{ form.lost_date.label }}
-        {{ form.lost_date(class="form-control") }}
-    </div>
+    {{ form.lost_date.label(class="form-label") }}
+    <small class="text-muted">
+        ⓘ Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum auch geschätzt angegeben werden.
+    </small>
+    {{ form.lost_date(class="form-control") }}
+</div>
 
     <div class="mb-3">
-        {{ form.lost_area.label }}
-        {{ form.lost_area(class="form-control") }}
-    </div>
+    {{ form.lost_area.label(class="form-label") }}
+    <small class="text-muted">
+        ⓘ Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.
+    </small>
+
+    {{ form.lost_area(class="form-control") }}
+</ div>
 
     <div class="text-end">
     {{ form.submit(class="btn btn-success") }}
