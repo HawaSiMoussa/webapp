@@ -37,7 +37,7 @@ def home():
 
     posts = db.session.execute(db.select(Post)).scalars()
 
-    return render_template("home.html", posts=posts)
+    return render_template("home.html", posts=posts, user =current_user)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
