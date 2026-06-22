@@ -3,7 +3,8 @@ import forms
 from db import db, Post, StandardUser
 from flask_bootstrap import Bootstrap5
 from flask import request 
-from flask import session
+from flask import jsonify
+from datetime import date, timedelta
 
 app = Flask(__name__)
 
@@ -40,35 +41,17 @@ with app.app_context():
 def start():
     return redirect(url_for("login"))
 
-@app.route("/home", methods=["GET", "POST"])
+
+@app.route("/home/")
 def home():
 
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
-    form = forms.Suchleiste()
-
-    posts = db.session.execute(
-        db.select(Post)
-    ).scalars()
-
-    if form.validate_on_submit():
-
-        posts = db.session.execute(
-            db.select(Post).where(
-                Post.titel.contains(
-                    form.suchbegriff.data
-                )
-            )
-        ).scalars()
-
-    return render_template(
-        "home.html",
-        form=form,
-        posts=posts
-    )
-
+    posts = db.session.execute(db.select(Post).where(Post.verfallsdatum>=date.today())
+                               ).scalars()
+    return render_template("home.html", posts=posts)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -167,13 +150,18 @@ def create_post():
                     "warning"
                 )
                 return redirect(url_for("create_post"))
-
+            
+            heute = date.today()
             post = Post(
                 user_id=session["user_id"],
                 titel=form.title.data,
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
                 verlustort=form.lost_area.data,
+
+                meldedatum=heute,
+                verfallsdatum=heute + timedelta(days=30),
+
                 status="laufend"
             )
 
