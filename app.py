@@ -115,7 +115,7 @@ def create_post():
         )
 
     else:
-
+#Validator
         if form.validate():
 
             aktiver_post = db.session.execute(
