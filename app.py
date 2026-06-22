@@ -274,7 +274,7 @@ def profile():
     
     user = db.session.get(StandardUser, session["user_id"] ) 
 
-    post = db.session.execute( db.select(Post).where(Post.user_id == user.user_id)).scalars()
+    post = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars()
     return render_template("profile.html", user=user, post= post)
 
 
@@ -321,6 +321,7 @@ def logout():
 
     return redirect(url_for("login"))
 
+
 @app.route("/api/posts")
 def api_posts():
 
@@ -335,6 +336,19 @@ def api_posts():
         }
         for p in posts
     ])
+
+@app.route ("/close_post/<int:post_id>/")
+def close_post(post_id):
+    post = db.session.get(Post, post_id)
+
+    post.status ="gefunden"
+
+    db.session.commit()
+
+    flash( "Es freut uns, dass du dein Gegenstand finden konntest! Dein Post wurde geschlossen.", "success") #success: grüner kasten
+    
+    return redirect (url_for("profile"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
