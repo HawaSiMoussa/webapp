@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Suche-LostAndFound</title>
 
-{{ bootstrap.load_css() }}
-</head>
-<body>
+{% block TITLE %}
+Suche
+{% endblock %}
+
+{% block CONTENT %}
+
 <div class="container mt-5" style="max-width: 450px;">
 <h2 class="text-center mb-4">Suche</h2>
 
@@ -16,30 +14,122 @@
 
     
    <div class="mb-3">
-   {{ form.suchbegriff.label(class="form.label") }}
-   {{ form.suchbegriff(class="form-control", placeholder="Suchen...") }}
+   {{ form.suchfeld.label(class="form-label") }}
+   {{ form.suchfeld(class="form-control", placeholder="Suchen...") }}
    </div>
 <button type="submit" class="btn btn-primary w-100">Suchen</button>
 </form>
 
-<div class="container mt-3">
-
-    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
-     width="100">
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
-    {% block CONTENT %}
-    {% endblock %}
-
-</div>
-
 <main>
 
-{%for post in posts%}
-<div class="border rounded p-3 mb-2">
-<h5 class="mb-1"> {{ post.titel}} </h5>
-<p class="mb-0"> {{post.beschreibung}}</p>
-{%endfor%}
-</div>
+{% for post in posts %}
+        {%if post.user.campus_id == user.campus_id%}
+    <div class="border rounded p-3 mb-4">
+
+        <!-- Username -->
+        <strong>
+            <i class="bi bi-person-circle"></i>
+            {{ post.user.benutzername }}
+        </strong>
+
+        <!-- Titel -->
+        <h5 class="mt-3">
+            {{ post.titel }}
+          
+
+        </h5>
+           <small>
+             {{ post.meldedatum.strftime('%d.%m.%Y') }}
+            </small>
+            <br>
+            <small class="text-danger">
+             {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+            </small>
+            
+        <!-- Buttons + Status -->
+        <div class="mt-3 d-flex align-items-center gap-2">
+        
+ 
+            <!-- Beschreibung -->
+            <button
+                class="btn btn-outline-secondary btn-sm"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#details{{ loop.index }}">
+
+                <i class="bi bi-chevron-down"></i>
+            </button>
+{% if session.get("is_admin") %}
+
+<a href=“{{ url_for('close_post', post_id=post.post_id) }}”
+class=“btn btn-success btn-sm”>
+Schließen
+</a>
+
+{% endif %}
+            <!-- Nachricht -->
+          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
+          &body={{('Hallo,' ~'\n\n' ~
+           'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~
+           'Gegenstand: ' ~post.titel ~'\n' ~
+           'Verlustort: ' ~ post.verlustort ~ '\n\n' ~
+            'Bitte melden dich bei mir.' ~ '\n\n' ~
+            'Viele Grüße'
+            )|urlencode }}">
+             
+             <i class="bi bi-envelope"></i>
+</a>
+
+
+
+
+
+        </div> 
+
+        <!-- Aufklappbarer Bereich -->
+        <div
+            class="collapse mt-3"
+            id="details{{ loop.index }}">
+
+            <div class="card card-body">
+
+                <p>
+                    <strong>Beschreibung:</strong><br>
+                    {{ post.beschreibung }}
+                </p>
+
+                <p>
+                    <strong>Verlustort:</strong><br>
+                    {{ post.verlustort }}
+                </p>
+
+                <p>
+                    <strong>Verlustdatum:</strong><br>
+                    {{ post.verlustdatum}}
+                </p>
+
+            
+
+                <button
+                    class="btn btn-outline-secondary btn-sm w-auto"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#details{{ loop.index }}">
+
+                    <i class="bi bi-chevron-up"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        {%endif%}
+
+    {% endfor %}
+
 {{ bootstrap.load_js() }}
-</body>
-</html>
+{% endblock %}

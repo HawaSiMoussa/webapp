@@ -6,13 +6,15 @@ LostAndFound
 
 {% block CONTENT %}
 
-<form method="POST" class="mb-4">
+<form method="POST"
+      action="{{ url_for('suche') }}"
+      class="mb-4">
 
     {{ form.hidden_tag() }}
 
     <div class="input-group">
 
-        {{ form.suchbegriff(
+        {{ form.suchfeld(
             class="form-control",
             placeholder="Suchen..."
         ) }}
@@ -64,7 +66,14 @@ LostAndFound
 
                 <i class="bi bi-chevron-down"></i>
             </button>
+{% if session.get("is_admin") %}
 
+<a href=“{{ url_for('close_post', post_id=post.post_id) }}”
+class=“btn btn-success btn-sm”>
+Schließen
+</a>
+
+{% endif %}
             <!-- Nachricht -->
           <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
           &body={{('Hallo,' ~'\n\n' ~

@@ -21,7 +21,7 @@ migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
-    db.create_all()
+    db.create_all() # 
 
     admins_to_create = [
         {
@@ -29,24 +29,6 @@ with app.app_context():
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        },
-        {
-            "hwr_mail": "fabian.rauchholz@hwr-berlin.de",
-            "passwort": "Fabian12345678",
-            "name": "Fabian Rauchholz",
-            "benutzername": "FabianLichtenberg"
-        },
-        {
-            "hwr_mail": "verena.dikof@hwr-berlin.de",
-            "passwort": "Verena12345678",
-            "name": "Verena Dikof",
-            "benutzername": "VerenaLichtenberg"
-        },
-        {
-            "hwr_mail": "pforteb@hwr-berlin.de",
-            "passwort": "Pforte12345678",
-            "name": "Pförtner Haus A, B, E",
-            "benutzername": "PforteSchoeneberg"
         }
     ]
 
@@ -54,7 +36,7 @@ with app.app_context():
         # Prüfen, ob der Admin schon in der DB existiert
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar_one_or_none()
+        ).scalar() # weg machen 
 
         
         if not exists:
@@ -75,20 +57,20 @@ def start():
 
 
 #Feed bzw. Home Seite
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
 
     if "user_id" not in session:
 
         flash("Bitte zuerst einloggen!", "warning")
-
         return redirect(url_for("login"))
     form = forms.Suchleiste()
-
     user = db.session.get(StandardUser,session["user_id"])
-
     posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                               ).one()
+                           ).scalars()  
+
+
+
     return render_template("home.html", posts=posts, form=form, user=user)
 
 
@@ -103,9 +85,9 @@ def register():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalar_one_or_none()
+        ).scalars()
 
-        if existing_user:
+        if len(list(existing_user)) > 0:
             flash("Diese E-Mail wird bereits verwendet!", "warning")
             return redirect(url_for("register"))
 
@@ -180,7 +162,7 @@ def create_post():
                     Post.user_id == session["user_id"],
                     Post.status == "laufend"
                 )
-            ).scalar_one_or_none()
+            ).scalar() # überarbeiten
 
             if aktiver_post:
                 flash(
@@ -248,7 +230,7 @@ def login():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalar_one_or_none()
+        ).scalar() # s weg machen überarbeiten dann geht wohl der fehler
 
         if user is None:
             flash("User existiert nicht.", "warning")
@@ -383,7 +365,25 @@ def edit_post (post_id):
 
             return redirect(url_for('profile'))
 
+@app.route("/search", methods=["GET", "POST"])
+def suche():
 
-if __name__ == "__main__":
+    form = forms.Suchleiste()
+    posts =[]
+    user=db.session.get(StandardUser, session["user_id"])
+
+    if form.validate_on_submit():
+        suchbegriff = form.suchfeld.data
+
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.contains(suchbegriff) | Post.beschreibung.contains(suchbegriff)
+            )
+        ).scalars()
+
+    return render_template("suche.html", posts=posts, form=form, user=user)
+
     
+if __name__ == "__main__":
+
     app.run(debug=True)
