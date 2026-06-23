@@ -66,12 +66,8 @@ LostAndFound
 
                 <i class="bi bi-chevron-down"></i>
             </button>
-{% if session.get("is_admin") %}
-
-<a href=“{{ url_for('close_post', post_id=post.post_id) }}”
-class=“btn btn-success btn-sm”>
-Schließen
-</a>
+{% if session.get('is_admin')or post.user_id == session.get('user_id') %}
+<a href="{{url_for('delete_post',post_id=post.post_id)}}" class="btn btn-danger"> Post löschen</a>
 
 {% endif %}
             <!-- Nachricht -->
