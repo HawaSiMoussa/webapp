@@ -5,12 +5,12 @@ Post bearbeiten
 {% endblock %}
 
 {% block CONTENT %}
-
-{{form.csrf.token}}
+<form method="POST">
+{{ form.csrf_token }}
 
 <div class = "mb-3">
     {{form.title.label}}
-    {{form.title(class"form-control")}}
+    {{form.title(class="form-control")}}
 
 </div>
 
