@@ -87,8 +87,8 @@ def home():
 
     user = db.session.get(StandardUser,session["user_id"])
 
-    posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today())
-                               ).scalars()
+    posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
+                               ).one()
     return render_template("home.html", posts=posts, form=form, user=user)
 
 
@@ -216,6 +216,7 @@ def create_post():
                 flash(form.errors['lost_date'][0], 'warning')
         return redirect(url_for('create_post'))
     
+
 @app.route("/post/delete/<int:post_id>")
 def delete_post(post_id):
 
@@ -271,8 +272,11 @@ def profile():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
+    
     user = db.session.get(StandardUser, session["user_id"] ) 
-    return render_template("profile.html", user=user)
+
+    posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars()
+    return render_template("profile.html", user=user, posts= posts)
 
 
 # Profil bearbeiten
@@ -318,6 +322,7 @@ def logout():
 
     return redirect(url_for("login"))
 
+
 @app.route("/api/posts")
 def api_posts():
 
@@ -332,6 +337,52 @@ def api_posts():
         }
         for p in posts
     ])
+
+@app.route ("/close_post/<int:post_id>/")
+def close_post(post_id):
+    post = db.session.get(Post, post_id)
+
+    post.status ="gefunden"
+
+    db.session.commit()
+
+    flash( "Es freut uns, dass du dein Gegenstand finden konntest! Dein Post wurde geschlossen.", "success") #success: grüner kasten
+    
+    return redirect (url_for("profile"))
+
+@app.route ("/edit_post/<int:post_id>/", methods= ["GET", "POST"])
+def edit_post (post_id):
+
+    post = db.session.get(Post,post_id)
+
+    form = forms.CreatePostForm()
+    if request.method == 'GET':
+
+            form.title.data = post.titel
+            form.description.data = post.beschreibung
+            form.lost_date.data = post.verlustdatum
+            form.lost_area.data = post.verlustort
+
+            return render_template('edit_post.html',form=form)
+    else:
+
+            if form.validate():
+
+                post.titel = form.title.data
+                post.beschreibung = form.description.data
+                post.verlustdatum = form.lost_date.data
+                post.verlustort = form.lost_area.data
+
+                db.session.commit()
+
+                flash('Post erfolgreich aktualisiert.','success')
+            else:
+
+                flash('Post konnte nicht aktualisiert werden.','warning'
+                )
+
+            return redirect(url_for('profile'))
+
 
 if __name__ == "__main__":
     

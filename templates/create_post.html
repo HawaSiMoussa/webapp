@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
    
-
 </div>
 {% block TITLE %}
 
@@ -11,8 +8,12 @@ Verlust melden
 
 
 {% block CONTENT %}
-<div class="container mt-">
 
+{% from 'bootstrap5/utils.html' import render_messages %}
+{{ render_messages() }}
+
+<div class="container mt-">
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
     <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
      width="100">
 </div>
@@ -41,21 +42,29 @@ Verlust melden
 
     <div class="mb-3">
     {{ form.lost_date.label(class="form-label") }}
-    <small class="text-muted">
-        ⓘ Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum auch geschätzt angegeben werden.
-    </small>
+    <!--tooltip für Verlusdatum-->
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum geschätzt angegeben werden.">
+        ⓘ
+    </span>
     {{ form.lost_date(class="form-control") }}
 </div>
 
     <div class="mb-3">
     {{ form.lost_area.label(class="form-label") }}
-    <small class="text-muted">
-        ⓘ Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.
-    </small>
+    <!--tooltip für Verlustort-->
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.">
+        ⓘ
+    </span>
 
     {{ form.lost_area(class="form-control") }}
-</ div>
-
+</div>
+<!--"success" lässt Button grün erscheinen-->
     <div class="text-end">
     {{ form.submit(class="btn btn-success") }}
     </div>
