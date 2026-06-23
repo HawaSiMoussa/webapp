@@ -29,24 +29,6 @@ with app.app_context():
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        },
-        {
-            "hwr_mail": "fabian.rauchholz@hwr-berlin.de",
-            "passwort": "Fabian12345678",
-            "name": "Fabian Rauchholz",
-            "benutzername": "FabianLichtenberg"
-        },
-        {
-            "hwr_mail": "verena.dikof@hwr-berlin.de",
-            "passwort": "Verena12345678",
-            "name": "Verena Dikof",
-            "benutzername": "VerenaLichtenberg"
-        },
-        {
-            "hwr_mail": "pforteb@hwr-berlin.de",
-            "passwort": "Pforte12345678",
-            "name": "Pförtner Haus A, B, E",
-            "benutzername": "PforteSchoeneberg"
         }
     ]
 
@@ -385,5 +367,5 @@ def edit_post (post_id):
 
 
 if __name__ == "__main__":
-    
+
     app.run(debug=True)
