@@ -88,7 +88,7 @@ def home():
     user = db.session.get(StandardUser,session["user_id"])
 
     posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                               ).scalars()
+                               ).one()
     return render_template("home.html", posts=posts, form=form, user=user)
 
 
