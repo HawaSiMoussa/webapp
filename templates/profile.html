@@ -111,18 +111,22 @@ Profil
              </div>
             
                 <small>
+                {% if post.meldedatum %}
                 {{ post.meldedatum.strftime('%d.%m.%Y') }}
+                {% endif %}
                 </small>
 
                 <small class="text-danger">
+                {% if post.meldedatum %}
                 {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+                {% endif %}
                 </small>
                     <div class="mt-3">
                         <a href=" {{url_for('edit_post', post_id=post.post_id)}}"
                         class = "btn btn-warning btn-sm">
                         Bearbeiten
                         </a>
-                        <a href="{{ url_for('close_post', post_id=post.id) }}"
+                        <a href="{{ url_for('close_post', post_id=post.post_id) }}"
                         class="btn btn-success btn-sm">
 
                         Schließen

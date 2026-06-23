@@ -216,6 +216,7 @@ def create_post():
                 flash(form.errors['lost_date'][0], 'warning')
         return redirect(url_for('create_post'))
     
+
 @app.route("/post/delete/<int:post_id>")
 def delete_post(post_id):
 
@@ -274,8 +275,8 @@ def profile():
     
     user = db.session.get(StandardUser, session["user_id"] ) 
 
-    post = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars()
-    return render_template("profile.html", user=user, post= post)
+    posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars()
+    return render_template("profile.html", user=user, posts= posts)
 
 
 # Profil bearbeiten
