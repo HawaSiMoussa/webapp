@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Suche-LostAndFound</title>
 
-{{ bootstrap.load_css() }}
-</head>
-<body>
+{% block TITLE %}
+Suche
+{% endblock %}
+
+{% block CONTENT %}
+
 <div class="container mt-5" style="max-width: 450px;">
 <h2 class="text-center mb-4">Suche</h2>
 
@@ -41,5 +39,4 @@
 {%endfor%}
 </div>
 {{ bootstrap.load_js() }}
-</body>
-</html>
+{% endblock %}

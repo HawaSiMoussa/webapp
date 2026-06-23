@@ -67,7 +67,10 @@ def home():
     form = forms.Suchleiste()
     user = db.session.get(StandardUser,session["user_id"])
     posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                           ).scalars()                          
+                           ).scalars()  
+
+
+
     return render_template("home.html", posts=posts, form=form, user=user)
 
 
@@ -227,7 +230,7 @@ def login():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalars() # weg machen überarbeiten 
+        ).scalar() # s weg machen überarbeiten dann geht wohl der fehler
 
         if user is None:
             flash("User existiert nicht.", "warning")
@@ -362,7 +365,22 @@ def edit_post (post_id):
 
             return redirect(url_for('profile'))
 
+@app.route("/search", methods=["GET", "POST"])
+def suche():
+    form = forms.Suchleiste()
 
+    if form.validate_on_submit():
+        suchbegriff = form.suchfeld.data
+
+        posts = db.session.execute(
+            db.select(Post).where(
+                Post.titel.contains(suchbegriff) | Post.beschreibung.contains(suchbegriff)
+            )
+        ).scalars()
+
+        return render_template("suche.html", posts=posts, form=form)
+
+    return render_template("suche.html", form=form)
 if __name__ == "__main__":
 
     app.run(debug=True)

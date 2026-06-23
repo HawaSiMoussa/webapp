@@ -97,7 +97,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Registrieren")
     
 class Suchleiste(FlaskForm):
-  suchbegriff = StringField( "Suchbegriff", 
+  suchfeld = StringField( "Suchbegriff", 
        validators=[InputRequired()]
   )
   
