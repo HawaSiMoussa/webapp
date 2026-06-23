@@ -8,21 +8,21 @@ from datetime import date, timedelta
 
 app = Flask(__name__)
 
-app.config.from_mapping(
-    SECRET_KEY='secret_key_just_for_dev_environment',
-    SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',
+app.config.from_mapping( #ntzung von datenbank , sicherheit und session
+    SECRET_KEY='secret_key_just_for_dev_environment',#session
+    SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',# sqlite datenbank pfad
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=False
 )
-
+ #hier mit app verknüfen
 db.init_app(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all() # 
-
+# das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
     admins_to_create = [
         {
             "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
@@ -33,13 +33,13 @@ with app.app_context():
     ]
 
     for admin_data in admins_to_create:
-        # Prüfen, ob der Admin schon in der DB existiert
+        # Prüfen, ob der Admin schon in der DB existiert damit die dopplungen verhindert werden
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar() # weg machen 
+        ).scalar() # wir nutzen scalar statt scalars weil wir hier mit scalars probleme hatten und durch scalar werden wir nur ein objekt zurückbekommen und nicht eine liste von objekten
 
         
-        if not exists:
+        if not exists: # hier wird dann ein neuer admin erstellt, wenn er noch nicht existiert
             new_admin = StandardUser(
                 hwr_mail=admin_data["hwr_mail"],
                 passwort=admin_data["passwort"],
@@ -49,35 +49,36 @@ with app.app_context():
             )
             db.session.add(new_admin)
 
-    db.session.commit()
+    db.session.commit() # jett werden die änderungen in der datenbank gespeichert
 
-@app.route("/")
+@app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
     return redirect(url_for("login"))
 
-#Feed bzw. Home Seite
+#Feed bzw. Home Seite der zeigt alle aktuell aktiven und nicht beendete Posts an.
 @app.route("/home", methods=["GET", "POST"])
 def home():
-
+# nur die eingeloggten user können die home seite sehen, sonst werden sie auf die login seite weitergeleitet:
     if "user_id" not in session:
 
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
     form = forms.Suchleiste()
     user = db.session.get(StandardUser,session["user_id"])
+    
     posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                           ).scalars()  
+                           ).scalars()  # hier werden alle posts aus der datenbank geholt, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der home.html datei angezeigt.
 
 
 
     return render_template("home.html", posts=posts, form=form, user=user)
 
-
+# jetzt wird eine register funktion erstellt, die es den usern ermöglicht, sich zu registrieren. die funktion überprüft, ob die eingegebene email bereits in der datenbank existiert. wenn ja, wird eine warnung angezeigt. wenn nein, wird ein neuer user erstellt und in der datenbank gespeichert. danach wird der user automatisch eingeloggt und auf die contact seite weitergeleitet.
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
-    form = forms.RegisterForm()
-
+    form = forms.RegisterForm() 
+    # hier wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn ja, wird der user erstellt und in der datenbank gespeichert. wenn nein, wird das formular erneut angezeigt.
     if form.validate_on_submit():
 
         existing_user = db.session.execute(
@@ -86,11 +87,11 @@ def register():
             )
         ).scalars()
 
-        if len(list(existing_user)) > 0:
+        if len(list(existing_user)) > 0: # hier wird überprüft, ob die eingegebene email bereits in der datenbank existiert. wenn ja, wird eine warnung angezeigt und der user wird auf die register seite weitergeleitet.
             flash("Diese E-Mail wird bereits verwendet!", "warning")
             return redirect(url_for("register"))
 
-        user = StandardUser(
+        user = StandardUser( # hier wird ein neuer user erstellt und in der datenbank gespeichert.
             hwr_mail=form.hwrmail.data,
             passwort=form.passwort.data
         )
@@ -98,15 +99,15 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        session["user_id"] = user.user_id
+        session["user_id"] = user.user_id # benutzer wird automatisch eingeloggt, nachdem er sich registriert hat.
 
         flash("Account erstellt!", "success")
-        return redirect(url_for("contact"))
+        return redirect(url_for("contact")) # weiterleitung auf die contact seite, damit der user seine kontaktinformationen eingeben kann.
 
     return render_template("register.html", form=form)
 
 
-#Kontaktformular
+#Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
     if "user_id" not in session:
@@ -139,12 +140,12 @@ def contact():
         form=form
     )
 
-#Post erstellen(Fatme)
+# der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/create/", methods=["GET", "POST"])
 def create_post():
 
     form = forms.CreatePostForm()
-
+# get-request wird verwendet, um das formular anzuzeigen. post-request wird verwendet, um die daten aus dem formular zu verarbeiten und in der datenbank zu speichern.
     if request.method == 'GET':
 
         return render_template(
@@ -153,7 +154,7 @@ def create_post():
         )
 
     else:
-#Validator
+#Validator 
         if form.validate():
 
             aktiver_post = db.session.execute(
@@ -169,7 +170,7 @@ def create_post():
                     "warning"
                 )
                 return redirect(url_for("create_post"))
-            
+            # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
             heute = date.today()
             post = Post(
                 user_id=session["user_id"],
@@ -190,14 +191,14 @@ def create_post():
             flash('Post erfolgreich erstellt.', 'success')
 
         else:
-
+ # es wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn nicht, werden die fehler angezeigt.
             print(form.errors)
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
         return redirect(url_for('create_post'))
     
-
+# die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird der status des posts auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. wenn nein, wird der user auf die login seite weitergeleitet.
 app.route ("/close_post/<int:post_id>/")
 def close_post(post_id):
     post = db.session.get(Post, post_id)
@@ -211,7 +212,7 @@ def close_post(post_id):
     return redirect (url_for("profile"))
 
 @app.route('/login/', methods=['GET', 'POST'])
-def login():
+def login(): # in diesem teil wird die login funktion erstellt. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird das formular angezeigt. wenn das formular korrekt ausgefüllt wurde, wird der user eingeloggt und auf die home seite weitergeleitet. wenn das formular nicht korrekt ausgefüllt wurde, wird eine warnung angezeigt und der user bleibt auf der login seite.
 
     form = forms.CreateLogin()
 
@@ -239,7 +240,7 @@ def login():
 
     return render_template("login.html", form=form)
 
-#Profil anzeigen
+#zeigt die daten des eingeloggten users an. die funktion überprüft, ob der user eingeloggt ist. wenn ja, werden die daten des users angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route('/profile/')
 def profile():
     if "user_id" not in session:
@@ -248,11 +249,11 @@ def profile():
     
     user = db.session.get(StandardUser, session["user_id"] ) 
 
-    posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars()
+    posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars() # das holt alle posts des eingeloggten users aus der datenbank, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der profile.html datei angezeigt.
     return render_template("profile.html", user=user, posts= posts)
 
 
-# Profil bearbeiten
+# Profil bearbeiten es ermöglicht daas ändenrn der benutzerinformationen. 
 @app.route('/profile/edit/', methods=['GET', 'POST'])
 def edit_profile():
 
@@ -286,7 +287,7 @@ def edit_profile():
         form=form
     )
 
-@app.route("/logout")
+@app.route("/logout") # löscht die session des eingeloggten users und leitet ihn auf die login seite weiter.
 def logout():
 
     session.pop("user_id", None)
@@ -296,7 +297,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/api/posts")
+@app.route("/api/posts") # gitb alle posts in der datenbank als json zurück. 
 def api_posts():
 
     posts = db.session.execute(
@@ -315,8 +316,8 @@ def api_posts():
 def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
+    form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
 
-    form = forms.CreatePostForm()
     if request.method == 'GET':
 
             form.title.data = post.titel
@@ -340,10 +341,12 @@ def edit_post (post_id):
 
                 flash('Post konnte nicht aktualisiert werden.','warning')
 
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile')) # alte daten werden vorbeigeschickt und die neuen daten werden in der datenbank gespeichert.
+    
+
 
 @app.route("/search", methods=["GET", "POST"])
-def suche():
+def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen suchbegriff. 
 
     form = forms.Suchleiste()
     posts =[]
@@ -363,7 +366,7 @@ def suche():
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route ("/delete_post/<int:post_id>/")
+@app.route ("/delete_post/<int:post_id>/") # post löschen entfernt einen post aus der datenbank. 
 def delete_post(post_id):
     post = db.session.get(Post, post_id)
 
@@ -375,7 +378,7 @@ def delete_post(post_id):
          flash( "der post konnte nicht gelöscht werden", "warning") #success: grüner kasten
 
     return redirect (url_for("home"))
-    
+    # alles starten
 if __name__ == "__main__":
 
     app.run(debug=True)
