@@ -55,15 +55,6 @@ with app.app_context():
 def start():
     return redirect(url_for("login"))
 
-@app.route("/close_post/<int:post_id>/")
-def close_post(post_id):
-    post = db.session.get(Post, post_id)
-    if post:
-        post.status = "gefunden"
-        db.session.commit()
-        flash("Es freut uns, dass du deinen Gegenstand finden konntest! Dein Post wurde geschlossen.", "success")
-    return redirect(url_for("profile"))
-
 #Feed bzw. Home Seite
 @app.route("/home", methods=["GET", "POST"])
 def home():
