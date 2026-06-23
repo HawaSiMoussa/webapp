@@ -80,6 +80,7 @@ def register():
     form = forms.RegisterForm() 
     # hier wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn ja, wird der user erstellt und in der datenbank gespeichert. wenn nein, wird das formular erneut angezeigt.
     if form.validate_on_submit():
+        
 
         existing_user = db.session.execute(
             db.select(StandardUser).where(
@@ -93,16 +94,20 @@ def register():
 
         user = StandardUser( # hier wird ein neuer user erstellt und in der datenbank gespeichert.
             hwr_mail=form.hwrmail.data,
-            passwort=form.passwort.data
+            passwort=form.passwort.data,
+           campus_id=form.campus.data
         )
 
         db.session.add(user)
         db.session.commit()
 
-        session["user_id"] = user.user_id # benutzer wird automatisch eingeloggt, nachdem er sich registriert hat.
+        session["user_id"] = user.user_id
+        session["campus_id"] = user.campus_id
 
         flash("Account erstellt!", "success")
-        return redirect(url_for("contact")) # weiterleitung auf die contact seite, damit der user seine kontaktinformationen eingeben kann.
+        return redirect(url_for("contact"))
+    
+    
 
     return render_template("register.html", form=form)
 
