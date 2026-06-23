@@ -58,7 +58,7 @@ LostAndFound
             </button>
 
             <!-- Nachricht -->
-          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Gefunden!: ' ~ post.titel)|urlencode }}
+          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
           &body={{('Hallo,' ~'\n\n' ~
            'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~
            'Gegenstand: ' ~post.titel ~'\n' ~
