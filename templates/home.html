@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% from 'bootstrap5/utils.html' import render_messages %}
-
 
 {% block TITLE %}
 LostAndFound
@@ -68,7 +66,8 @@ LostAndFound
             'Bitte melden Sie sich bei mir.' ~ '\n\n' ~
             'Viele Grüße'
             )|urlencode }}">
-    <i class="bi bi-envelope"></i>
+             class="btn btn-outline-primary btn-sm border-0">
+             <i class="bi bi-envelope"></i>
 </a>
 
 
@@ -77,12 +76,6 @@ LostAndFound
             <span>
                 <i class="bi bi-eye"></i>
                 {{ post.views }}
-            </span>
-
-            <!-- Status -->
-            <span
-                class="rounded-circle bg-danger d-inline-block"
-                style="width:6px; height:6px;">
             </span>
 
         </div> 
