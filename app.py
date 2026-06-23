@@ -64,12 +64,11 @@ def home():
 
         flash("Bitte zuerst einloggen!", "warning")
     return redirect(url_for("login"))
-    form = forms.Suchleiste()
-    user = db.session.get(StandardUser,session["user_id"])
-
-    posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                               ).scalars()
-    return render_template("home.html", posts=posts, form=form, user=user)
+form = forms.Suchleiste()
+user = db.session.get(StandardUser,session["user_id"])
+posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
+                           ).scalars()                          
+return render_template("home.html", posts=posts, form=form, user=user)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
