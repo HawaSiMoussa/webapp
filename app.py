@@ -227,7 +227,7 @@ def login():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalar_one_or_none() # weg machen überarbeiten 
+        ).scalars() # weg machen überarbeiten 
 
         if user is None:
             flash("User existiert nicht.", "warning")
