@@ -88,6 +88,7 @@ def register():
     form = forms.RegisterForm()
 
     if form.validate_on_submit():
+        
 
         existing_user = db.session.execute(
             db.select(StandardUser).where(
@@ -101,16 +102,20 @@ def register():
 
         user = StandardUser(
             hwr_mail=form.hwrmail.data,
-            passwort=form.passwort.data
+            passwort=form.passwort.data,
+           campus_id=form.campus.data
         )
 
         db.session.add(user)
         db.session.commit()
 
         session["user_id"] = user.user_id
+        session["campus_id"] = user.campus_id
 
         flash("Account erstellt!", "success")
         return redirect(url_for("contact"))
+    
+    
 
     return render_template("register.html", form=form)
 
