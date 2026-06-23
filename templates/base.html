@@ -92,7 +92,12 @@
 <div class="container mt-3">
 
     
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+<div>
+
+    {{ render_messages() }}
+
+
+</div>
     {% block CONTENT %}
     {% endblock %}
 
