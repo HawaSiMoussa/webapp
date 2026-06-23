@@ -320,18 +320,6 @@ def api_posts():
         for p in posts
     ])
 
-@app.route ("/close_post/<int:post_id>/")
-def close_post(post_id):
-    post = db.session.get(Post, post_id)
-
-    post.status ="gefunden"
-
-    db.session.commit()
-
-    flash( "Es freut uns, dass du dein Gegenstand finden konntest! Dein Post wurde geschlossen.", "success") #success: grüner kasten
-    
-    return redirect (url_for("profile"))
-
 @app.route ("/edit_post/<int:post_id>/", methods= ["GET", "POST"])
 def edit_post (post_id):
 
@@ -344,7 +332,6 @@ def edit_post (post_id):
             form.description.data = post.beschreibung
             form.lost_date.data = post.verlustdatum
             form.lost_area.data = post.verlustort
-
             return render_template('edit_post.html',form=form)
     else:
 
@@ -360,8 +347,7 @@ def edit_post (post_id):
                 flash('Post erfolgreich aktualisiert.','success')
             else:
 
-                flash('Post konnte nicht aktualisiert werden.','warning'
-                )
+                flash('Post konnte nicht aktualisiert werden.','warning')
 
             return redirect(url_for('profile'))
 
@@ -375,14 +361,29 @@ def suche():
     if form.validate_on_submit():
         suchbegriff = form.suchfeld.data
 
-        posts = db.session.execute(
+        result = db.session.execute(
             db.select(Post).where(
                 Post.titel.contains(suchbegriff) | Post.beschreibung.contains(suchbegriff)
             )
         ).scalars()
 
+    for post_object in result:
+            posts.append(post_object)
+
     return render_template("suche.html", posts=posts, form=form, user=user)
 
+@app.route ("/delete_post/<int:post_id>/")
+def delete_post(post_id):
+    post = db.session.get(Post, post_id)
+
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        flash( "der post wurde erfolgreich gelöscht", "success") #success: grüner kasten
+    else: 
+         flash( "der post konnte nicht gelöscht werden", "warning") #success: grüner kasten
+
+    return redirect (url_for("home"))
     
 if __name__ == "__main__":
 
