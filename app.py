@@ -159,7 +159,7 @@ def create_post():
                     Post.user_id == session["user_id"],
                     Post.status == "laufend"
                 )
-            ).scalar_one_or_none() # überarbeiten
+            ).scalar() # überarbeiten
 
             if aktiver_post:
                 flash(
