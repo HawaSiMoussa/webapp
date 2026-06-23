@@ -20,7 +20,7 @@ db.init_app(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context():
+with app.app_context ():
     db.create_all() # 
 # das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
     admins_to_create = [
