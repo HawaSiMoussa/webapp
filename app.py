@@ -63,10 +63,8 @@ def home():
     if "user_id" not in session:
 
         flash("Bitte zuerst einloggen!", "warning")
-
-        return redirect(url_for("login"))
+    return redirect(url_for("login"))
     form = forms.Suchleiste()
-
     user = db.session.get(StandardUser,session["user_id"])
 
     posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
@@ -85,7 +83,7 @@ def register():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalar_one_or_none()
+        ).scalars()
 
         if existing_user:
             flash("Diese E-Mail wird bereits verwendet!", "warning")

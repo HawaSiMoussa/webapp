@@ -64,7 +64,14 @@ LostAndFound
 
                 <i class="bi bi-chevron-down"></i>
             </button>
+{% if session.get("is_admin") %}
 
+<a href=“{{ url_for('close_post', post_id=post.post_id) }}”
+class=“btn btn-success btn-sm”>
+Schließen
+</a>
+
+{% endif %}
             <!-- Nachricht -->
           <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
           &body={{('Hallo,' ~'\n\n' ~
