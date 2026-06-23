@@ -21,7 +21,7 @@ migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
-    db.create_all()
+    db.create_all() # 
 
     admins_to_create = [
         {
