@@ -41,11 +41,12 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
-| Neugestaltung und Überarbeitung der Scribbles für die Anwendung | Product Discovery Commits | Vorlesungsfolien, Kursmaterial |
-| Erstellung des Value Proposition Canvas | Product Discovery Commits | Value Proposition Canvas Methode |
-| Eigenständiges Design des LostAndFound-Logos | Commit mit Logo-Datei | Eigene Gestaltung |
-| Automatisches Setzen des Meldedatums auf das aktuelle Tagesdatum | Commits in app.py | Python datetime Documentation |
-| Entwicklung des Profilbereichs und Anpassungen der Benutzeroberfläche | Commits in Templates und CSS-Dateien | Bootstrap Documentation |
-| Gestaltung des User Interfaces mit Bootstrap und eigenem CSS | Commits in Templates und CSS-Dateien | Bootstrap Documentation |
-| Implementierung der Info-Tooltips bei Verlustdatum und Verlustort | Commits in create_post.html | Bootstrap Documentation |
-| Unterstützung bei Merge-Konflikten und Wiederherstellung verlorener Codebestandteile | Merge- und Fix-Commits | Git Documentation |
+| Neugestaltung und Überarbeitung der Scribbles für die Anwendung | - | Vorlesungsfolien, Kursmaterial |
+| Erstellung des Value Proposition Canvas | - | Value Proposition Canvas Methode |
+| Eigenständiges Design des LostAndFound-Logos | - | Eigene Gestaltung |
+| Entwicklung des Registrierungsformulars inklusive Validierung der Eingaben | [RegisterForm](LINK) | Flask-WTF Documentation |
+| Implementierung der Funktion „Post erstellen“ inklusive Formular und Datenbankspeicherung | [AddFehlermeldung](https://github.com/HawaSiMoussa/webapp/commit/bc836f29be543f61a1f057eadec24d964b015c76) | Flask Documentation, SQLAlchemy Documentation |
+| Automatisches Setzen des Meldedatums auf das aktuelle Tagesdatum | [MeldedatumAppearingAtTheFrontOfThePost](https://github.com/HawaSiMoussa/webapp/commit/5f9b4cfb9d5cdfe38954f772e774c691e72eb271), [AddMeldedatumAndVerfallsdatum](https://github.com/HawaSiMoussa/webapp/commit/199b3879823dcbb038c5ad5d57486b76fcdbf72d) | Python datetime Documentation |
+| Entwicklung des Profilbereichs und Anpassungen der Benutzeroberfläche (inkl. Erstellen einer base.html) | [AddEverywhereLogo](https://github.com/HawaSiMoussa/webapp/commit/b5d2acb59c4f1972831851d0837ffc2343845ac4), [ExtendBase.html](https://github.com/HawaSiMoussa/webapp/commit/c888b907f6ad8bf9bdbbbfe116d7472316af25c2), [AddCSS](https://github.com/HawaSiMoussa/webapp/commit/cadfc6319b7cf94564039174f9182485949ab001) | Bootstrap Documentation |
+| Implementierung der Info-Tooltips bei Verlustdatum und Verlustort | [AddTooltip](https://github.com/HawaSiMoussa/webapp/commit/505f62e963b8d45f8692aca1ad9e99392be14be6), [InsertSmallInfo](https://github.com/HawaSiMoussa/webapp/commit/52a7672daa7eaef1e2a0a9133f34c1a199052b1c) | Bootstrap Documentation |
+| Unterstützung bei Merge-Konflikten und Wiederherstellung verlorener Codebestandteile | [FixIssues](https://github.com/HawaSiMoussa/webapp/commit/ebacfd89b19a75226b37a06d2751b92e95aede01) | - |
