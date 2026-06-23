@@ -70,8 +70,12 @@ Profil
         </div>
 
         <div class="col">
+        {% if user.campus %}
             {{ user.campus_id }}
-
+            {% else %}
+            <span class="text-muted">Kein Campus ausgewählt</span>
+        {% endif %}
+    </div>
          
         </div>
         <a href="{{ url_for('logout') }}"
