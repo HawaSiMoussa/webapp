@@ -57,7 +57,7 @@ def start():
 
 
 #Feed bzw. Home Seite
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
 
     if "user_id" not in session:
@@ -367,7 +367,10 @@ def edit_post (post_id):
 
 @app.route("/search", methods=["GET", "POST"])
 def suche():
+
     form = forms.Suchleiste()
+    posts =[]
+    user=db.session.get(StandardUser, session["user_id"])
 
     if form.validate_on_submit():
         suchbegriff = form.suchfeld.data
@@ -378,9 +381,9 @@ def suche():
             )
         ).scalars()
 
-        return render_template("suche.html", posts=posts, form=form)
+    return render_template("suche.html", posts=posts, form=form, user=user)
 
-    return render_template("suche.html", form=form)
+    
 if __name__ == "__main__":
 
     app.run(debug=True)

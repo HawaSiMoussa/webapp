@@ -6,13 +6,15 @@ LostAndFound
 
 {% block CONTENT %}
 
-<form method="POST" class="mb-4">
+<form method="POST"
+      action="{{ url_for('suche') }}"
+      class="mb-4">
 
     {{ form.hidden_tag() }}
 
     <div class="input-group">
 
-        {{ form.suchbegriff(
+        {{ form.suchfeld(
             class="form-control",
             placeholder="Suchen..."
         ) }}
