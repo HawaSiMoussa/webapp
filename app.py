@@ -36,7 +36,7 @@ with app.app_context():
         # Prüfen, ob der Admin schon in der DB existiert
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar_one_or_none() # weg machen 
+        ).scalar() # weg machen 
 
         
         if not exists:
