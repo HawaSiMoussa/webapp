@@ -204,7 +204,7 @@ def create_post():
         return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird der status des posts auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. wenn nein, wird der user auf die login seite weitergeleitet.
-app.route ("/close_post/<int:post_id>/")
+@app.route ("/close_post/<int:post_id>/")
 def close_post(post_id):
     post = db.session.get(Post, post_id)
 
