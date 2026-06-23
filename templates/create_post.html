@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-
-<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
    
-
 </div>
 {% block TITLE %}
 
@@ -16,7 +13,7 @@ Verlust melden
 {{ render_messages() }}
 
 <div class="container mt-">
-
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
     <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
      width="100">
 </div>
@@ -45,6 +42,7 @@ Verlust melden
 
     <div class="mb-3">
     {{ form.lost_date.label(class="form-label") }}
+    <!--tooltip für Verlusdatum-->
     <span
         data-bs-toggle="tooltip"
         data-bs-placement="right"
@@ -56,6 +54,7 @@ Verlust melden
 
     <div class="mb-3">
     {{ form.lost_area.label(class="form-label") }}
+    <!--tooltip für Verlustort-->
     <span
         data-bs-toggle="tooltip"
         data-bs-placement="right"
@@ -65,7 +64,7 @@ Verlust melden
 
     {{ form.lost_area(class="form-control") }}
 </div>
-
+<!--"success" lässt Button grün erscheinen-->
     <div class="text-end">
     {{ form.submit(class="btn btn-success") }}
     </div>
