@@ -161,7 +161,7 @@ def create_post():
     else:
 #Validator 
         if form.validate():
-
+          if not session.get("is_admin"):
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
