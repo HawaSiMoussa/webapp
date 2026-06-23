@@ -36,7 +36,7 @@ with app.app_context():
         # Prüfen, ob der Admin schon in der DB existiert
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar_one_or_none()
+        ).scalar_one_or_none() # weg machen 
 
         
         if not exists:
@@ -84,7 +84,7 @@ def register():
             )
         ).scalars()
 
-        if existing_user:
+        if len(list(existing_user)) > 0:
             flash("Diese E-Mail wird bereits verwendet!", "warning")
             return redirect(url_for("register"))
 
@@ -159,7 +159,7 @@ def create_post():
                     Post.user_id == session["user_id"],
                     Post.status == "laufend"
                 )
-            ).scalar_one_or_none()
+            ).scalar_one_or_none() # überarbeiten
 
             if aktiver_post:
                 flash(
@@ -227,7 +227,7 @@ def login():
             db.select(StandardUser).where(
                 StandardUser.hwr_mail == form.hwrmail.data
             )
-        ).scalar_one_or_none()
+        ).scalar_one_or_none() # weg machen überarbeiten 
 
         if user is None:
             flash("User existiert nicht.", "warning")
