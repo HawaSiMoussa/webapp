@@ -46,11 +46,13 @@ LostAndFound
 
         </h5>
            <small>
-             {{ post.meldedatum.strftime('%d.%m.%Y') }}
+            <i class="bi bi-info-circle"></i>
+              Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
             </small>
             <br>
             <small class="text-danger">
-             {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+            <i class="bi bi-hourglass-split"></i>
+             Ablaufdatum{{ post.ablaufdatum.strftime('%d.%m.%Y') }}
             </small>
             
         <!-- Buttons + Status -->
