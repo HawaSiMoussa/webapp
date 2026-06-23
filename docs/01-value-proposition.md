@@ -1,3 +1,19 @@
+---
+title: Value Proposition
+nav_order: 1
+---
+
+{: .no_toc }
+# Value Proposition
+
+<details open markdown="block">
+<summary>Table of contents</summary>
++ ToC
+{: toc }
+{: .text-delta }
+</details>
+
+
 ## Value Proposition
 
 The Problem
@@ -20,6 +36,7 @@ Die Zielgruppe der Anwendung sind Studierende, Dozierende und Mitarbeitende der 
 Die Plattform richtet sich ausschließlich an Personen mit einer gültigen HWR-E-Mail-Adresse und bildet somit ein digitales, campusinternes Lost-and-Found-System.
 
 ## Happy Path
+
 1. Ein HWR-Mitglied registriert sich mit seiner HWR-E-Mail-Adresse.
 2. Die Person erstellt eine Suchanzeige für einen verlorenen Gegenstand.
 3. Die Anzeige erscheint im Feed des jeweiligen Campus.
@@ -30,3 +47,9 @@ Die Plattform richtet sich ausschließlich an Personen mit einer gültigen HWR-E
 ## Target Scope
 
 Zu Beginn des Projekts wurden Scribbles erstellt, um die geplanten Funktionen und den Aufbau der Benutzeroberfläche zu visualisieren. Die Scribbles dienten als Grundlage für die spätere Umsetzung der Webanwendung.
+
+![](images/Scribble1.jpeg)
+
+### Weitere Ansicht
+
+![](images/Scribble2.jpeg)
