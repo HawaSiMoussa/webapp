@@ -45,11 +45,11 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
-| Login html sowie die email validation korrigiert   | login html erstellt für das design sowie den validator richtig getsellt mit den endungen der hwr-mail nochmal | commit proof: e591fdf58a28dd2e01598e340a416488c14f1d63 |
-| [Auth] Validierungs-Logik für HWR-E-Mail-Endungen und Feedback-Flashes im Registrierungsformular |  | Flask Flash-Messages Guide |
-| [Security] Einbau der automatischen Admin-User-Generierung beim App-Start |  | Flask-SQLAlchemy Context Docs |
+|[Login und Registrierung] Validierungs-Logik für HWR-E-Mail-Endungen und Feedback-Flashes im Registrierungsformular Login html sowie die email validation korrigiert login html erstellt für das design sowie den validator richtig gestellt mit den Endungen der hwr-mail nochmal | commit proof: e591fdf58a28dd2e01598e340a416488c14f1d63, c1586c7cfcba0548ea8b1e0bb9ae7e390cf6661d,  | ihre guide|
+| [Suche] die Sucheingabe die ich im feed eingeführt habe sowie fetsgelegt dass eben auch wörter angezeigt werden die klein oder großgeschrieben wurden also nicht 100% identisch zum titel des posts | ommit prrof: 64ee9808850d5547e416bbe250c43168753376a4 | ihre Guide |
+| [db migrate eingeführt] Einbau der migrate für die datenbank also isntralliert da ich davor probleme hatte | 7fc8fbc5d544b3aa0340846b3b136fba60f91b00 | hierfür habe ich ihren link im user interface unten für migrate genutzt|
 | [UI/UX] Entwicklung der HTML-Templates für Login, Registrierung und den Lösch-Button im Home-Feed |  | Bootstrap 5 Components |
-| [Database] Definition der Tabellen-Beziehungen (`Campus`, `StandardUser`, `Fundbuero`, `Post`) |  | SQLAlchemy Relationships |
+| [Database] Definition der Tabellen-Beziehungen5 (`Campus`, `StandardUser`, `Fundbuero`, `Post`) |  | SQLAlchemy Relationships |
 | [Backend] Erstellung der Route `/delete_post` zum permanenten Entfernen von Einträgen aus der DB |  | Flask Route Documentation |
 | [Backend] Integration von Passwort-Mindestlängen (8 Zeichen) inklusive Fehlerausgabe |  | WTForms Validators Documentation |
 | Packages installiert für email und() und migrate  |  | https://flask-migrate.readthedocs.io/en/latest/ das habe ich genutzt sowie ein email package installiert aber auch migrate installiert https://learn.microsoft.com/de-de/nuget/consume-packages/install-use-packages-visual-studio|
