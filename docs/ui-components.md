@@ -27,7 +27,7 @@ Für die Benutzeroberfläche wurde ein eigenes Logo entworfen und auf mehreren S
 
 ### Logo
 
-![Logo](images/LogoLostAndFound.jpeg)
+![Logo](/static/images/LogoLostAndFound.jpeg)
 
 Das Logo erscheint unter anderem auf:
 

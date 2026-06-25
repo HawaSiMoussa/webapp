@@ -26,15 +26,16 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 ## Top-3 Contributions
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
-|---|---|---|---|
+| :-- | :-- | :-- | :-- |
 | 1 | Unterstützung bei der Product Discovery (Scribbles, Value Proposition Canvas) | Ich bin stolz darauf, weil diese Ideen und Entwürfe die Grundlage für unsere spätere Web-App geschaffen haben. | Es war nicht einfach, die Anforderungen der Nutzer zu verstehen und daraus sinnvolle Funktionen abzuleiten. |
 | 2 | Entwicklung der Registrierungs- und Post-Erstellungsformulare | Diese Funktionen sind ein zentraler Bestandteil unserer Anwendung und werden von jedem Nutzer verwendet. | Ich musste mich zuerst in Flask-WTF, Validatoren und die Verbindung zur Datenbank einarbeiten. |
 | 3 | Gestaltung des User Interfaces mit Bootstrap und CSS | Mir war wichtig, dass die Anwendung übersichtlich aussieht und einfach zu bedienen ist. | Die größte Herausforderung war es, Bootstrap mit eigenem CSS zu kombinieren und dabei ein einheitliches Design beizubehalten. |
+
 ## Design Decisions that I led
 
-1. [DD #00 – Zeichenlimit für Beschreibungen](../design-decisions/dd-00.md)
-2. [DD #01 – Verlustdatum darf nicht in der Zukunft liegen](../design-decisions/dd-01.md)
-3. [DD #02 – Eine aktive Suchanzeige pro Nutzer](../design-decisions/dd-02.md)
+1. [DD #00 – Zeichenlimit für Beschreibungen](design-decisions/dd-00.md)
+2. [DD #01 – Verlustdatum darf nicht in der Zukunft liegen](design-decisions/dd-01.md)
+3. [DD #02 – Eine aktive Suchanzeige pro Nutzer](design-decisions/dd-02.md)
 
 ## Contributions
 
