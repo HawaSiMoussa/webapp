@@ -28,7 +28,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 2. DD #10
 3. DD #11
 4. DD #06
-5. DD #07
+5. DD #09
 ## Top-3 Contributions
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
