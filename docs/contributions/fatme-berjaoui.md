@@ -41,6 +41,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
 | Neugestaltung und Überarbeitung der Scribbles für die Anwendung | - | Vorlesungsfolien zu Product Discovery und UI-Konzeption |
+| Erstellung der Web-Page| [AddDD](https://github.com/HawaSiMoussa/webapp/commit/452ff44db46f22873e7009220a58023effcd0f4f), [ProductDiscovery](https://github.com/HawaSiMoussa/webapp/commit/d4dd662b9d7ae156d4d30cb67298ac2ae560829d)| - |
 | Erstellung des Value Proposition Canvas | - | Value Proposition Canvas Methode, Vorlesungsfolien Product Discovery |
 | Eigenständiges Design des LostAndFound-Logos | - | Eigene Gestaltung |
 | Entwicklung des Registrierungsformulars (inkl. contact.html) | [KlasseContactForm](https://github.com/HawaSiMoussa/webapp/commit/b1b0bc4d31e365eda89225e9eda09a9ab82c1037), [App.route](https://github.com/HawaSiMoussa/webapp/commit/5fd428cb25c31330c3c0487f313936fec8568c41) | Flask-WTF Documentation, WTForms Documentation, Vorlesungsunterlagen zu HTML Forms |
