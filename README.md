@@ -17,3 +17,4 @@ LostAndFound bringt sie zurück. Unser Projekt LostAndFound ist eine Webanwendun
     pip install -r requirements.txt
     - Anwendung bzw. Flask starten im Terminal:
     python app.py
+    - über http://127.0.0.1:5000 die Anwendung in einem Browser starten
