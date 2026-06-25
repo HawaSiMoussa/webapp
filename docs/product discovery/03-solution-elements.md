@@ -7,4 +7,4 @@ nav_order: 3
 {: .no_toc }
 # Solution Elements
 
-![Value Proposition Schema](../material/ValuePropositionSchema.jpeg)
+![Value Proposition Schema](/material/ValuePropositionSchema.jpeg)
