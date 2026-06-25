@@ -21,6 +21,14 @@ Mir ist bewusst, dass die wörtliche oder nahezu wörtliche Wiedergabe von fremd
 
 Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-basierte Hilfsmittel verwendet habe, die Verantwortung für eventuell durch die KI generierte fehlerhafte oder verzerrte Inhalte, fehlerhafte Referenzen, Verstöße gegen das Datenschutz- und Urheberrecht oder Plagiate trage.
 
+
+## Design Decisions that I led
+
+1. DD #12
+2. DD #10
+3. DD #11
+4. DD #06
+5. DD #07
 ## Top-3 Contributions
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
