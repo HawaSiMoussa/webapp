@@ -48,8 +48,8 @@ Die Plattform richtet sich ausschließlich an Personen mit einer gültigen HWR-E
 
 Zu Beginn des Projekts wurden Scribbles erstellt, um die geplanten Funktionen und den Aufbau der Benutzeroberfläche zu visualisieren. Die Scribbles dienten als Grundlage für die spätere Umsetzung der Webanwendung.
 
-![](images/Scribble1.jpeg)
+![](assets/images/Scribble1.jpeg)
 
 ### Weitere Ansicht
 
-![](images/Scribble2.jpeg)
+![](assets/images/Scribble2.jpeg)

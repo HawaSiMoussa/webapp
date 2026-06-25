@@ -13,7 +13,7 @@ nav_order: 2
 {: .text-delta }
 </details>
 
-![Datenmodell](images/Datenmodell.jpeg)
+![Datenmodell](assets/images/Datenmodell.jpeg)
 
 ## Beschreibung des Datenmodells
 

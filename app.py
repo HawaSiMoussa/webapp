@@ -380,7 +380,7 @@ def delete_post(post_id):
         db.session.commit()
         flash( "der post wurde erfolgreich gelöscht", "success") #success: grüner kasten
     else: 
-         flash( "der post konnte nicht gelöscht werden", "warning") #success: grüner kasten
+         flash( "der post konnte nicht gelöscht werden", "warning") #warning: roter Kasten
 
     return redirect (url_for("home"))
     # alles starten
