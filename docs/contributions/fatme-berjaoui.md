@@ -26,7 +26,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 ## Top-3 Contributions
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
-|---|---|---|---|
+|:--|:--|:--|:--|
 | 1 | Unterstützung bei der Product Discovery (Scribbles, Value Proposition Canvas) | Ich bin stolz darauf, weil diese Ideen und Entwürfe die Grundlage für unsere spätere Web-App geschaffen haben. | Es war nicht einfach, die Anforderungen der Nutzer zu verstehen und daraus sinnvolle Funktionen abzuleiten. |
 | 2 | Entwicklung der Registrierungs- und Post-Erstellungsformulare | Diese Funktionen sind ein zentraler Bestandteil unserer Anwendung und werden von jedem Nutzer verwendet. | Ich musste mich zuerst in Flask-WTF, Validatoren und die Verbindung zur Datenbank einarbeiten. |
 | 3 | Gestaltung des User Interfaces mit Bootstrap und CSS | Mir war wichtig, dass die Anwendung übersichtlich aussieht und einfach zu bedienen ist. | Die größte Herausforderung war es, Bootstrap mit eigenem CSS zu kombinieren und dabei ein einheitliches Design beizubehalten. |
