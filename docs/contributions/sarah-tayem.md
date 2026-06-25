@@ -24,11 +24,11 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 ## Design Decisions that I led
 
-1. DD #12
-2. DD #10
-3. DD #11
-4. DD #06
-5. DD #09
+1. [DD #12] (../design-decisions/dd-12.md)
+2. [DD #10] (../design-decisions/dd-10.md)
+3. [DD #11] (../design-decisions/dd-11.md)
+4. [DD #06] (../design-decisions/dd-06.md)
+5. [DD #09] (../design-decisions/dd-09.md)
 ## Top-3 Contributions
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
