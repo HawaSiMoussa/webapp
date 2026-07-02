@@ -8,8 +8,9 @@ nav_order: 2
 Meine Zielnote liegt bei 1,3 oder 1,7.
 
 ## Personal Goals
-Ich möchte verstehen wovon eine Web App abhängt und die einzelnen Schritte vollständig nachvollziehen, um somit in der Zukunft weitere Web-Apps entwickeln zu können. Zudem erhoffe ich mir viele Erfahrungen mit Python und HTML sammeln zu können. Am Ende des Kurses möchte ich eine erfolgreiche und für mich sinnvolle Web App erstellt 
+Ich möchte verstehen wovon eine Web App abhängt und die einzelnen Schritte vollständig nachvollziehen, um somit in der Zukunft weitere Web-Apps entwickeln zu können. Zudem erhoffe ich mir viele Erfahrungen mit Python und HTML sammeln zu können. Am Ende des Kurses möchte ich eine erfolgreiche und für mich sinnvolle Web App erstellt
 haben, die ich mit meinem später erweiterten Wissen und Ideen ausbauen kann.
+Ich möchte einen großen nutzen in dieser web app sehen
 
 ## Eidesstattliche Erklärung
 
@@ -27,9 +28,9 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
 |---|---|---|---|
-| 1 | Fehlertolerantes Suchsystem im Feed | Die Suche ist unabhängig von Groß- und Kleinschreibung. Das spart Usern viel Zeit und verhindert Verwirrung, wenn ein Titel nicht zu 100 % exakt eingetippt wird. | Einbindung der relationalen Query-Logik über SQLAlchemy, ohne die Performance der App zu beeinträchtigen. |
+| 1 | Fehlertolerantes Suchsystem im Feed | Die Suche ist unabhängig von Groß- und Kleinschreibung. Das spart Usern viel Zeit und verhindert Verwirrung, wenn ein Titel nicht zu 100 % exakt eingetippt wird. | 
 | 2 | Sicheres & benutzerfreundliches Auth-System | Das System gibt sofort präzises Feedback (z. B. wenn eine E-Mail bereits vergeben ist) und leitet neu registrierte User ohne nervigen Zweit-Login direkt zum Home-Feed weiter. | Die logische Verknüpfung der Validierung mit automatischen Sessions, um doppelten Eingabeaufwand zu vermeiden. |
-| 3 | Strikte HWR-Domain-Validierung | Nur Nutzer mit echten HWR-Mailendungen können Konten anlegen. Das schützt unser digitales Uni-Ökosystem vor externem Spam und Missbrauch. | Die fehlerfreie Prüfung von gleich drei verschiedenen HWR-Mail-Strukturen parallel im Backend. |
+| 3 | Strikte HWR-Domain-Validierung | Nur Nutzer mit echten HWR-Mailendungen können Konten anlegen. Das schützt unser digitales Uni-Ökosystem vor externem Spam und Missbrauch. | Die fehlerfreie Prüfung von gleich drei verschiedenen HWR-Mail-Strukturen parallel im Backend. | Außerdem habe ich ebenso bei fehler behebungen meiner komilitonninen mit beigetragen wehslab ich sehr stolz bin da wir uns alle gegenseitig unterstützt haben|
 
 ## Design Decisions that I led
 
@@ -44,23 +45,28 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
-| [Backend] Implementierung der Freitextsuche in der Route `/search` mit Case-Insensitivity |  | SQLAlchemy Query Documentation |
-| [Auth] Validierungs-Logik für HWR-E-Mail-Endungen und Feedback-Flashes im Registrierungsformular |  | Flask Flash-Messages Guide |
-| [Security] Einbau der automatischen Admin-User-Generierung beim App-Start |  | Flask-SQLAlchemy Context Docs |
-| [UI/UX] Entwicklung der HTML-Templates für Login, Registrierung und den Lösch-Button im Home-Feed |  | Bootstrap 5 Components |
-| [Database] Definition der Tabellen-Beziehungen (`Campus`, `StandardUser`, `Fundbuero`, `Post`) |  | SQLAlchemy Relationships |
-| [Backend] Erstellung der Route `/delete_post` zum permanenten Entfernen von Einträgen aus der DB |  | Flask Route Documentation |
-| [Backend] Integration von Passwort-Mindestlängen (8 Zeichen) inklusive Fehlerausgabe |  | WTForms Validators Documentation |
-| Packages installiert für emiail und() und migrate  |  | https://flask-migrate.readthedocs.io/en/latest/ das ahbe ich genutzt sowie email package installiert  https://learn.microsoft.com/de-de/nuget/consume-packages/install-use-packages-visual-studio|
+|[Login und Registrierung] Validierungs-Logik für HWR-E-Mail-Endungen und Feedback-Flashes im Registrierungsformular Login html sowie die email validation korrigiert login html erstellt für das design sowie den validator richtig gestellt mit den Endungen der hwr-mail nochmal | commit proof: https://github.com/HawaSiMoussa/webapp/commit/2e3a77d8026d431487da70e15e4a35b911275c4f , https://github.com/HawaSiMoussa/webapp/commit/cd6acdff75600d1a6c20cd2023410b069e3a2e80 , https://github.com/HawaSiMoussa/webapp/commit/c1586c7cfcba0548ea8b1e0bb9ae7e390cf6661d, https://github.com/HawaSiMoussa/webapp/commit/66872f114d3b56474d7a610cde5ba937d57d69c3 , https://github.com/HawaSiMoussa/webapp/commit/ea7dc47eadfb9ab733a6aebf46791bcff092c8c0 , https://github.com/HawaSiMoussa/webapp/commit/2ab4a2f6991ebcdf667eba4d47c4075a5aaeaa8f | ihre guide|
+| [Suche] die Sucheingabe die ich im feed eingeführt habe sowie fetsgelegt dass eben auch wörter angezeigt werden die klein oder großgeschrieben wurden also nicht 100% identisch zum titel des posts | ommit prrof: https://github.com/HawaSiMoussa/webapp/commit/d4d9491f0ec9602d81516a65acaa14540ce5887f , https://github.com/HawaSiMoussa/webapp/commit/64ee9808850d5547e416bbe250c43168753376a4  | ihre Guide |
+| [db migrate eingeführt] Einbau der migrate für die datenbank also isntralliert da ich davor probleme hatte | 7fc8fbc5d544b3aa0340846b3b136fba60f91b00 | hierfür habe ich ihren link im user interface unten für migrate genutzt|
+| [Admin] Einen Admin entwickelt der einen überblick über alles hat und auch posts löschen kann  | https://github.com/HawaSiMoussa/webapp/commit/ed893ce385b12ea73599b876a2b504b97e9efa49 , https://github.com/HawaSiMoussa/webapp/commit/7fc8fbc5d544b3aa0340846b3b136fba60f91b00,https://github.com/HawaSiMoussa/webapp/commit/66872f114d3b56474d7a610cde5ba937d57d69c3 ,https://github.com/HawaSiMoussa/webapp/commit/e8b9bcfc8060b0e375f97df12a8c38d7d130be0e, https://github.com/HawaSiMoussa/webapp/commit/544aaf94c785cd7310c5ca3bdeb951ffbc05eb86 , https://github.com/HawaSiMoussa/webapp/commit/b00e2e74e8c1989d69b9d227c6c89c8361e3e99f,https://github.com/HawaSiMoussa/webapp/commit/3018e5f6b63703603489b7aa4a232caa946be35b  |ihre Guide |
+| [Verbesserungen auch der teile meiner kommilitonen] Hier haben wir eine menge probleme verbessert und fehler behoben | https://github.com/HawaSiMoussa/webapp/commit/f01f9fa2462b00f812b3e922752fd87a24619f08 , https://github.com/HawaSiMoussa/webapp/commit/68b13c20883b3762707a0b2c5532652c12778007, https://github.com/HawaSiMoussa/webapp/commit/c0c1ae2e3e7ea66c6aec508e2607db2bd289f37f  | ihre guide und mit gemini die fehler verstanden |
+| [app.py auskomentiert] Die app.py wurde komplett auskommentiert sowie nei bedarf verbessert  |  https://github.com/HawaSiMoussa/webapp/commit/00736e1676c318a62a2b72f719f99ea800198239 , https://github.com/HawaSiMoussa/webapp/commit/6c04b175d8e2fb2f17b5e7a7fe82c1551f671e45 | eigene dokumnetation und flask automatische kommentar hilfe |
+
+| [Packages installiert für email und() und migrate]| https://github.com/HawaSiMoussa/webapp/commit/e1a7149a406a2fe4184ae6b46b5ab9a3312ed6ed|https://, https://github.com/HawaSiMoussa/webapp/commit/95c4d52334da081b8f7ecf445eab115efd5a1ada flask-migrate.readthedocs.io/en/latest/ das habe ich genutzt sowie ein email package installiert aber auch migrate installiert https://learn.microsoft.com/de-de/nuget/consume-packages/install-use-packages-visual-studio| https://github.com/HawaSiMoussa/webapp/commit/e1a7149a406a2fe4184ae6b46b5ab9a3312ed6ed  |
+
+| [Umfrage] Die Umfrage habe ich ebenfalls selber erstellt und in den uni gruppen verschickt + auswertung   |  siehe read me |eigene umfrage erstellt|
+| [persona] Die Pertsona wurde ebenso von mir eigenständig erstellt.   |   | siehe read me |
+
+
 
 ## AI Directory (KI-Verzeichnis)
 
-| # | KI-Tool | Einsatzzweck | Betroffene Bereiche (Code + Doku) | Anmerkungen, Vorgehensweise, Prompts |
+| # | KI-Tool | Einsatzzweck | Betroffene Bereiche commit | Anmerkungen, Vorgehensweise, Prompts |
 | :-: | :--- | :--- | :--- | :--- |
-| 01 | Gemini | Syntax-Erklärung zu SQLAlchemy-Operatoren | `app.py` (Route `/search`) | Analyse von Best Practices zur Nutzung des `contains`-Operators bei einer Freitextsuche, um die Funktionsweise  zu verstehen. |
+| 01 | Gemini | git commit probleme beheben | beim pushen gab es oft konflikte manchmal auch da wir zu dritt gleichzeitig gearbeitet haben wehslab oft vieles nicht gepusht oder gepullt wurde | Gemini hat mir geholfen diese probleme zu lösen in dem ich z.b den merge vorgang stoppe etc. |
 | 02 | Gemini | Logische Fehleranalyse (Debugging) bei Session-Abfragen | `app.py` (Route `/create_post`) | Behebung eines logischen Konflikts beim Versuch, Admin-Rechte (`is_admin`) aus dem regulären User-Filter auszuschließen . |
-| 03 | Gemini | Fehleranalyse bei Datenbank-Abfragen (`scalar` vs. `scalars`) | `app.py` (Admin-Generierung beim App-Start) | Erklärung einer Fehlermeldung bezüglich Daten-Typen erhalten. Die KI diente als Hilfe, um den theoretischen Unterschied zwischen der Rückgabe eines Einzelobjekts (.scalar) und einer Liste (.scalars) zu verstehen. |
-| 04 | Gemini | Validierungs-Logik und Fehler-Handling | `app.py` (Routen `/register` und `/login`) | Hilfestellung beim Verständnis, wie Validierungsfehler von Formularen  |
-| 05 | Gemini | Formatierung der technischen Projektdaten | Dokumentation (`sarah.md`) | Strukturierung und tabellarische Formatierung der eigenen handschriftlich festgehaltenen Beiträge und Design-Entscheidungen für das GitHub-Pages-Layout. |
+| 03 | Gemini | Fehleranalyse bei Datenbank-Abfragen (`scalar` vs. `scalars`) | `app.py` (Admin-Generierung beim App-Start) | Erklärung einer Fehlermeldung bezüglich Daten-Typen erhalten. Die KI diente als Hilfe, um den theoretischen Unterschied zwischen der Rückgabe eines Einzelobjekts (.scalar) und einer Liste (.scalars) zu verstehen und zu verstehen wieso der fehler kam bei der nutzung von scalars und nicht bei scalar |
+| 04 | Gemini | Validierungs-Logik und Fehler-Handling | `app.py` (Routen `/register` und `/login`) | Hilfestellung beim Verständnis, wie Validierungsfehlern von Formularen denn oftmals hatte ich fehler wir z.B beim login und bei der registrierung denn vom aufbau her waren sie ähnlich aber doie regostrierung hat anfangs nicht geklappt |
+| 05 | Chatgbt | bei der app.py in der stelle der Suche der fehler war die schreibweise von password und mehr schreibfehler auf die mich chatgbt hingewiesen hat   | Dokumentation  |  commit prove: e591fdf58a28dd2e01598e340a416488c14f1d63|
 
 
