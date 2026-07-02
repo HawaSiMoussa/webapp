@@ -24,19 +24,20 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 ## Design Decisions that I led
 
-1. [# DD-06: Verbesserung des Header-Designs](design-decisions/dd-06.md)
-2. [# DD-09: Verwendung von Mailto statt Flask-Mail ](/design-decisions/dd-09.md)
-3. [# DD-10: Views eines Posts tracken](/design-decisions/dd-10.md)
-3. [# DD-11:Kein separates Nachrichtensystem für das Fundbüro](/design-decisions/dd-11.md)
+1. [# DD-07: Verbesserung des Header-Designs](design-decisions/dd-06.md)
+2. [# DD-08: Verwendung von Mailto statt Flask-Mail ](/design-decisions/dd-09.md)
+3. [# DD-9: Views eines Posts tracken](/design-decisions/dd-10.md)
+3. [# DD-10:Kein separates Nachrichtensystem für das Fundbüro](/design-decisions/dd-11.md)
 
-##My Top-3 Contributions
+## My Top-3 Contributions
+
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
 |---|---|---|---|
-| 1 | Mail-to_funktion im Feed: User können bequem auf das Mail-Icon klicken und schon wird eine vorgefertigte E-Mail erzeugt, die nur noch abgeschickt werden muss. | Die Usability wird dadurch stark unterstrichen, da der User nicht erst selber eine Nachricht verfassen muss und nicht erst die EMpfängeradresse raussuchen muss | Leider hatte ich viele Fehler, dass die E-Mail-Adresse des Empfänger in die Mailvorlage übertragen wurde. Ich habe manchmal, wenn es darum ging Daten abzurufen, vergessen, dass zwischen den ganzen Dateien eine konkrete Verknüpfung herrscht, was zu dieser Herausforderung auch führte|
-| 2 | Profilbearbeitungsdunktion: Der User kann seine Profildaten(außer die E-Mail) selbstständig korrigieren| Diese Contribution verbessert ebenfalss die Usability stark, da Nutzer, falls versehentlich sie Daten falsch angegeben haben, was oft passiert, einfach korrigieren können. |Hier war auch die Koordination etwas schwierig. Ich musste koordinieren, dass Daten aus dem User aufgerufen werden, geändert werden können und dann erfolgreich aktualisiert werden|
-| 3 | Bootstrap Icons: In verschiedenen Bereichen der Anwendung, z. B. im Profil, beim Bearbeiten des Profils und im Feed habe ich für die Dynamik der Seite Icons verwendet. Ursprünglich wurden Emojis verwendet, nachmdem ich aber von Bootstrap Icons erfuhr habe ich diese später durch Bootstrap Icons ersetzt wurden. | Icons stärken die User Experience. Zudem wirkt die Seite professioneller und ist für das Design einfach schöner bzw. angenehmer für das Auge. | Ich musste mich zunächst mit der Einbindung von Bootstrap Icons vertraut machen und passende Icons auswählen, die die Benutzeroberfläche passend unterstützen.|
+| 1 | **Mail-to-Funktion im Feed:** User können bequem auf das Mail-Icon klicken und schon wird eine vorgefertigte E-Mail erzeugt, die nur noch abgeschickt werden muss. | Die Usability wird dadurch stark unterstrichen, da der User nicht erst selber eine Nachricht verfassen und nicht erst die Empfängeradresse raussuchen muss. | Leider hatte ich viele Fehler, dass die E-Mail-Adresse des Empfängers nicht richtig in die Mailvorlage übertragen wurde. Ich habe beim Datenabruf manchmal vergessen, dass zwischen den Dateien eine konkrete Verknüpfung herrscht. |
+| 2 | **Profilbearbeitungsfunktion:** Der User kann seine Profildaten (außer die E-Mail) selbstständig korrigieren. | Diese Contribution verbessert ebenfalls die Usability stark, da Nutzer falsch angegebene Daten einfach korrigieren können, was im Alltag oft passiert. | Hier war die Koordination schwierig. Ich musste koordinieren, dass Daten aus dem User-Modell aufgerufen, geändert und dann erfolgreich in der Datenbank aktualisiert werden. |
+| 3 | **Bootstrap Icons:** Verwendung von echten Icons im Profil, beim Bearbeiten und im Feed statt der ursprünglichen Emojis. | Icons stärken die User Experience. Zudem wirkt die Seite professioneller, moderner und ist für das Auge deutlich angenehmer. | Ich musste mich zunächst mit der Einbindung von Bootstrap Icons vertraut machen und passende Icons auswählen, die die Benutzeroberfläche sinnvoll unterstützen. |
 
-## Contributions
+## Contributions 
 
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
