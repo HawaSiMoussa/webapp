@@ -37,14 +37,13 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | 3 | Bootstrap Icons: In verschiedenen Bereichen der Anwendung, z. B. im Profil, beim Bearbeiten des Profils und im Feed habe ich für die Dynamik der Seite Icons verwendet. Ursprünglich wurden Emojis verwendet, nachmdem ich aber von Bootstrap Icons erfuhr habe ich diese später durch Bootstrap Icons ersetzt wurden. | Icons stärken die User Experience. Zudem wirkt die Seite professioneller und ist für das Design einfach schöner bzw. angenehmer für das Auge. | Ich musste mich zunächst mit der Einbindung von Bootstrap Icons vertraut machen und passende Icons auswählen, die die Benutzeroberfläche passend unterstützen.|
 
 ## Contributions
-
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
 | Entwicklung und Erweiterung der Datenbankstruktur für Benutzer- und Postdaten | Data model, commit:5e5e8080ed932f63c9c4537b9a0af9fd65e7f6ab | Vorlesungsfolien, Kursmaterial |
 | Implementierung des Feeds (Home-Ansicht) inklusive Anzeige aller Posts (home.html und Route home) | commit: ab60ee7886dfefd6e361a6d27cd55835fd84a8c6, commit: 3e3db0e5055842671c48928e40733c14f174b560 | Volresungsmaterialien (Notebook), Für Flask-Mail:Websites: https://codingnomads.com/send-emails-with-python-flask-mail,
 https://pythonbasics.org/flask-mail/,
 https://flask-mail.readthedocs.io/en/latest/, https://learnmodernpython.com/flask-python-flask-mail-sending-emails-made-simple/,
-KI (ChatGPT) 
+KI (ChatGPT)|
 | Entwicklung der Profilseite mit Anzeige der Benutzerdaten und aktiven Posts |ranch Sarah2--Profile |Vorlesungsdateien(Notebook), |
 | Implementierung der Funktion „Profil bearbeiten“ zur Änderung von Benutzer- und Kontaktdaten | Branch: Sarah2--Profile | Vorlesungsdateien(Notebook) |
 | Implementierung der Funktion „Post bearbeiten“ für bestehende Fund- und Verlustmeldungen |  | Vorlesungsdateien(Notebook) |
