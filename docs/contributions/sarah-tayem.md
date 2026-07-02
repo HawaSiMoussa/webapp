@@ -41,7 +41,8 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
 | Entwicklung und Erweiterung der Datenbankstruktur für Benutzer- und Postdaten | Data model, commit:5e5e8080ed932f63c9c4537b9a0af9fd65e7f6ab | Vorlesungsfolien, Kursmaterial |
-| Implementierung des Feeds (Home-Ansicht) inklusive Anzeige aller Posts (home.html und Route home) | commit: ab60ee7886dfefd6e361a6d27cd55835fd84a8c6, commit: 3e3db0e5055842671c48928e40733c14f174b560 | Volresungsmaterialien (Notebook), Für Flask-Mail:Websites: https://codingnomads.com/send-emails-with-python-flask-mail,
+| Implementierung des Feeds (Home-Ansicht) inklusive Anzeige aller Posts (home.html und Route home) | commit: ab60ee7886dfefd6e361a6d27cd55835fd84a8c6, commit: 3e3db0e5055842671c48928e40733c14f174b560 | Volresungsmaterialien (Notebook), Für Mail- Funktion: Vorwissen und die Website: https://www.w3schools.in/html/send-emails-with-html-email-links 
+Für Flask-Mail:Websites: https://codingnomads.com/send-emails-with-python-flask-mail,
 https://pythonbasics.org/flask-mail/,
 https://flask-mail.readthedocs.io/en/latest/, https://learnmodernpython.com/flask-python-flask-mail-sending-emails-made-simple/,
 KI (ChatGPT)
@@ -51,7 +52,7 @@ KI (ChatGPT)
 | Implementierung der Funktion „Post bearbeiten“ für bestehende Fund- und Verlustmeldungen |  | Vorlesungsdateien(Notebook) |
 | Gestaltung und Implementierung der Navigation Bar in base.html | commit: d5e85e19d3a99cd9506e86e6cf064a332ac4cc88, commit: cff9c23d38521ed2232b3f9ecfd5e965e540a992, commit: 6b08a383b7ed3b1f43e0a48c4797e57496092cd7| Bootstrap Website:https://getbootstrap.com/docs/4.0/components/navbar/ + Vorlesungsdateien(Notebook) |
 | Überarbeitung des Layouts mit Logo, Titel und Slogan im Header | Commit: f557c0c766e0e228d205966e56590df7a29f32f0, Commit: 45ba4b8e675016ad566370c93cb70ec14db2a7c1| Bootstrap Documentation |
-| UEntwicklung eines JSON-Endpunkts zur Bereitstellung von Post-Daten über die API| commit: 627b8650e2a9eeaf95374831837944d863f4fbd6| Vorlesungsmaterialien|
+| Entwicklung eines JSON-Endpunkts zur Bereitstellung von Post-Daten über die API| commit: 627b8650e2a9eeaf95374831837944d863f4fbd6| Vorlesungsmaterialien,Website: https://www.geeksforgeeks.org/python/how-to-return-a-json-response-from-a-flask-api/|
 
 ## Quellen, die für das Verständnis genutz wurden
 
@@ -61,19 +62,23 @@ https://flask.palletsprojects.com/en/stable/tutorial/templates/,
 https://jinja.palletsprojects.com/en/stable/templates/#html-escaping,
 https://www.iditect.com/faq/python/how-to-get-current-url-in-jinja2flask.html
 
+
+
+## Quellen für Bootstap Klassen und Icons
+https://bootstrapshuffle.com/classes
+https://icons.getbootstrap.com/
 ## AI Directory
 
-## AI Directory
-
-[You must maintain a comprehensive AI Directory, as per [FB1 Regulations on Generative AI Use](../assets/pdf/FB1_KI_Regelung_DE_ENG.pdf). "Catch-all" disclosure (like "AI Tool used for bugfixing") is generally not sufficient. You may list an *AI Tool* multiple times, e.g., if you have used it for different purposes / in different parts of your project. Any use of Agentic AI is **forbidden**.]
-
-| #   | AI Tool | Purpose of Use | Affected Sections (Code + Docs) | Remarks, Procedure, Prompts |
-| 01| ChatGPT    | Debugging  |  Zb. „bei dem code gibts fehler mit der einrückung, wo ist der Fehler?“
+| # | AI Tool | Purpose of Use | Affected Sections (Code + Docs) | Remarks, Procedure, Prompts |
+| :-- | :-- | :-- | :-- | :-- |
+| 01 | ChatGPT | Fehlerbehebungen | `app.py`, `home.html`, `edit_profile.html` | Zb. „bei dem code gibts fehler mit der einrückung, wo ist der Fehler?“
 „Das wird mir an Fehlermeldungen in der Konsole ausgegeben, was ist genau der Fehler?“
-„Warum sehe werden meine Bootstrap-Icons nicht angezeigt?“
-                             | :--                         |
-| 02 |ChatGPT     |   Branch: FlaskMailTest: mail.py             |    „Wie schätz du den Aufwand ein, wenn man Flask Mail in eine Web-App implementiert statt der Mail-To Funktion mit HTML“
-„Wie genau funktioniert Flask-Mail und welche Nachteile hat es?“
-                             |                             |
-| 03  | ChatGPT     |                |                                 |                             |
-| ... |         |                |                                 |                             |
+„Warum sehe werden meine Bootstrap-Icons nicht angezeigt?“ oder es wurde ein Screenshot von den Jinja2 Exceptions gegeben |
+| 02 | ChatGPT | Unterstützung bei Git- und GitHub-Problemen, vor Allem Merge Konflikten | Git Repository | Ein Screenshot vom Screen und Prompts wie: "Wie gehe ich jetzt mimt dem Merge Konflikt um, ohne etwas zu verlieren?" "Kannst du mir erklären was ich genau machen muss bei einem Merge Konflikt?", "Warum funktioniert gerade das committen gerade nicht" , "Wie mache ich ein Commit rückgängig?"|
+| 03 | ChatGPT | Für Verständnis über Flask-Mail sowie Einschätzung über den Aufwand |  Branch: FlaskMailTest: `mail.py` | „Wie schätz du den Aufwand ein, wenn man Flask Mail in eine Web-App implementiert statt der Mail-To Funktion mit HTML“
+„Wie genau funktioniert Flask-Mail und welche Nachteile hat es?“ |
+| 04 | ChatGPT | Testdaten erstellen | lostandfound.sqlite | "Gib mit bitte 5 Beispielpost nach diesem Schema" + Screenshot von unserem Formular|
+|05|ChatGPT| Hilfe bei der UI mit Bootstrap | `home.html`, profile.html, base.html, create_post.html | "Welche Bootstrap-Klassen gibt es für Buttons und Container?“
+
+
+
