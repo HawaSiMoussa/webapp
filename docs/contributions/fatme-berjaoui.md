@@ -58,5 +58,5 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | :-- | :-- | :-- | :-- | :-- |
 | 01 | ChatGPT | Verständnis von Hawas Code, da mein Kontaktformular mit ihrem Code verknüpft war | `contact.html`, `forms.py`, `app.py` | "Erklär mir diesen Code einfach und verständlich für dumme", ich habe hier Hawas user-id gebraucht und musste daher verstehen wie diese eingebettet wurde |
 | 02 | ChatGPT | Unterstützung bei Git- und GitHub-Problemen (Es kam mehrfach vor, dass unsere SQLite-Datei mit unseren Posts nach Commits leer war) | Git Repository | Hier wurde einfach ein Screenshot geschickt von den Fehlern ohne weiteren Text |
-| 03 | ChatGPT | Unterstützung bei der Erstellung und Strukturierung der `base.html` | `base.html`, HTML-Templates | Half die Grundlagen der Template-Vererbung in Jinja2 zu verstehen |
+| 03 | ChatGPT | Unterstützung für die Ersten Schritte einer `base.html` mit bisschen Strukturierung | `base.html`, HTML-Templates | Half die Grundlagen der Template-Vererbung in Jinja2 zu verstehen |
 | 04 | ChatGPT | Unterstützung bei der Auswahl einer passenden Farbpalette | `style.css`, `color.css` | Ich hatte eine spezifische Vision für die Farben, damit diese miteinander harmonisieren und hab dann nur nach der Nummer dieser Farbe gefragt|
