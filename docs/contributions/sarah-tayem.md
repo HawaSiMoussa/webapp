@@ -25,9 +25,9 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 ## Design Decisions that I led
 
 1. [# DD-06: Verbesserung des Header-Designs](design-decisions/dd-06.md)
-2. [# DD-09: Verwendung von Mailto statt Flask-Mail] (/design-decisions/dd-09.md)
-3. [# DD-10:Kein separates Nachrichtensystem für das Fundbüro] (/design-decisions/dd-10.md)
-3. [# DD-11:Kein separates Nachrichtensystem für das Fundbüro] (/design-decisions/dd-11.md)
+2. [# DD-09: Verwendung von Mailto statt Flask-Mail ](/design-decisions/dd-09.md)
+3. [# DD-10: Views eines Posts tracken](/design-decisions/dd-10.md)
+3. [# DD-11:Kein separates Nachrichtensystem für das Fundbüro](/design-decisions/dd-11.md)
 
 ##My Top-3 Contributions
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
