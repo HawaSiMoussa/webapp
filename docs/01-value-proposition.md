@@ -44,6 +44,8 @@ Die Plattform richtet sich ausschließlich an Personen mit einer gültigen HWR-E
 5. Die suchende Person wird kontaktiert.
 6. Der Gegenstand wird wiedergefunden und die Anzeige kann geschlossen werden.
 
+![](assets/images/FWDP.jpg)
+
 ## Target Scope
 
 Zu Beginn des Projekts wurden Scribbles erstellt, um die geplanten Funktionen und den Aufbau der Benutzeroberfläche zu visualisieren. Die Scribbles dienten als Grundlage für die spätere Umsetzung der Webanwendung.
