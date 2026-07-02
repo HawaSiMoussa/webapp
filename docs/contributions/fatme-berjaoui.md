@@ -54,6 +54,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | Unterstützung bei Merge-Konflikten und Wiederherstellung verlorener Codebestandteile |  [FixIssues](https://github.com/HawaSiMoussa/webapp/commit/ebacfd89b19a75226b37a06d2751b92e95aede01), [FixIssues3](https://github.com/HawaSiMoussa/webapp/commit/dffb2bc26a2aba338fcf3dcf6755c1119e8cefdd) | - |
 
 ## AI Directory
+
 | # | AI Tool | Purpose of Use | Affected Sections (Code + Docs) | Remarks, Procedure, Prompts |
 | :-- | :-- | :-- | :-- | :-- |
 | 01 | ChatGPT | Verständnis von Hawas Code, da mein Kontaktformular mit ihrem Code verknüpft war | `contact.html`, `forms.py`, `app.py` | "Erklär mir diesen Code einfach und verständlich für dumme", ich habe hier Hawas user-id gebraucht und musste daher verstehen wie diese eingebettet wurde |
