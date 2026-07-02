@@ -24,25 +24,23 @@ nav_order: 4
  ![Diagramm Erster Schritt](imageswebpage/imageswebpage2.jpeg)
 
  Hier zeigt sich eine unterschiedliche Verteilung der Antworten , da 41 % aufgewühlt überall suchen, 30,8 % bei Kommilitonen oder Dozenten nachfragen und 28,2 % zum Pförtner gehen. Für uns bedeutet das, dass der aktuelle Suchprozess extrem stressig und unkoordiniert abläuft, weshalb wir mit unserer Webapp als die ständigen Suchen und den Stress der Studierenden massiv senken können, sowie Ordnung hineinbringen können.
-
- ##  3. Was machst du, wenn du etwas an der Uni findest?
+## 3. Was machst du, wenn du etwas an der Uni findest?
 
  ![Diagramm Etwas finden](imageswebpage/imageswebpage3.jpeg)
 
   Während 56,4 % gefundene Sachen beim Pförtner abgeben, lassen 43,6 % den Gegenstand einfach liegen, weil sie davon ausgehen, dass der Besitzer danach sucht. Für uns bedeutet das, dass fast die Hälfte aller Fundsachen verloren geht, weil der Weg zum Pförtner zu umständlich ist. Mit unserer App können die Studenten bzw. die Finder die Sachen in wenigen Minuten mithilfe unserer App den Anzeigen zuordnen und somit möglicherweise den Besitzer finden. Das wird das Fundbüro an der HWR drastisch entlasten.
 
- ##  4. Wie findest du die Idee einer eigenen LostAndFound App für die HWR? (1 = schlecht, 5 = gut) 
+## 4. Wie findest du die Idee einer eigenen LostAndFound App für die HWR? (1 = schlecht, 5 = gut) 
 
   ![Diagramm Bewertung Idee](imageswebpage/imageswebpage4.jpeg)
 
   Bei dieser Frage stimmten überwältigende 69,2 % mit der Bestnote 5 ab und weitere 15,4 % gaben eine 4, was insgesamt 84,6 % positive Rückmeldungen ergibt. Für uns bedeutet, dass die endgültige Bestätigung unseres Projekts, da die absolute Mehrheit der Studierenden unsere App aktiv befürwortet und sie unbedingt haben will. 
   
- ##  5. Würdest du dich in der App anmelden, um einen Gegenstand zu suchen oder als gefunden zu melden?
+## 5. Würdest du dich in der App anmelden, um einen Gegenstand zu suchen oder als gefunden zu melden?
 
  ![Diagramm App Anmeldung](imageswebpage/imageswebpage6.jpeg)
 
  Die deutliche Mehrheit von rund 92 % (36 von 39 Stimmen) antwortete hier mit „Ja“, während nur eine minimale Minderheit mit „Nein“ stimmte. Für uns bedeutet das, dass die Nutzer unsere App nutzen würden und einen Gebrauch darin sehen. 
- 
  
 ## 6. Meinung zur Regelung, dass jeder User maximal einen aktiven Post machen kann um Spam/Betrug zu vermeiden: 
 
@@ -50,7 +48,7 @@ nav_order: 4
 
 Rund 74 % (29 Stimmen) finden diese Regelung gut für die Übersichtlichkeit, während 26 % (10 Stimmen) sie als zu streng empfinden. Für uns bedeutet das, dass wir diese Sicherheitsfunktion für normale Studierende beibehalten, in der Entwicklung haben wir aber für den Pförtner oder die Verwaltung Sonderrechte eingebaut, damit diese unbegrenzt posten können und nicht eingeschränkt sind.
 
-##  7.Über welchen Kanal würdest du am liebsten benachrichtigt werden, wenn jemand deinen verlorenen Gegenstand gefunden hat? 
+## 7.Über welchen Kanal würdest du am liebsten benachrichtigt werden, wenn jemand deinen verlorenen Gegenstand gefunden hat? 
 
 ![Diagramm Benachrichtigungskanal](imageswebpage/imageswebpage8.jpeg)
 
