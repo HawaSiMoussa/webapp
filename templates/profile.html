@@ -70,9 +70,9 @@ Profil
         </div>
 
         <div class="col">
-        {% if user.campus %}
+        {% if user.campus_id %}
             {{ user.campus_id }}
-            {% else %}
+        {% else %}
             <span class="text-muted">Kein Campus ausgewählt</span>
         {% endif %}
     </div>
@@ -121,7 +121,7 @@ Profil
             <br>
             <small class="text-danger">
             <i class="bi bi-hourglass-split"></i>
-             Ablaufdatum{{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+             Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
             </small>
                     <div class="mt-3">
                         <a href=" {{url_for('edit_post', post_id=post.post_id)}}"

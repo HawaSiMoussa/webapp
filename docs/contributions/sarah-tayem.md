@@ -24,12 +24,12 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 ## Design Decisions that I led
 
-1. [# DD-06: Verbesserung des Header-Designs] (../design-decisions/dd-06.md)
-2. [# DD-09: Verwendung von Mailto statt Flask-Mail] (../design-decisions/dd-09.md)
-3. [# DD-10:Kein separates Nachrichtensystem für das Fundbüro] (../design-decisions/dd-10.md)
-3. [# DD-11:Kein separates Nachrichtensystem für das Fundbüro] (../design-decisions/dd-11.md)
+1. [# DD-06: Verbesserung des Header-Designs](design-decisions/dd-06.md)
+2. [# DD-09: Verwendung von Mailto statt Flask-Mail ](/design-decisions/dd-09.md)
+3. [# DD-10: Views eines Posts tracken](/design-decisions/dd-10.md)
+3. [# DD-11:Kein separates Nachrichtensystem für das Fundbüro](/design-decisions/dd-11.md)
 
-
+##My Top-3 Contributions
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
 |---|---|---|---|
 | 1 | Mail-to_funktion im Feed: User können bequem auf das Mail-Icon klicken und schon wird eine vorgefertigte E-Mail erzeugt, die nur noch abgeschickt werden muss. | Die Usability wird dadurch stark unterstrichen, da der User nicht erst selber eine Nachricht verfassen muss und nicht erst die EMpfängeradresse raussuchen muss | Leider hatte ich viele Fehler, dass die E-Mail-Adresse des Empfänger in die Mailvorlage übertragen wurde. Ich habe manchmal, wenn es darum ging Daten abzurufen, vergessen, dass zwischen den ganzen Dateien eine konkrete Verknüpfung herrscht, was zu dieser Herausforderung auch führte|
@@ -41,7 +41,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | Contribution | Proof, e.g., git commits | Sources used |
 | :-- | :-- | :-- |
 | Entwicklung und Erweiterung der Datenbankstruktur für Benutzer- und Postdaten | Data model, commit:5e5e8080ed932f63c9c4537b9a0af9fd65e7f6ab | Vorlesungsfolien, Kursmaterial |
-| Implementierung des Feeds (Home-Ansicht) inklusive Anzeige aller Posts (home.html und Route home) | commit: ab60ee7886dfefd6e361a6d27cd55835fd84a8c6, commit: 3e3db0e5055842671c48928e40733c14f174b560 | Value Proposition Canvas Methode |
+| Implementierung des Feeds (Home-Ansicht) inklusive Anzeige aller Posts (home.html und Route home) | commit: ab60ee7886dfefd6e361a6d27cd55835fd84a8c6, commit: 3e3db0e5055842671c48928e40733c14f174b560 | Volresungsmaterialien (Notebook) |
 | Entwicklung der Profilseite mit Anzeige der Benutzerdaten und aktiven Posts |ranch Sarah2--Profile |Vorlesungsdateien(Notebook) |
 | Implementierung der Funktion „Profil bearbeiten“ zur Änderung von Benutzer- und Kontaktdaten | Branch: Sarah2--Profile | Vorlesungsdateien(Notebook) |
 | Implementierung der Funktion „Post bearbeiten“ für bestehende Fund- und Verlustmeldungen |  | Vorlesungsdateien(Notebook) |
