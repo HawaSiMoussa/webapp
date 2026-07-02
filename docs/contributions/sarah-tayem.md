@@ -48,7 +48,6 @@ Für Flask-Mail:Websites: (https://codingnomads.com/send-emails-with-python-flas
 (https://pythonbasics.org/flask-mail/),
 (https://flask-mail.readthedocs.io/en/latest/), (https://learnmodernpython.com/flask-python-flask-mail-sending-emails-made-simple/),
 KI (ChatGPT)
-
 | Entwicklung der Profilseite mit Anzeige der Benutzerdaten und aktiven Posts |Branch Sarah2--Profile , z.B. commits:[add profile.html: show user profile infos](https://github.com/HawaSiMoussa/webapp/commit/802cfee19b56101d7e8fb64aeed13b77e356de16), |Vorlesungsdateien(Notebook),[add profile route to app.py](https://github.com/HawaSiMoussa/webapp/commit/104c38961d01a9a40cd865ff25cb572d3fc4d2e8)|
 | Implementierung der Funktion „Profil bearbeiten“ zur Änderung von Benutzer- und Kontaktdaten | Branch: Sarah2--Profile, z.B. commits: [add edit profile template](https://github.com/HawaSiMoussa/webapp/commit/b9a96bc4f9e91b0f06ba07ecebe431591e412f72), 
 [add edit profile route] (https://github.com/HawaSiMoussa/webapp/commit/e251dfff5b6e4eaa9a5e9560470936d327f0b30c), [username editable](https://github.com/HawaSiMoussa/webapp/commit/71caf4a2c767c7405ffd1cede300c9bad48e573d), [add pencil next to profile instead of next to each profile data field](https://github.com/HawaSiMoussa/webapp/commit/b3e4ca4c1dd09d6957c301537977a01fbeb6ea76)| Vorlesungsdateien(Notebook) |
