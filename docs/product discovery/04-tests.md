@@ -29,6 +29,8 @@ nav_order: 4
 ## 3. Was machst du, wenn du etwas an der Uni findest?
 
  ![Diagramm Etwas finden](imageswebpage/imageswebpage3.jpg)
+ 
+
 
   Während 56,4 % gefundene Sachen beim Pförtner abgeben, lassen 43,6 % den Gegenstand einfach liegen, weil sie davon ausgehen, dass der Besitzer danach sucht. Für uns bedeutet das, dass fast die Hälfte aller Fundsachen verloren geht, weil der Weg zum Pförtner zu umständlich ist. Mit unserer App können die Studenten bzw. die Finder die Sachen in wenigen Minuten mithilfe unserer App den Anzeigen zuordnen und somit möglicherweise den Besitzer finden. Das wird das Fundbüro an der HWR drastisch entlasten.
 
