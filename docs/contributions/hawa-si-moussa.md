@@ -26,11 +26,13 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 ## Top-3 Contributions
 
+### Top-3 Contributions 
+
 | # | My contribution | Why I am proud of it | Which challenge I overcame |
-|---|---|---|---
-| 1 | Fehlertolerantes Suchsystem im Feed | Die Suche ist unabhängig von Groß- und Kleinschreibung. Das spart Usern viel Zeit und verhindert Verwirrung, wenn ein Titel nicht zu 100 % exakt eingetippt wird, dann wird die anzeige trotzdessen gefunden und angezeigt. | Die challange die ich überstehen musste war vorallem dass ich nicht nur auf groß und klein schreibung achten wollte sondern auch darauf dass leerzeichen oder ein buchstabe der fehlt die suche auch nicht beträchtigen hierfür hatte ich allerdings noch keine lösung bzw. nicht genügend wissen gehabt.|
-| 2 | Sicheres & benutzerfreundliches Authentifikations System | Das System gibt sofort präzises Feedback (z. B. wenn eine E-Mail bereits vergeben ist) und leitet neu registrierte User ohne nervigen Zweit Logins direkt zum HomeFeed weiter. Das spart Zeit und sorgt dafür dass der User direkt die App entdecken kann. Somit wird der Prozess vereinfacht und beschleunigt.| Die logische Verknüpfung der Validierung und die weiterleitung zum feed hat mir sehr viele probleme bereitet denn, um doppelten Eingabeaufwand zu vermeiden durfte das ganze nicht wieder zurück zum login laufen. |
-| 3 | Strikte HWR-Domain-Validierung | Nur Nutzer mit echten HWR-Mailendungen können Konten anlegen. Das schützt unser digitales Uni-Ökosystem vor externem Spam und Missbrauch. | Die fehlerfreie Prüfung von gleich drei verschiedenen HWR-Mail-Strukturen parallel im Backend.| 
+|---|---|---|---|
+| 1 | Fehlertolerantes Suchsystem im Feed | Die Suche ist unabhängig von Groß- und Kleinschreibung. Das spart Usern viel Zeit und verhindert Verwirrung, wenn ein Titel nicht zu 100 % exakt eingetippt wird, dann wird die Anzeige trotzdessen gefunden und angezeigt. | Die Challenge die ich überstehen musste war vor allem, dass ich nicht nur auf Groß- und Kleinschreibung achten wollte, sondern auch darauf, dass Leerzeichen oder ein Buchstabe der fehlt die Suche auch nicht beeinträchtigen. Hierfür hatte ich allerdings noch keine Lösung bzw. nicht genügend Wissen gehabt. |
+| 2 | Sicheres & benutzerfreundliches Authentifikations System | Das System gibt sofort präzises Feedback (z. B. wenn eine E-Mail bereits vergeben ist) und leitet neu registrierte User ohne nervigen Zweit-Login direkt zum HomeFeed weiter. Das spart Zeit und sorgt dafür, dass der User direkt die App entdecken kann. Somit wird der Prozess vereinfacht und beschleunigt. | Die logische Verknüpfung der Validierung und die Weiterleitung zum Feed hat mir sehr viele Probleme bereitet, denn um doppelten Eingabeaufwand zu vermeiden, durfte das Ganze nicht wieder zurück zum Login laufen. |
+| 3 | Strikte HWR-Domain-Validierung | Nur Nutzer mit echten HWR-Mailendungen können Konten anlegen. Das schützt unser digitales Uni-Ökosystem vor externem Spam und Missbrauch. | Die fehlerfreie Prüfung von gleich drei verschiedenen HWR-Mail-Strukturen parallel im Backend. |
 
 ## Design Decisions that I led
 
