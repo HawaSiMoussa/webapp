@@ -23,7 +23,7 @@ nav_order: 4
 ## 2. Was ist dein allererster Schritt, wenn du merkst, dass du am Campus etwas verloren hast? 
 
 
- ![Diagramm Erster Schritt](imageswebpage/imageswebpage2.jpeg)
+![Diagramm Erster Schritt](imageswebpage/imageswebpage2.jpeg)
 
  Hier zeigt sich eine unterschiedliche Verteilung der Antworten , da 41 % aufgewühlt überall suchen, 30,8 % bei Kommilitonen oder Dozenten nachfragen und 28,2 % zum Pförtner gehen. Für uns bedeutet das, dass der aktuelle Suchprozess extrem stressig und unkoordiniert abläuft, weshalb wir mit unserer Webapp als die ständigen Suchen und den Stress der Studierenden massiv senken können, sowie Ordnung hineinbringen können.
 
