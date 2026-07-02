@@ -20,8 +20,8 @@ nav_order: 4
 
 
 
-
 ## 2. Was ist dein allererster Schritt, wenn du merkst, dass du am Campus etwas verloren hast? 
+
 
  ![Diagramm Erster Schritt](imageswebpage/imageswebpage2.jpeg)
 
