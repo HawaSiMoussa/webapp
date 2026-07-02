@@ -74,9 +74,7 @@ https://icons.getbootstrap.com/
 
 | # | AI Tool | Purpose of Use | Affected Sections (Code + Docs) | Remarks, Procedure, Prompts |
 | :-- | :-- | :-- | :-- | :-- |
-| 01 | ChatGPT | Fehlerbehebungen | `app.py`, `home.html`, `edit_profile.html`, `db.py` | Zb. „bei dem code gibts fehler mit der einrückung, wo ist der Fehler?“, "Fehlt ein import?",
-„Das wird mir an Fehlermeldungen in der Konsole ausgegeben, was ist genau der Fehler?“,
-„Warum sehe werden meine Bootstrap-Icons nicht angezeigt?“ oder es wurde ein Screenshot von den Jinja2 Exceptions gegeben |
+| 01 | ChatGPT | Fehlerbehebungen | `app.py`, `home.html`, `edit_profile.html`, `db.py` | Zb. „bei dem code gibts fehler mit der einrückung, wo ist der Fehler?“, "Fehlt ein import?", „Das wird mir an Fehlermeldungen in der Konsole ausgegeben, was ist genau der Fehler?“, „Warum sehe werden meine Bootstrap-Icons nicht angezeigt?“ oder es wurde ein Screenshot von den Jinja2 Exceptions gegeben |
 | 02 | ChatGPT | Unterstützung bei Git- und GitHub-Problemen, vor Allem Merge Konflikten | Git Repository | Ein Screenshot vom Screen und Prompts wie: "Wie gehe ich jetzt mimt dem Merge Konflikt um, ohne etwas zu verlieren?" "Kannst du mir erklären was ich genau machen muss bei einem Merge Konflikt?", "Warum funktioniert gerade das committen gerade nicht" , "Wie mache ich ein Commit rückgängig?"|
 | 03 | ChatGPT | Für Verständnis über Flask-Mail sowie Einschätzung über den Aufwand |  Branch: FlaskMailTest: `mail.py` | „Wie schätz du den Aufwand ein, wenn man Flask Mail in eine Web-App implementiert statt der Mail-To Funktion mit HTML“
 „Wie genau funktioniert Flask-Mail und welche Nachteile hat es?“  |
