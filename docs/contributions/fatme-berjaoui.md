@@ -52,3 +52,12 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | Implementierung der Info-Tooltips bei Verlustdatum und Verlustort | [AddTooltip](https://github.com/HawaSiMoussa/webapp/commit/505f62e963b8d45f8692aca1ad9e99392be14be6),  [InsertSmallInfo](https://github.com/HawaSiMoussa/webapp/commit/52a7672daa7eaef1e2a0a9133f34c1a199052b1c) | Bootstrap Documentation, HTML Attribute und Benutzerführung (Usability) |
 | Zuständig für forms.py | [CreateForms.py](https://github.com/HawaSiMoussa/webapp/commit/140eb154cc82d669c668b2ac7ce85e10923f9d8a), [InsertInApp.py](https://github.com/HawaSiMoussa/webapp/commit/c756626909e05db8bb1a2d1bd8783843eb4c511a) | Bootstrap Documentation, HTML & CSS Vorlesungsunterlagen, Template-Vererbung mit Jinja2 |
 | Unterstützung bei Merge-Konflikten und Wiederherstellung verlorener Codebestandteile |  [FixIssues](https://github.com/HawaSiMoussa/webapp/commit/ebacfd89b19a75226b37a06d2751b92e95aede01), [FixIssues3](https://github.com/HawaSiMoussa/webapp/commit/dffb2bc26a2aba338fcf3dcf6755c1119e8cefdd) | - |
+
+## AI Directory
+
+| # | AI Tool | Purpose of Use | Affected Sections (Code + Docs) | Remarks, Procedure, Prompts |
+| :-- | :-- | :-- | :-- | :-- |
+| 01 | ChatGPT | Verständnis von Hawas Code, da mein Kontaktformular mit ihrem Code verknüpft war | `contact.html`, `forms.py`, `app.py` | "Erklär mir diesen Code einfach und verständlich für dumme", ich habe hier Hawas user-id gebraucht und musste daher verstehen wie diese eingebettet wurde |
+| 02 | ChatGPT | Unterstützung bei Git- und GitHub-Problemen (Es kam mehrfach vor, dass unsere SQLite-Datei mit unseren Posts nach Commits leer war) | Git Repository | Hier wurde einfach ein Screenshot geschickt von den Fehlern ohne weiteren Text |
+| 03 | ChatGPT | Unterstützung für die Ersten Schritte einer `base.html` mit bisschen Strukturierung | `base.html`, HTML-Templates | Half die Grundlagen der Template-Vererbung in Jinja2 zu verstehen |
+| 04 | ChatGPT | Unterstützung bei der Auswahl einer passenden Farbpalette | `style.css`, `color.css` | Ich hatte eine spezifische Vision für die Farben, damit diese miteinander harmonisieren und hab dann nur nach der Nummer dieser Farbe gefragt|
