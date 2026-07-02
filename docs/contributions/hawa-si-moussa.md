@@ -24,8 +24,6 @@ Mir ist bewusst, dass die wörtliche oder nahezu wörtliche Wiedergabe von fremd
 
 Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-basierte Hilfsmittel verwendet habe, die Verantwortung für eventuell durch die KI generierte fehlerhafte oder verzerrte Inhalte, fehlerhafte Referenzen, Verstöße gegen das Datenschutz- und Urheberrecht oder Plagiate trage.
 
-## Top-3 Contributions
-
 ### Top-3 Contributions 
 
 
