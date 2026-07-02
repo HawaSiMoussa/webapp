@@ -37,10 +37,10 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 
 ## Design Decisions that I led
 
-1. [DD #01 – Besonderheiten beim Admin](../design-decisions/dd-01.md)
-2. [DD #02 – Registrierung und Login Rückmeldung](../design-decisions/dd-02.md)
-3. [DD #03 – Die Suche im Feed](../design-decisions/dd-03.md)
-4. [DD #04 – Email HWR für das Login und die Registrierung](../design-decisions/dd-04.md) commit: 95c4d52334da081b8f7ecf445eab115efd5a1ada
+1. [DD #03 – Besonderheiten beim Admin](../design-decisions/dd-01.md)
+2. [DD #04 – Registrierung und Login Rückmeldung](../design-decisions/dd-02.md)
+3. [DD #05 – Die Suche im Feed](../design-decisions/dd-03.md)
+4. [DD #06 – Email HWR für das Login und die Registrierung](../design-decisions/dd-04.md) commit: 95c4d52334da081b8f7ecf445eab115efd5a1ada
 
 
 
