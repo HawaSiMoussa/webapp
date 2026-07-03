@@ -55,9 +55,9 @@ https://pythonbasics.org/flask-mail/,https://flask-mail.readthedocs.io/en/latest
 
 Für Jinja:
 Websites:
-(https://flask.palletsprojects.com/en/stable/tutorial/templates/),
-(https://jinja.palletsprojects.com/en/stable/templates/#html-escaping),
-(https://www.iditect.com/faq/python/how-to-get-current-url-in-jinja2flask.html)
+https://flask.palletsprojects.com/en/stable/tutorial/templates/,
+https://jinja.palletsprojects.com/en/stable/templates/#html-escaping,
+https://www.iditect.com/faq/python/how-to-get-current-url-in-jinja2flask.html
 
 
 
