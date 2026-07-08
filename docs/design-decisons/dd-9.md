@@ -26,16 +26,16 @@ Die Funktion wurde nicht umgesetzt
 
 ## Option 1: View-Counter pro Beitrag
 Vorteil:
-- Mehr Feedback für Nutzer
-- Höhere Transparenz über die Reichweite eines Beitrags
+Mehr Feedback für Nutzer
+Höhere Transparenz über die Reichweite eines Beitrags
 Nachteil:
-- Zusätzliche Datenbanklogik notwendig
-- Zusätzlicher Aufwand für Tracking und Speicherung
+Zusätzliche Datenbanklogik notwendig
+Zusätzlicher Aufwand für Tracking und Speicherung
 
 ## Option 2: Keine View-Anzeige (gewählt)
 Vorteil:
-- Einfachere Implementierung
-- Fokus auf Kernfunktionen
+Einfachere Implementierung
+Fokus auf Kernfunktionen
 
 ## Reasoning
 Aus Zeitgründen nicht Implementiert
