@@ -203,12 +203,15 @@ def create_post():
                 flash(form.errors['lost_date'][0], 'warning')
         return redirect(url_for('create_post'))
     
-# die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird der status des posts auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route ("/close_post/<int:post_id>/")
+# die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
+@app.route ("/close_post/<int:post_id>/", methods= ["POST"])
+#grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
     post = db.session.get(Post, post_id)
-
+# kann none ausgeben wenn post_id nicht existiert
+# kein check, nächste zeile würde als crashen (attribute error), weil post = None, also kein post.status. daher checken ob post existiert
     post.status ="gefunden"
+    # hier fehlt evtl owner check, also nur wenn dem user der post gehört, kann er den post schließen, aber nicht unbedingt, weil fällt nicht unter normalfall
 
     db.session.commit()
 
