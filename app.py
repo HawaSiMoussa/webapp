@@ -204,7 +204,7 @@ def create_post():
         return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
-@app.route ("/close_post/<int:post_id>/")
+@app.route ("/close_post/<int:post_id>/", methods= ["POST"])
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
     post = db.session.get(Post, post_id)
