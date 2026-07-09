@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, TextAreaField, DateField, SubmitField, SelectField, EmailField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Length, ValidationError, Email
+from wtforms.validators import InputRequired, Length, ValidationError, Email, Regexp
 from datetime import date
 
 # Kontaktformular 1.2
@@ -57,7 +57,7 @@ class CreateLogin(FlaskForm):
 
     hwrmail = EmailField(
         "HWR-Mail",
-        validators=[InputRequired(), Email()]
+        validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|student\.hwr-berlin\.de|dot\.hwr-berlin\.de)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
     )
 
     passwort = PasswordField(
@@ -82,7 +82,7 @@ class RegisterForm(FlaskForm):
 
     hwrmail = EmailField(
         "HWR-Mail",
-        validators=[InputRequired(), Email()]
+        validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|student\.hwr-berlin\.de|dot\.hwr-berlin\.de)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
     )
 
     passwort = PasswordField(
