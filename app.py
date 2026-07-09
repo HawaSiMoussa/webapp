@@ -115,13 +115,13 @@ def register():
 #Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
-    if "user_id" not in session:
+    if "user_id" not in session: #existiert die session des eingeloggten users nicht, wird er auf die login seite weitergeleitet.
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #erst bei POST 
 
         user = db.session.get(
             StandardUser,
@@ -132,7 +132,7 @@ def contact():
         user.benutzername = form.username.data
         user.telefonnummer = form.phone_number.data
 
-        db.session.commit()
+        db.session.commit() #Eingabe an DB geschickt
         
 
         flash("Daten erfolgreich gespeichert!", "success")
@@ -155,13 +155,13 @@ def create_post():
 
         return render_template(
             'create_post.html',
-            form=form
+            form=form 
         )
 
     else:
 #Validator 
-        if form.validate():
-          if not session.get("is_admin"):
+        if form.validate(): 
+          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
@@ -201,6 +201,7 @@ def create_post():
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
+                
         return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird der status des posts auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. wenn nein, wird der user auf die login seite weitergeleitet.

@@ -12,7 +12,7 @@ class ContactForm(FlaskForm):
 
 
 # Post erstellen
-class CreatePostForm(FlaskForm):
+class CreatePostForm(FlaskForm): #FlaskForm geerbt
 
     title = StringField(
         "Titel",
@@ -40,7 +40,9 @@ class CreatePostForm(FlaskForm):
     submit = SubmitField("Veröffentlichen")
 
     # Verlustdatum darf nicht in der Zukunft liegen
-    def validate_lost_date(self, field):
+    def validate_lost_date(self, field): 
+        #WTForms hat eine besondere Regel:
+        #Wenn eine Methode validate_<Feldname> heißt, wird sie automatisch aufgerufen, sobald form.validate() oder form.validate_on_submit() ausgeführt wird.
         if field.data > date.today():
             raise ValidationError(
                 "Verlustdatum darf nicht in der Zukunft liegen."
