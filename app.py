@@ -56,7 +56,7 @@ def start():
     return redirect(url_for("login"))
 
 #Feed bzw. Home Seite der zeigt alle aktuell aktiven und nicht beendete Posts an.
-@app.route("/home", methods=["GET", "POST"])
+@app.route("/home")
 def home():
 # nur die eingeloggten user können die home seite sehen, sonst werden sie auf die login seite weitergeleitet:
     if "user_id" not in session:
@@ -115,13 +115,13 @@ def register():
 #Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
-    if "user_id" not in session:
+    if "user_id" not in session: #existiert die session des eingeloggten users nicht, wird er auf die login seite weitergeleitet.
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #erst bei POST 
 
         user = db.session.get(
             StandardUser,
@@ -132,7 +132,7 @@ def contact():
         user.benutzername = form.username.data
         user.telefonnummer = form.phone_number.data
 
-        db.session.commit()
+        db.session.commit() #Eingabe an DB geschickt
         
 
         flash("Daten erfolgreich gespeichert!", "success")
@@ -155,13 +155,13 @@ def create_post():
 
         return render_template(
             'create_post.html',
-            form=form
+            form=form 
         )
 
     else:
 #Validator 
-        if form.validate():
-          if not session.get("is_admin"):
+        if form.validate(): 
+          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
@@ -201,6 +201,7 @@ def create_post():
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
+                
         return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
@@ -208,10 +209,9 @@ def create_post():
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
     post = db.session.get(Post, post_id)
-# kann none ausgeben wenn post_id nicht existiert
-# kein check, nächste zeile würde als crashen (attribute error), weil post = None, also kein post.status. daher checken ob post existiert
+
     post.status ="gefunden"
-    # hier fehlt evtl owner check, also nur wenn dem user der post gehört, kann er den post schließen, aber nicht unbedingt, weil fällt nicht unter normalfall
+ 
 
     db.session.commit()
 
@@ -268,28 +268,27 @@ def edit_profile():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-
+# Instanz der Klasse StandardUser mit der user_id aus der session wird hier erstellt. 
     user = db.session.get(
         StandardUser,
         session["user_id"]
-    )
-    form = forms.EditProfileForm(obj=user)
-    if form.validate_on_submit():
+    )#
+    #obj ist ein parameter aus der flaskforms bibliothek
+    form = forms.EditProfileForm(obj=user) #obj=user sorgt dafür, dass die aktuellen daten des users im formular angezeigt werden, wenn die seite geladen wird
+    if form.validate_on_submit(): # wenn das formular korrekt ausgefüllt wurde
 
         user.benutzername = form.benutzername.data
         user.name = form.name.data
         user.telefonnummer = form.telefonnummer.data
         user.campus_id = form.campus_id.data
-
-        db.session.commit()
-
+# .data repräsentiert die daten, die der user im formular eingegeben hat. 
         flash(
             "Profil erfolgreich aktualisiert!",
             "success"
         )
     
         return redirect(url_for("profile"))
-
+# wird in zwei fällen ausgeführt: wenn das formular nicht korrekt ausgefüllt wurde oder wenn die seite zum ersten mal geladen wird. 
     return render_template(
         "edit_profile.html",
         form=form
@@ -311,8 +310,8 @@ def api_posts():
     posts = db.session.execute(
         db.select(Post)
     ).scalars()
-
-    return jsonify([
+#jsonify gibt die daten als json zurück. die daten werden in einer liste gespeichert, die dann in der api_posts.html datei angezeigt wird. die daten werden in einem dictionary gespeichert, das dann in der liste gespeichert wird
+    return jsonify([ 
         {
             "titel": p.titel,
             "status": p.status
@@ -325,7 +324,7 @@ def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
-
+# in der if abfrage wird überprüft, ob die methode GET ist. wenn ja, werden die aktuellen daten des posts in das formular geladen
     if request.method == 'GET':
 
             form.title.data = post.titel
