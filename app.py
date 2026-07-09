@@ -367,8 +367,7 @@ def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen
             )
         ).scalars()
 
-    for post_object in result:
-            posts.append(post_object)
+    for post_object in result:            posts.append(post_object)
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
