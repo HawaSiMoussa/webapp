@@ -56,7 +56,7 @@ def start():
     return redirect(url_for("login"))
 
 #Feed bzw. Home Seite der zeigt alle aktuell aktiven und nicht beendete Posts an.
-@app.route("/home", methods=["GET", "POST"])
+@app.route("/home")
 def home():
 # nur die eingeloggten user können die home seite sehen, sonst werden sie auf die login seite weitergeleitet:
     if "user_id" not in session:
@@ -323,7 +323,7 @@ def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
-
+# in der if abfrage wird überprüft, ob die methode GET ist. wenn ja, werden die aktuellen daten des posts in das formular geladen
     if request.method == 'GET':
 
             form.title.data = post.titel

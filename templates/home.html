@@ -10,7 +10,7 @@ LostAndFound
       action="{{ url_for('suche') }}"
       class="mb-4">
 
-    {{ csrf_token() }} 
+    {{ form.csrf_token() }} 
 <!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird -->
 
     <div class="input-group">
@@ -29,17 +29,11 @@ LostAndFound
 </form>
 
 <!--durch die Schleife werden alle Posts angezeigt, die dem Campus des Users entsprechen: in der for Schleife wird jeder Post geholt, in der if Abfrage dann rausgefiltert nach Campus-->
-<!--Campus-Filter: aktuell im Template statt in der DB-Query → bei 12.000+ Nutzern ineffizient -->
 
-<!--posts = db.session.execute(
-    db.select(Post).where(
-        Post.ablaufdatum >= date.today(),
-        Post.status == "laufend",
-        Post.user.has(campus_id=user.campus_id)
-    )
-).scalars()-->
+
+
     {% for post in posts %}
-        {%if post.user.campus_id == user.campus_id%}
+        {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
     <div class="border rounded p-3 mb-4">
 
         <!--Username -->
