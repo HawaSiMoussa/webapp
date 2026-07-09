@@ -1,10 +1,10 @@
 ---
-title: DD-10
+title: DD-09
 parent: Design Decisions
 ---
 
 {: .no_toc }
-# DD-10: Views eines Posts tracken
+# DD-09: Views eines Posts tracken
 
 ## Meta
 
