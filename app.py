@@ -273,7 +273,7 @@ def edit_profile():
         StandardUser,
         session["user_id"]
     )
-    form = forms.EditProfileForm(obj=user)
+    form = forms.EditProfileForm(obj=user) #obj=user sorgt dafür, dass die aktuellen daten des users im formular angezeigt werden, wenn die seite geladen wird
     if form.validate_on_submit():
 
         user.benutzername = form.benutzername.data
@@ -311,8 +311,8 @@ def api_posts():
     posts = db.session.execute(
         db.select(Post)
     ).scalars()
-
-    return jsonify([
+#jsonify gibt die daten als json zurück. die daten werden in einer liste gespeichert, die dann in der api_posts.html datei angezeigt wird. die daten werden in einem dictionary gespeichert, das dann in der liste gespeichert wird
+    return jsonify([ 
         {
             "titel": p.titel,
             "status": p.status
