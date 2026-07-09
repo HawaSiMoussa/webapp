@@ -49,7 +49,7 @@ with app.app_context ():
             )
             db.session.add(new_admin)
 
-    db.session.commit() # jett werden die änderungen in der datenbank gespeichert
+    db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():

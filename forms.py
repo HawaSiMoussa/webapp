@@ -46,7 +46,7 @@ class CreatePostForm(FlaskForm):
                 "Verlustdatum darf nicht in der Zukunft liegen."
             )
 
-
+# Login-Formular 
 class CreateLogin(FlaskForm):
 
     campus = SelectField(
@@ -71,7 +71,7 @@ class CreateLogin(FlaskForm):
 
     submit = SubmitField("Login")
 
-
+# Registrierungsformular
 class RegisterForm(FlaskForm):
 
     campus = SelectField(
@@ -96,6 +96,7 @@ class RegisterForm(FlaskForm):
 
     submit = SubmitField("Registrieren")
     
+    # Suchleiste
 class Suchleiste(FlaskForm):
   suchfeld = StringField( "Suchbegriff", 
        validators=[InputRequired()]
@@ -103,6 +104,7 @@ class Suchleiste(FlaskForm):
   
   submit = SubmitField("Suchen")
 
+# Edit Profile Form
 class EditProfileForm(FlaskForm):
     
     benutzername = StringField( "Benutzername", validators=[InputRequired()])
