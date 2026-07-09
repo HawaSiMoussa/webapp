@@ -10,8 +10,8 @@ LostAndFound
       action="{{ url_for('suche') }}"
       class="mb-4">
 
-    {{ form.hidden_tag() }} 
-<!--CSRF-Schutz durch hidden_tag() statt einzelnem form.csrf_token -->
+    {{ csrf_token() }} 
+<!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird -->
 
     <div class="input-group">
 

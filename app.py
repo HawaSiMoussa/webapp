@@ -208,10 +208,9 @@ def create_post():
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
     post = db.session.get(Post, post_id)
-# kann none ausgeben wenn post_id nicht existiert
-# kein check, nächste zeile würde als crashen (attribute error), weil post = None, also kein post.status. daher checken ob post existiert
+
     post.status ="gefunden"
-    # hier fehlt evtl owner check, also nur wenn dem user der post gehört, kann er den post schließen, aber nicht unbedingt, weil fällt nicht unter normalfall
+ 
 
     db.session.commit()
 
@@ -268,28 +267,27 @@ def edit_profile():
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-
+# Instanz der Klasse StandardUser mit der user_id aus der session wird hier erstellt. 
     user = db.session.get(
         StandardUser,
         session["user_id"]
-    )
+    )#
+    #obj ist ein parameter aus der flaskforms bibliothek
     form = forms.EditProfileForm(obj=user) #obj=user sorgt dafür, dass die aktuellen daten des users im formular angezeigt werden, wenn die seite geladen wird
-    if form.validate_on_submit():
+    if form.validate_on_submit(): # wenn das formular korrekt ausgefüllt wurde
 
         user.benutzername = form.benutzername.data
         user.name = form.name.data
         user.telefonnummer = form.telefonnummer.data
         user.campus_id = form.campus_id.data
-
-        db.session.commit()
-
+# .data repräsentiert die daten, die der user im formular eingegeben hat. 
         flash(
             "Profil erfolgreich aktualisiert!",
             "success"
         )
     
         return redirect(url_for("profile"))
-
+# wird in zwei fällen ausgeführt: wenn das formular nicht korrekt ausgefüllt wurde oder wenn die seite zum ersten mal geladen wird. 
     return render_template(
         "edit_profile.html",
         form=form
