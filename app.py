@@ -8,7 +8,7 @@ from datetime import date, timedelta
 
 app = Flask(__name__)
 
-app.config.from_mapping( #ntzung von datenbank , sicherheit und session
+app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SECRET_KEY='secret_key_just_for_dev_environment',#session
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',# sqlite datenbank pfad
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
@@ -29,7 +29,7 @@ with app.app_context ():
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        }
+        },
     ]
 
     for admin_data in admins_to_create:
@@ -49,7 +49,7 @@ with app.app_context ():
             )
             db.session.add(new_admin)
 
-    db.session.commit() # jett werden die änderungen in der datenbank gespeichert
+    db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
@@ -77,7 +77,7 @@ def home():
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 
-    form = forms.RegisterForm() 
+    form = forms.RegisterForm() # objekt form der klasse register form erstellt 
     # hier wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn ja, wird der user erstellt und in der datenbank gespeichert. wenn nein, wird das formular erneut angezeigt.
     if form.validate_on_submit():
         
@@ -115,13 +115,13 @@ def register():
 #Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
-    if "user_id" not in session:
+    if "user_id" not in session: #existiert die session des eingeloggten users nicht, wird er auf die login seite weitergeleitet.
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #erst bei POST 
 
         user = db.session.get(
             StandardUser,
@@ -132,7 +132,7 @@ def contact():
         user.benutzername = form.username.data
         user.telefonnummer = form.phone_number.data
 
-        db.session.commit()
+        db.session.commit() #Eingabe an DB geschickt
         
 
         flash("Daten erfolgreich gespeichert!", "success")
@@ -155,13 +155,13 @@ def create_post():
 
         return render_template(
             'create_post.html',
-            form=form
+            form=form 
         )
 
     else:
 #Validator 
-        if form.validate():
-          if not session.get("is_admin"):
+        if form.validate(): 
+          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
@@ -201,6 +201,7 @@ def create_post():
 
             if 'lost_date' in form.errors:
                 flash(form.errors['lost_date'][0], 'warning')
+                
         return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
@@ -221,13 +222,13 @@ def close_post(post_id):
 @app.route('/login/', methods=['GET', 'POST'])
 def login(): # in diesem teil wird die login funktion erstellt. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird das formular angezeigt. wenn das formular korrekt ausgefüllt wurde, wird der user eingeloggt und auf die home seite weitergeleitet. wenn das formular nicht korrekt ausgefüllt wurde, wird eine warnung angezeigt und der user bleibt auf der login seite.
 
-    form = forms.CreateLogin()
+    form = forms.CreateLogin() # Nimm das Formular aus forms.py und zeige 
 
     if form.validate_on_submit():
 
-        user = db.session.execute(
-            db.select(StandardUser).where(
-                StandardUser.hwr_mail == form.hwrmail.data
+        user = db.session.execute( # execute führt die sql abfrage aus und gibt ein result object zurück
+            db.select(StandardUser).where( #in tabelle standarduser reun
+                StandardUser.hwr_mail == form.hwrmail.data # nimm von der Tabelle alle user dessen hwr mail mit der hwrmail übereinstimmt, die der user im formular eingegeben hat. wenn es keinen user gibt, der diese hwrmail hat, wird None zurückgegeben.
             )
         ).scalar() # s weg machen überarbeiten dann geht wohl der fehler
 
@@ -354,7 +355,7 @@ def edit_post (post_id):
 @app.route("/search", methods=["GET", "POST"])
 def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen suchbegriff. 
 
-    form = forms.Suchleiste()
+    form = forms.Suchleiste() # es wird ein objekt der klasse Suchleiste erstellt, die in forms.py definiert ist. das objekt enthält das formular
     posts =[]
     user=db.session.get(StandardUser, session["user_id"])
 
