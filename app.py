@@ -123,7 +123,7 @@ def contact():
 
     if form.validate_on_submit(): #erst bei POST 
 
-        user = db.session.get(
+        user = db.session.get( #User Objekt erstellt über
             StandardUser,
             session["user_id"]
         )
@@ -146,11 +146,11 @@ def contact():
     )
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route("/create/", methods=["GET", "POST"])
+@app.route("/create/", methods=["GET", "POST"]) 
 def create_post():
 
     form = forms.CreatePostForm()
-# get-request wird verwendet, um das formular anzuzeigen. post-request wird verwendet, um die daten aus dem formular zu verarbeiten und in der datenbank zu speichern.
+
     if request.method == 'GET':
 
         return render_template(
@@ -165,9 +165,9 @@ def create_post():
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
-                    Post.status == "laufend"
+                    Post.status == "laufend" 
                 )
-            ).scalar() # überarbeiten
+            ).scalar() 
 
             if aktiver_post:
                 flash(
@@ -176,9 +176,9 @@ def create_post():
                 )
                 return redirect(url_for("create_post"))
             # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
-            heute = date.today()
+            heute = date.today() 
             post = Post(
-                user_id=session["user_id"],
+                user_id=session["user_id"], 
                 titel=form.title.data,
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
