@@ -13,7 +13,7 @@ app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',# sqlite datenbank pfad
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=False
+    SESSION_COOKIE_SECURE=False #aufgrund lokaler Entwicklung
 )
  #hier mit app verknüfen
 db.init_app(app)
