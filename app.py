@@ -326,10 +326,10 @@ def edit_post (post_id):
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
 
     if request.method == "GET":
-            form.title.data = post.titel
-            form.description.data = post.beschreibung
-            form.lost_date.data = post.verlustdatum
-            form.lost_area.data = post.verlustort
+        form.title.data = post.titel
+        form.description.data = post.beschreibung
+        form.lost_date.data = post.verlustdatum
+        form.lost_area.data = post.verlustort
 
     if form.validate_on_submit():
 
