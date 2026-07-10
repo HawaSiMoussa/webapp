@@ -324,33 +324,24 @@ def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
-# in der if abfrage wird überprüft, ob die methode GET ist. wenn ja, werden die aktuellen daten des posts in das formular geladen
-    if request.method == 'GET':
 
+    if request.method == "GET":
             form.title.data = post.titel
             form.description.data = post.beschreibung
             form.lost_date.data = post.verlustdatum
             form.lost_area.data = post.verlustort
-            return render_template('edit_post.html',form=form)
-    else:
 
-            if form.validate():
+    if form.validate_on_submit():
 
-                post.titel = form.title.data
-                post.beschreibung = form.description.data
-                post.verlustdatum = form.lost_date.data
-                post.verlustort = form.lost_area.data
-
-                db.session.commit()
-
-                flash('Post erfolgreich aktualisiert.','success')
-            else:
-
-                flash('Post konnte nicht aktualisiert werden.','warning')
-
-            return redirect(url_for('profile')) # alte daten werden vorbeigeschickt und die neuen daten werden in der datenbank gespeichert.
+        post.titel = form.title.data
+        post.beschreibung = form.description.data
+        post.verlustdatum = form.lost_date.data
+        post.verlustort = form.lost_area.data
+        db.session.commit()
+        flash('Post erfolgreich aktualisiert.','success')
+        return redirect(url_for('profile')) # alte daten werden vorbeigeschickt und die neuen daten werden in der datenbank gespeichert.
     
-
+    return render_template('edit_post.html',form=form)
 
 @app.route("/search", methods=["GET", "POST"])
 def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen suchbegriff. 
