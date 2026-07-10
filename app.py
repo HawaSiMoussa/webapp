@@ -109,17 +109,17 @@ def login():
     return render_template("login.html", form=form)
 @app.route("/testmail")
 def testmail():
-
+    #Instanz der Klasse Message (Objekt repräsentiert eine Mail bevor sie verschickt wird)
     msg = Message(
         subject="Flask-Mail Test",
-        recipients=["useto.test.169@gmail.com"]
+        recipients=["useto.test.169@gmail.com"] # Liste von Empfänger-Adressen (auch wenn's nur eine ist, muss es trotzdem eine Liste sein – Flask-Mail erlaubt mehrere Empfänger gleichzeitig
     )
 
     msg.body = "FlaskMail wurde für diese Mail genutzt :)."
 
-    mail.send(msg)
+    mail.send(msg) #verbindung zu smpt server aufbauen und authetifizieren mit MAIL_USERNAME und MAIL_PASSWORD, Mail verschicken, Verbindung wieder schließen
 
-    return "Mail wurde verschickt."
+    return "Mail wurde verschickt." #einfacher String als rückgabe, weil das nur zum testen ist, dass die Mail verschickt wurde
 
 if __name__ == "__main__":
     app.run(debug=True)
