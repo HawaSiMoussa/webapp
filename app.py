@@ -20,16 +20,16 @@ db.init_app(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context ():
-    db.create_all() # 
+with app.app_context (): # flask arbeitsraum
+    db.create_all() # erstellt tabellen und spalten in der datenbank, wenn sie noch nicht existieren. 
 # das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
-    admins_to_create = [
+    admins_to_create = [ 
         {
-            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",  # liste mit wert und schllüssel python liste 
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        },
+        }, 
     ]
 
     for admin_data in admins_to_create:
@@ -368,7 +368,7 @@ def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen
             )
         ).scalars()
 
-    for post_object in result:
+        for post_object in result:
             posts.append(post_object)
 
     return render_template("suche.html", posts=posts, form=form, user=user)
