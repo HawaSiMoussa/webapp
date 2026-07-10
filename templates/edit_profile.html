@@ -11,6 +11,7 @@
 
     {{ form.csrf_token }}
      <div class="mb-3">
+     <!-- .label rendert das <label> html element mit dem beschriftungstext aus forms.py-->
         {{ form.benutzername.label }}
         {{ form.benutzername(class="form-control") }}
     </div>

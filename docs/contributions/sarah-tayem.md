@@ -37,6 +37,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 | 2 | **Profilbearbeitungsfunktion:** Der User kann seine Profildaten (außer die E-Mail) selbstständig korrigieren. | Diese Contribution verbessert ebenfalls die Usability stark, da Nutzer falsch angegebene Daten einfach korrigieren können, was im Alltag oft passiert. | Hier war die Koordination schwierig. Ich musste koordinieren, dass Daten aus dem User-Modell aufgerufen, geändert und dann erfolgreich in der Datenbank aktualisiert werden. |
 | 3 | **Bootstrap Icons:** Verwendung von echten Icons im Profil, beim Bearbeiten und im Feed statt der ursprünglichen Emojis. | Icons stärken die User Experience. Zudem wirkt die Seite professioneller, moderner und ist für das Auge deutlich angenehmer. | Ich musste mich zunächst mit der Einbindung von Bootstrap Icons vertraut machen und passende Icons auswählen, die die Benutzeroberfläche sinnvoll unterstützen. |
 
+
 ## Contributions 
 
 | Contribution | Proof, e.g., git commits | Sources used |
