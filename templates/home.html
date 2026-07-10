@@ -41,7 +41,7 @@ LostAndFound
 <!-- pro post also eigene db abfrage: lazy loading, n+1 problem bei vielen posts-->
         <strong>
             <i class="bi bi-person-circle"></i>
-            {{ post.user.benutzername }}
+            {{ post.user.benutzername }} #n+1 problem: pro post wird eine eigene abfrage an die datenbank geschickt
         </strong>
 
         <!-- Titel -->
