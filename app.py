@@ -311,6 +311,7 @@ def api_posts():
         db.select(Post)
     ).scalars()
 #jsonify gibt die daten als json zurück. die daten werden in einer liste gespeichert, die dann in der api_posts.html datei angezeigt wird. die daten werden in einem dictionary gespeichert, das dann in der liste gespeichert wird
+#also: python datenstruktur(liste von dictionaries)--> json string--> in flask response objekt verpackt
     return jsonify([ 
         {
             "titel": p.titel,
