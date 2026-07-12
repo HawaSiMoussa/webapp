@@ -16,7 +16,7 @@ app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SESSION_COOKIE_SECURE=False
 )
  #hier mit app verknüfen
-db.init_app(app)
+db.init_app(app) #verknüpft die datenbank mit flask app
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
