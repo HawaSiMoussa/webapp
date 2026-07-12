@@ -43,15 +43,10 @@ class StandardUser(db.Model):
 
     campus = db.relationship("Campus",back_populates="users")
 
-    posts = db.relationship( "Post",back_populates="user")
-    hwr_mail = db.Column(db.String,unique=True, nullable=False)
-
-    ist_admin = db.Column(db.Boolean,default=False)
-
-    campus = db.relationship("Campus",back_populates="users")
 
     posts = db.relationship("Post",back_populates="user")
 
+    fundbuero_id = db.Column(db.Integer, db.ForeignKey("fundbuero.fundbuero_id"), nullable=True)
 
 class Fundbuero(db.Model):
 
@@ -76,8 +71,7 @@ class Fundbuero(db.Model):
 
     posts = db.relationship("Post",back_populates="fundbuero")
 
-    posts = db.relationship("Post", back_populates="fundbuero")
-
+    
 
 
 class Post(db.Model):
