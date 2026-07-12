@@ -107,19 +107,29 @@ def login():
         return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
-@app.route("/testmail")
-def testmail():
-    #Instanz der Klasse Message (Objekt repräsentiert eine Mail bevor sie verschickt wird)
+
+@app.route("/send_fundbuero_mail/<int:post_id>/", methods=["POST"])
+def send_fundbuero_mail(post_id):
+
+    if "user_id" not in session or "fundbuero_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    post = db.session.get(Post, post_id)
+
+    if post is None:
+        flash("Der Post existiert nicht.", "warning")
+        return redirect(url_for("home"))
+
     msg = Message(
-        subject="Flask-Mail Test",
-        recipients=["useto.test.169@gmail.com"] # Liste von Empfänger-Adressen (auch wenn's nur eine ist, muss es trotzdem eine Liste sein – Flask-Mail erlaubt mehrere Empfänger gleichzeitig
+        subject="Gefunden: " + post.titel,
+        recipients=[post.user.hwr_mail]
     )
+    msg.body = post.fundbuero.standardtext
 
-    msg.body = "FlaskMail wurde für diese Mail genutzt :)."
+    mail.send(msg)
 
-    mail.send(msg) #verbindung zu smpt server aufbauen und authetifizieren mit MAIL_USERNAME und MAIL_PASSWORD, Mail verschicken, Verbindung wieder schließen
-
-    return "Mail wurde verschickt." #einfacher String als rückgabe, weil das nur zum testen ist, dass die Mail verschickt wurde
-
+    flash("Mail wurde verschickt.", "success")
+    return redirect(url_for("home"))
 if __name__ == "__main__":
     app.run(debug=True)
