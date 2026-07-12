@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 import forms
 import os
 from db import db, Post, StandardUser
@@ -117,8 +117,13 @@ def send_fundbuero_mail(post_id):
 
     post = db.session.get(Post, post_id)
 
+
     if post is None:
         flash("Der Post existiert nicht.", "warning")
+        return redirect(url_for("home"))
+    
+    if post.fundbuero_id != session["fundbuero_id"]:
+        flash("Dieser Post gehört nicht zu deinem Fundbüro.", "warning")
         return redirect(url_for("home"))
 
     msg = Message(
