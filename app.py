@@ -7,6 +7,13 @@ from flask import jsonify
 from datetime import date, timedelta
 
 app = Flask(__name__)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+
+app.config['MAIL_USERNAME'] = 'useto.test.169@gmail.com'
+app.config['MAIL_PASSWORD'] = 'famr lhrw ysyr wbvn'
+app.config['MAIL_DEFAULT_SENDER'] = 'useto.test.169@gmail.com'
 
 app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SECRET_KEY='secret_key_just_for_dev_environment',#session
