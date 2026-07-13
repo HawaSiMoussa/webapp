@@ -1,12 +1,15 @@
-
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import date, timedelta
 db = SQLAlchemy()
-from flask_sqlalchemy import SQLAlchemy  
+ 
+#sqlalchemy um alle datenbank-funktionen zugriff zu haben(db.model, db.session, db.Column...)
+db = SQLAlchemy()
+migrate = Migrate()
 
+#Erstellen der Campus, StandardUser, Fundbuero und Post Klassen
 
-db = SQLAlchemy() #create SQLAlchemy object to be able to use it in other files, e.g. to define the data model in db.py
-
+#Model:  klasse keine normale python klasse sondern wird zu einer echten tabelle on der datenbank
 class Campus(db.Model):
 
     __tablename__ = "campus"
@@ -14,7 +17,7 @@ class Campus(db.Model):
 
     ort = db.Column(db.String, nullable=False)
 
-    users = db.relationship( "StandardUser", back_populates="campus")
+    users = db.relationship( "StandardUser", back_populates="campus") #relationship zwischen Campus und StandardUser, back_populates sorgt dafür, dass die Beziehung in beiden Richtungen funktioniert
 
     fundbueros = db.relationship("Fundbuero",back_populates="campus")
 
@@ -39,15 +42,12 @@ class StandardUser(db.Model):
 
     hwr_mail = db.Column(db.String, unique=True,nullable=False ) 
 
-    ist_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     campus = db.relationship("Campus",back_populates="users")
 
-
-    posts = db.relationship("Post",back_populates="user")
-
-    fundbuero_id = db.Column(db.Integer, db.ForeignKey("fundbuero.fundbuero_id"), nullable=True)
-
+    posts = db.relationship( "Post",back_populates="user")
+   
 class Fundbuero(db.Model):
 
     __tablename__ = "fundbuero"
@@ -64,14 +64,16 @@ class Fundbuero(db.Model):
 
     email = db.Column(db.String)
 
+    meldedatum = db.Column(db.Date,default=date.today)
+
+    ablaufdatum = db.Column(db.Date)
+
     standardtext = db.Column(db.Text)
 
     campus = db.relationship("Campus",back_populates="fundbueros")
 
+    posts = db.relationship("Post", back_populates="fundbuero")
 
-    posts = db.relationship("Post",back_populates="fundbuero")
-
-    
 
 
 class Post(db.Model):
@@ -85,14 +87,7 @@ class Post(db.Model):
     fundbuero_id = db.Column(db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
 
     titel = db.Column(db.String,nullable=False)
-    post_id = db.Column(db.Integer, primary_key=True )
-
-    user_id = db.Column(db.Integer,db.ForeignKey("standardUser.user_id") )
-
-    fundbuero_id = db.Column( db.Integer,db.ForeignKey("fundbuero.fundbuero_id"))
-
-    titel = db.Column(db.String,nullable=False )
-
+    
 
     meldedatum = db.Column(db.Date)
 
@@ -113,10 +108,4 @@ class Post(db.Model):
     user = db.relationship("StandardUser",back_populates="posts")
 
     fundbuero = db.relationship("Fundbuero",back_populates="posts")
-    status = db.Column( db.String, default="laufend")
-
-    views = db.Column(db.Integer, default=0 )
-
-    user = db.relationship("StandardUser",back_populates="posts")
-
-    fundbuero = db.relationship( "Fundbuero", back_populates="posts")
+    

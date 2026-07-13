@@ -1,62 +1,29 @@
 {% extends "base.html" %}
-
+   
+</div>
 {% block TITLE %}
+
 Verlust melden
 {% endblock %}
 
+
 {% block CONTENT %}
 
-<h1>Verlust melden</h1>
-<!-- Navbar bzw collapse menü -->
-<!-- Menüinhalt -->
-<nav class="navbar border-bottom mb-3">
+{% from 'bootstrap5/utils.html' import render_messages %}
+{{ render_messages() }}
 
-    <div class="container-fluid">
-
-        <a class="navbar-brand" href="{{ url_for('index') }}">
-            LostAndFound
-        </a>
-
-        <button
-            class="btn btn-outline-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarToggleExternalContent">
-
-            <i class="bi bi-list"></i>
-
-        </button>
-
-    </div>
-
-</nav>
-
-<div class="d-flex justify-content-end">
-
-    <div class="collapse" id="navbarToggleExternalContent">
-
-        <div class="border rounded p-3" style="width:300px;">
-            <a href="{{ url_for('index') }}" class="d-block mb-2">
-                <i class="bi bi-house"></i> Home
-            </a>
-
-            <a href="#" class="d-block mb-2">
-                <i class="bi bi-person"></i> Profil
-            </a>
-
-            <a href="{{ url_for('create_post') }}" class="d-block mb-2">
-                <i class="bi bi-plus-lg"></i> Post erstellen
-            </a>
-
-            <a href="#" class="d-block">
-                <i class="bi bi-exclamation-circle"></i> Hilfe & Kontakt
-            </a>
-
-        </div>
-
-    </div>
-
+<div class="container mt-">
+<!--flask sucht Bilder und andere statische Dateien automatisch im static folder deswegen static-->
+    <img src="{{ url_for('static',filename='images/LogoLostAndFound.jpeg') }}"
+     width="100">
 </div>
+
+<p>
+</p>
+<p>
+</p>
+
+<h1>Verlust melden</h1>
 
 
 <form action="{{ url_for('create_post') }}" method="post">
@@ -66,23 +33,38 @@ Verlust melden
     <div class="mb-3">
         {{ form.title.label }}
         {{ form.title(class="form-control") }}
-    </div>
+</div>
 
     <div class="mb-3">
         {{ form.description.label }}
         {{ form.description(class="form-control") }}
-    </div>
+</div>
 
     <div class="mb-3">
-        {{ form.lost_date.label }}
-        {{ form.lost_date(class="form-control") }}
-    </div>
+    {{ form.lost_date.label(class="form-label") }}
+    <!--tooltip für Verlusdatum-->
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass man sich nach dem Verlust eines Gegenstandes oft nicht mehr an das genaue Datum erinnern kann. Daher kann das Verlustdatum geschätzt angegeben werden.">
+        ⓘ
+    </span>
+    {{ form.lost_date(class="form-control") }}
+</div>
 
     <div class="mb-3">
-        {{ form.lost_area.label }}
-        {{ form.lost_area(class="form-control") }}
-    </div>
+    {{ form.lost_area.label(class="form-label") }}
+    <!--tooltip für Verlustort-->
+    <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Wir wissen, dass der genaue Verlustort häufig nicht bekannt ist. Daher kann der Verlustort auch ungefähr oder geschätzt angegeben werden.">
+        ⓘ
+    </span>
 
+    {{ form.lost_area(class="form-control") }}
+</div>
+<!--"success" lässt Button grün erscheinen-->
     <div class="text-end">
     {{ form.submit(class="btn btn-success") }}
     </div>

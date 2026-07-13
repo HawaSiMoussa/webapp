@@ -1,0 +1,38 @@
+{%extends "base.html" %}
+
+{% block TITLE %}
+    Profil bearbeiten
+{% endblock %}
+
+{% block CONTENT %}
+
+
+<form method="POST">
+
+    {{ form.csrf_token }}
+     <div class="mb-3">
+     <!-- .label rendert das <label> html element mit dem beschriftungstext aus forms.py-->
+        {{ form.benutzername.label }}
+        {{ form.benutzername(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.name.label }}
+        {{ form.name(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.telefonnummer.label }}
+        {{ form.telefonnummer(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.campus_id.label }}
+        {{ form.campus_id(class="form-select") }}
+    </div>
+
+    {{ form.submit(class="btn btn-success") }}
+
+</form>
+
+    {% endblock %}

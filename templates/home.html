@@ -1,87 +1,48 @@
+{% extends "base.html" %}
 
-{% from 'bootstrap5/nav.html' import render_nav_item %}
-{% from 'bootstrap5/utils.html' import render_messages %}
-<!doctype html>
-<html lang="en">
+{% block TITLE %}
+LostAndFound
+{% endblock %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block CONTENT %}
+<!--Formular schickt an /search (action=url_for('suche')) nicht an home selbst -->
+<form method="POST"
+      action="{{ url_for('suche') }}"
+      class="mb-4">
 
-    <title>LostAndFound</title>
+    {{ form.csrf_token() }} 
+<!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird 
+ vale: das Formular kam wirklich von dieser seite mit gültiger Session nicht von einer fremden-->
+<!--rendert verstecktes HTML eingabefeld mit geheimen session gebundenen wert, value wird pro session gesetzt-->
+    <div class="input-group">
 
-    {{ bootstrap.load_css() }}
-    <!--We donâ€™t hard-code a link to the Bootstrap CSS file, but rather let Bootstrap-Flask do this.
-The CSS file is pulled from an internet resource hosted by Bootstrap.-->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!--we dont't need a link for bootstrap css to the style sheet but we need it for bootstrap icons-->
-</head>
+        {{ form.suchfeld(
+            class="form-control",
+            placeholder="Suchen..."
+        ) }}
 
-<body>
-
-<div class="container mt-4">
-
-
-<!-- Navbar/ collapse menu -->
-
-<nav class="navbar border-bottom mb-3">
-
-    <div class="container-fluid">
-
-        <a class="navbar-brand" href="{{ url_for('index') }}">
-            LostAndFound
-        </a>
-
-        <button
-            class="btn btn-outline-secondary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarToggleExternalContent">
-
-            <i class="bi bi-list"></i>
-
-        </button>
+        {{ form.submit(
+            class="btn btn-primary"
+        ) }}
 
     </div>
 
-</nav>
+</form>
 
-<div class="d-flex justify-content-end">
+<!--durch die Schleife werden alle Posts angezeigt, die dem Campus des Users entsprechen: in der for Schleife wird jeder Post geholt, in der if Abfrage dann rausgefiltert nach Campus-->
 
-    <div class="collapse" id="navbarToggleExternalContent">
 
-        <div class="border rounded p-3" style="width:300px;">
-            <a href="{{ url_for('index') }}" class="d-block mb-2">
-                <i class="bi bi-house"></i> Home
-            </a>
 
-            <a href="#" class="d-block mb-2">
-                <i class="bi bi-person"></i> Profil
-            </a>
-
-            <a href="{{ url_for('create_post') }}" class="d-block mb-2">
-                <i class="bi bi-plus-lg"></i> Post erstellen
-            </a>
-
-            <a href="#" class="d-block">
-                <i class="bi bi-exclamation-circle"></i> Hilfe & Kontakt
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
-    <!-- Posts -->
     {% for post in posts %}
+        {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
+    <div class="border rounded p-3 mb-4">
 
-    <div class="border rounded p-3 mb-3">
-
-        <!-- Username -->
+        <!--Username -->
+<!--post.user greift über realationship auf die user tabelle in db.py zu-->
+<!-- pro post also eigene db abfrage: lazy loading, n+1 problem bei vielen posts-->
         <strong>
             <i class="bi bi-person-circle"></i>
-            {{ post.user.benutzername }}
+            {{ post.user.benutzername }} #n+1 problem: pro post wird eine eigene abfrage an die datenbank geschickt
         </strong>
 
         <!-- Titel -->
@@ -90,9 +51,19 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
           
 
         </h5>
-
-        <!-- button to open extended version of the Post -->
+           <small>
+            <i class="bi bi-info-circle"></i>
+              Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
+            </small>
+            <br>
+            <small class="text-danger">
+            <i class="bi bi-hourglass-split"></i>
+             Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+            </small>
+            
+        <!-- Buttons + Status -->
         <div class="mt-3 d-flex align-items-center gap-2">
+        
  
             <!-- Beschreibung -->
             <button
@@ -103,26 +74,28 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
                 <i class="bi bi-chevron-down"></i>
             </button>
+{% if session.get('is_admin')or post.user_id == session.get('user_id') %}
+<a href="{{url_for('delete_post',post_id=post.post_id)}}" class="btn btn-danger"> Post löschen</a>
 
+{% endif %}
             <!-- Nachricht -->
-          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Bezüglich: ' ~ post.titel)|urlencode }}"
-   class="btn btn-outline-primary btn-sm border-0">
-    <i class="bi bi-envelope"></i>
+            <!--urlencode filter sorgt dafür, dass Sonderzeichen in der URL korrekt dargestellt werden-->
+            <!-- falls verlustortgleich none dann in der nachricht "none" -->
+          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
+          &body={{('Hallo,' ~'\n\n' ~
+           'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~
+           'Gegenstand: ' ~post.titel ~'\n' ~
+           'Verlustort: ' ~ post.verlustort ~ '\n\n' ~  
+            'Bitte melden dich bei mir.' ~ '\n\n' ~
+            'Viele Grüße'
+            )|urlencode }}">
+             
+             <i class="bi bi-envelope"></i>
 </a>
 
 
 
-            <!-- Views -->
-            <span>
-                <i class="bi bi-eye"></i>
-                {{ post.views }}
-            </span>
 
-            <!-- Status -->
-            <span
-                class="rounded-circle bg-danger d-inline-block"
-                style="width:6px; height:6px;">
-            </span>
 
         </div> 
 
@@ -142,13 +115,18 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
                     <strong>Verlustort:</strong><br>
                     {{ post.verlustort }}
                 </p>
+                <!--rohes date-objekt im iso format, statt tt.mm.jjjj-->
 
                 <p>
                     <strong>Verlustdatum:</strong><br>
                     {{ post.verlustdatum}}
                 </p>
 
+            
+<!-- bootstrap klassen für button und type button gesetzt weil standard ist submit -->
+<!-- loop index ist die laufende nummer der for schleife, damit jeder button eine eigene id hat : wichtig damit bootstrap weiß, welchen bereich er aufklappen soll -->
                 <button
+
                     class="btn btn-outline-secondary btn-sm w-auto"
                     type="button"
                     data-bs-toggle="collapse"
@@ -164,11 +142,9 @@ The CSS file is pulled from an internet resource hosted by Bootstrap.-->
 
     </div>
 
+
+        {%endif%}
+
     {% endfor %}
 
-</div>
-
-{{ bootstrap.load_js() }} <!--The same applies to the Bootstrap JavaScript code, which by convention is placed right before the </body> end tag.-->
-
-</body>
-</html>
+{% endblock %}
