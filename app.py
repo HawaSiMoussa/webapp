@@ -20,23 +20,35 @@ db.init_app(app) #verknüpft die datenbank mit flask app
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-for admin_data in admins_to_create:
-        # Hier muss 'hwrmail' stehen (so wie du es im Model definiert hast)
+with app.app_context():
+    db.create_all() 
+    
+    admins_to_create = [ 
+        {
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
+            "passwort": "Sarah12345678",
+            "name": "Sarah Tayem",
+            "benutzername": "Sarahtayem"
+        }, 
+    ]
+
+    for admin_data in admins_to_create:
+        # Hier muss 'hwr_mail' stehen, so wie es in deiner DB-Klasse heißt
         exists = db.session.execute(
-            db.select(StandardUser).where(StandardUser.hwrmail == admin_data["hwr_mail"])
+            db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
         ).scalar()
         
         if not exists:
             new_admin = StandardUser(
-                hwrmail=admin_data["hwr_mail"], # Hier auch 'hwrmail'
+                hwr_mail=admin_data["hwr_mail"], # Hier auch 'hwr_mail'
                 passwort=admin_data["passwort"],
                 name=admin_data["name"],
                 benutzername=admin_data["benutzername"],
                 is_admin=True
             )
             db.session.add(new_admin)
+    db.session.commit()
 
-        db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
