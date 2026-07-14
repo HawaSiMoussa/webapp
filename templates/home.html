@@ -5,146 +5,53 @@ LostAndFound
 {% endblock %}
 
 {% block CONTENT %}
-<!--Formular schickt an /search (action=url_for('suche')) nicht an home selbst -->
-<form method="POST"
-      action="{{ url_for('suche') }}"
-      class="mb-4">
 
+<form method="POST" action="{{ url_for('suche') }}" class="mb-4">
     {{ form.csrf_token() }} 
-<!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird 
- vale: das Formular kam wirklich von dieser seite mit gültiger Session nicht von einer fremden-->
-<!--rendert verstecktes HTML eingabefeld mit geheimen session gebundenen wert, value wird pro session gesetzt-->
     <div class="input-group">
-
-        {{ form.suchfeld(
-            class="form-control",
-            placeholder="Suchen..."
-        ) }}
-
-        {{ form.submit(
-            class="btn btn-primary"
-        ) }}
-
+        {{ form.suchfeld(class="form-control", placeholder="Suchen...") }}
+        {{ form.submit(class="btn btn-primary") }}
     </div>
-
 </form>
 
-<!--durch die Schleife werden alle Posts angezeigt, die dem Campus des Users entsprechen: in der for Schleife wird jeder Post geholt, in der if Abfrage dann rausgefiltert nach Campus-->
-
-
-
-    {% for post in posts %}
-        {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
+{% for post in posts %}
+    {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
     <div class="border rounded p-3 mb-4">
-
-        <!--Username -->
-<!--post.user greift über realationship auf die user tabelle in db.py zu-->
-<!-- pro post also eigene db abfrage: lazy loading, n+1 problem bei vielen posts-->
         <strong>
             <i class="bi bi-person-circle"></i>
-            {{ post.user.benutzername }} #n+1 problem: pro post wird eine eigene abfrage an die datenbank geschickt
+            {{ post.user.benutzername }}
         </strong>
 
-        <!-- Titel -->
         <h5 class="mt-3">
             {{ post.titel }}
-          
-
         </h5>
-           <small>
+        <small>
             <i class="bi bi-info-circle"></i>
-              Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
-            </small>
-            <br>
-            <small class="text-danger">
+            Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
+        </small>
+        <br>
+        <small class="text-danger">
             <i class="bi bi-hourglass-split"></i>
-             Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
-            </small>
+            Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+        </small>
             
-        <!-- Buttons + Status -->
         <div class="mt-3 d-flex align-items-center gap-2">
-        
- 
-            <!-- Beschreibung -->
-            <button
-                class="btn btn-outline-secondary btn-sm"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#details{{ loop.index }}">
-
+            <button class="btn btn-outline-secondary btn-sm" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#details{{ loop.index }}">
                 <i class="bi bi-chevron-down"></i>
             </button>
-{% if session.get('is_admin')or post.user_id == session.get('user_id') %}
-<a href="{{url_for('delete_post',post_id=post.post_id)}}" class="btn btn-danger"> Post löschen</a>
 
-{% endif %}
-            <!-- Nachricht -->
-            <!--urlencode filter sorgt dafür, dass Sonderzeichen in der URL korrekt dargestellt werden-->
-            <!-- falls verlustortgleich none dann in der nachricht "none" -->
-          <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}
-          &body={{('Hallo,' ~'\n\n' ~
-           'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~
-           'Gegenstand: ' ~post.titel ~'\n' ~
-           'Verlustort: ' ~ post.verlustort ~ '\n\n' ~  
-            'Bitte melden dich bei mir.' ~ '\n\n' ~
-            'Viele Grüße'
-            )|urlencode }}">
-             
-             <i class="bi bi-envelope"></i>
-</a>
+            {% if session.get('is_admin') or post.user_id == session.get('user_id') %}
+            <!-- KORREKTUR: hier 'id' statt 'post_id' verwendet -->
+            <a href="{{ url_for('delete_post', id=post.post_id) }}" class="btn btn-danger"> Post löschen</a>
+            {% endif %}
 
-
-
-
-
-        </div> 
-
-        <!-- Aufklappbarer Bereich -->
-        <div
-            class="collapse mt-3"
-            id="details{{ loop.index }}">
-
-            <div class="card card-body">
-
-                <p>
-                    <strong>Beschreibung:</strong><br>
-                    {{ post.beschreibung }}
-                </p>
-
-                <p>
-                    <strong>Verlustort:</strong><br>
-                    {{ post.verlustort }}
-                </p>
-                <!--rohes date-objekt im iso format, statt tt.mm.jjjj-->
-
-                <p>
-                    <strong>Verlustdatum:</strong><br>
-                    {{ post.verlustdatum}}
-                </p>
-
-            
-<!-- bootstrap klassen für button und type button gesetzt weil standard ist submit -->
-<!-- loop index ist die laufende nummer der for schleife, damit jeder button eine eigene id hat : wichtig damit bootstrap weiß, welchen bereich er aufklappen soll -->
-                <button
-
-                    class="btn btn-outline-secondary btn-sm w-auto"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#details{{ loop.index }}">
-
-                    <i class="bi bi-chevron-up"></i>
-
-                </button>
-
-            </div>
-
+            <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}&body={{('Hallo,' ~'\n\n' ~ 'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~ 'Gegenstand: ' ~post.titel ~'\n' ~ 'Verlustort: ' ~ post.verlustort ~ '\n\n' ~ 'Bitte melden dich bei mir.' ~ '\n\n' ~ 'Viele Grüße')|urlencode }}">
+                <i class="bi bi-envelope"></i>
+            </a>
         </div>
-
     </div>
-
-
-        {%endif%}
-
-    {% endfor %}
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
