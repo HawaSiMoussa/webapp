@@ -323,6 +323,14 @@ def api_posts():
 def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
+    if not post:
+         return redirect(url_for("home"))
+
+    if post.user_id != session["user_id"] and not session.get("is_admin"):
+        flash("Du hast keine Berechtigung, diesen Post zu bearbeiten.", "warning")
+        return redirect(url_for("home"))
+
+
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
 # in der if abfrage wird überprüft, ob die methode GET ist. wenn ja, werden die aktuellen daten des posts in das formular geladen
     if request.method == 'GET':
@@ -375,9 +383,18 @@ def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen
 
 @app.route ("/delete_post/<int:post_id>/") # post löschen entfernt einen post aus der datenbank. 
 def delete_post(post_id):
+
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+    
     post = db.session.get(Post, post_id)
 
-    if post:
+    if not post:
+        flash("Post nicht gefunden.", "warning")
+        return redirect(url_for("home"))
+
+    if post.user_id == session["user_id"] or session.get("is_admin"):
         db.session.delete(post)
         db.session.commit()
         flash( "der post wurde erfolgreich gelöscht", "success") #success: grüner kasten
