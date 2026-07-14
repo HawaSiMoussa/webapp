@@ -1,30 +1,29 @@
 {% extends "base.html" %}
 
-{% block TITLE %}
-Login
-{% endblock %}
+{% block TITLE %}Login{% endblock %}
 
 {% block CONTENT %}
 
-
 <div class="text-center mb-4">
-    <img src="{{ url_for('static', filename='images/LogoLostAndFound.jpeg') }}"
-         width="180">
+    <img src="{{ url_for('static', filename='images/LogoLostAndFound.jpeg') }}" width="180">
 </div>
 
-
 <div class="container mt-5" style="max-width: 450px;">
-
     <h2 class="text-center mb-4">Login</h2>
 
-    <form method="post">
-
-        {{ form.hidden_tag() }}
-
-        <div class="mb-3">
-            {{ form.campus.label(class="form-label") }}
-            {{ form.campus(class="form-select") }}
+    <!-- Fehleranzeige -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    <li>{{ field }}: {{ errors|join(', ') }}</li>
+                {% endfor %}
+            </ul>
         </div>
+    {% endif %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
 
         <div class="mb-3">
             {{ form.hwrmail.label(class="form-label") }}
@@ -34,29 +33,15 @@ Login
         <div class="mb-3">
             {{ form.passwort.label(class="form-label") }}
             {{ form.passwort(class="form-control") }}
-            {% for error in form.passwort.errors %}
-                <div class="text-danger">
-                    {{ error }}
-                </div>
-            {% endfor %}
-
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">
-            Login
-        </button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
 
         <div class="text-center mt-3">
             <p>Noch keinen Account?</p>
-
-            <a href="{{ url_for('register') }}"
-               class="btn btn-outline-secondary w-100">
-                Registrieren
-            </a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-secondary w-100">Registrieren</a>
         </div>
-
     </form>
-
 </div>
 
 {% endblock %}
