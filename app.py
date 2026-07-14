@@ -380,8 +380,13 @@ def delete_post(post_id):
         flash("Post nicht gefunden.", "warning")
         return redirect(url_for("home"))
     
+    # Debugging: Was steht in der Session?
+    print(f"DEBUG: UserID in Session: {session.get('user_id')}")
+    print(f"DEBUG: Ist Admin? {session.get('is_admin')}")
+    print(f"DEBUG: PostUserID: {post.user_id}")
+
     # Berechtigungsprüfung
-    is_admin = session.get("is_admin") == True
+    is_admin = session.get("is_admin") is True
     is_owner = (post.user_id == session.get("user_id"))
 
     if is_owner or is_admin:
@@ -395,4 +400,3 @@ def delete_post(post_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
