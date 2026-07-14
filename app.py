@@ -151,63 +151,28 @@ def contact():
     return render_template("contact.html", form=form)
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route("/create/", methods=["GET", "POST"]) 
-def create_post():
-
+@app.route("/create/", methods=["GET", "POST"])
+def create():
     form = forms.CreatePostForm()
-
-    if request.method == 'GET':
-
-        return render_template(
-            'create_post.html',
-            form=form 
+    
+    if form.validate_on_submit():
+        # WICHTIG: Hier musst du die user_id mitgeben!
+        new_post = Post(
+            titel=form.titel.data,
+            inhalt=form.inhalt.data,
+            user_id=session["user_id"] # <-- Das hier ist das fehlende Teil!
         )
+        db.session.add(new_post)
+        db.session.commit()
+        flash("Post erstellt!", "success")
+        return redirect(url_for("home"))
+    
+    # Falls das Formular nicht validiert, gib uns einen Hinweis im Terminal
+    if form.errors:
+        print("Formular-Fehler:", form.errors)
+        
+    return render_template("create.html", form=form)
 
-    else:
-#Validator 
-        if form.validate(): 
-          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
-            aktiver_post = db.session.execute(
-                db.select(Post).where(
-                    Post.user_id == session["user_id"],
-                    Post.status == "laufend" 
-                )
-            ).scalar() 
-
-            if aktiver_post:
-                flash(
-                    "Du hast bereits eine aktive Suchanzeige.",
-                    "warning"
-                )
-                return redirect(url_for("create_post"))
-            # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
-            heute = date.today() 
-            post = Post(
-                user_id=session["user_id"], 
-                titel=form.title.data,
-                beschreibung=form.description.data,
-                verlustdatum=form.lost_date.data,
-                verlustort=form.lost_area.data,
-
-                meldedatum=heute,
-                ablaufdatum=heute + timedelta(days=30),
-
-                status="laufend"
-            )
-
-            db.session.add(post)
-            db.session.commit()
-
-            flash('Post erfolgreich erstellt.', 'success')
-
-        else:
- # es wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn nicht, werden die fehler angezeigt.
-            print(form.errors)
-
-            if 'lost_date' in form.errors:
-                flash(form.errors['lost_date'][0], 'warning')
-                
-        return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
 @app.route ("/close_post/<int:post_id>/")
@@ -380,33 +345,22 @@ def suche():
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route("/delete_post/<int:post_id>/") 
-def delete_post(post_id):
-    if "user_id" not in session:
-        flash("Bitte zuerst einloggen!", "warning")
-        return redirect(url_for("login"))
+@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
+def delete_post(id):
+    # Den Post in der DB finden
+    post = db.session.get(Post, id)
     
-    post = db.session.get(Post, post_id)
-    if not post:
-        flash("Post nicht gefunden.", "warning")
+    # Sicherheitsprüfung:
+    # 1. Ist der User der Besitzer? (post.user_id == session["user_id"])
+    # 2. ODER ist der User ein Admin? (session.get("is_admin"))
+    if post.user_id != session.get("user_id") and not session.get("is_admin"):
+        flash("Du darfst nur deine eigenen Beiträge löschen!", "danger")
         return redirect(url_for("home"))
-    
-    # Debugging: Was steht in der Session?
-    print(f"DEBUG: UserID in Session: {session.get('user_id')}")
-    print(f"DEBUG: Ist Admin? {session.get('is_admin')}")
-    print(f"DEBUG: PostUserID: {post.user_id}")
 
-    # Berechtigungsprüfung
-    is_admin = session.get("is_admin") is True
-    is_owner = (post.user_id == session.get("user_id"))
-
-    if is_owner or is_admin:
-        db.session.delete(post)
-        db.session.commit()
-        flash("Der Post wurde erfolgreich gelöscht.", "success")
-    else: 
-        flash("Du hast keine Berechtigung, diesen Post zu löschen.", "warning")
-
+    # Wenn die Prüfung okay ist, löschen wir
+    db.session.delete(post)
+    db.session.commit()
+    flash("Beitrag erfolgreich gelöscht!", "success")
     return redirect(url_for("home"))
 
 
