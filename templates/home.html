@@ -11,8 +11,9 @@ LostAndFound
       class="mb-4">
 
     {{ form.csrf_token() }} 
-<!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird -->
-
+<!--ein csrf token bedeutet, dass der token automatisch generiert und in das formular eingefügt wird 
+ vale: das Formular kam wirklich von dieser seite mit gültiger Session nicht von einer fremden-->
+<!--rendert verstecktes HTML eingabefeld mit geheimen session gebundenen wert, value wird pro session gesetzt-->
     <div class="input-group">
 
         {{ form.suchfeld(
@@ -41,7 +42,7 @@ LostAndFound
 <!-- pro post also eigene db abfrage: lazy loading, n+1 problem bei vielen posts-->
         <strong>
             <i class="bi bi-person-circle"></i>
-            {{ post.user.benutzername }}
+            {{ post.user.benutzername }} #n+1 problem: pro post wird eine eigene abfrage an die datenbank geschickt
         </strong>
 
         <!-- Titel -->

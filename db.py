@@ -3,10 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import date, timedelta
 db = SQLAlchemy()
  
-
+#sqlalchemy um alle datenbank-funktionen zugriff zu haben(db.model, db.session, db.Column...)
 db = SQLAlchemy()
 migrate = Migrate()
 
+#Erstellen der Campus, StandardUser, Fundbuero und Post Klassen
+
+#Model:  klasse keine normale python klasse sondern wird zu einer echten tabelle on der datenbank
 class Campus(db.Model):
 
     __tablename__ = "campus"
@@ -14,7 +17,7 @@ class Campus(db.Model):
 
     ort = db.Column(db.String, nullable=False)
 
-    users = db.relationship( "StandardUser", back_populates="campus")
+    users = db.relationship( "StandardUser", back_populates="campus") #relationship zwischen Campus und StandardUser, back_populates sorgt dafür, dass die Beziehung in beiden Richtungen funktioniert
 
     fundbueros = db.relationship("Fundbuero",back_populates="campus")
 

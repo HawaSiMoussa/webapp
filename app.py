@@ -13,10 +13,10 @@ app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SQLALCHEMY_DATABASE_URI='sqlite:///lostandfound.sqlite',# sqlite datenbank pfad
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=False
+    SESSION_COOKIE_SECURE=False #aufgrund lokaler Entwicklung
 )
  #hier mit app verknüfen
-db.init_app(app)
+db.init_app(app) #verknüpft die datenbank mit flask app
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
@@ -123,7 +123,7 @@ def contact():
 
     if form.validate_on_submit(): #erst bei POST 
 
-        user = db.session.get(
+        user = db.session.get( #User Objekt erstellt über
             StandardUser,
             session["user_id"]
         )
@@ -146,11 +146,11 @@ def contact():
     )
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route("/create/", methods=["GET", "POST"])
+@app.route("/create/", methods=["GET", "POST"]) 
 def create_post():
 
     form = forms.CreatePostForm()
-# get-request wird verwendet, um das formular anzuzeigen. post-request wird verwendet, um die daten aus dem formular zu verarbeiten und in der datenbank zu speichern.
+
     if request.method == 'GET':
 
         return render_template(
@@ -165,9 +165,9 @@ def create_post():
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
-                    Post.status == "laufend"
+                    Post.status == "laufend" 
                 )
-            ).scalar() # überarbeiten
+            ).scalar() 
 
             if aktiver_post:
                 flash(
@@ -176,9 +176,9 @@ def create_post():
                 )
                 return redirect(url_for("create_post"))
             # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
-            heute = date.today()
+            heute = date.today() 
             post = Post(
-                user_id=session["user_id"],
+                user_id=session["user_id"], 
                 titel=form.title.data,
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
@@ -311,6 +311,7 @@ def api_posts():
         db.select(Post)
     ).scalars()
 #jsonify gibt die daten als json zurück. die daten werden in einer liste gespeichert, die dann in der api_posts.html datei angezeigt wird. die daten werden in einem dictionary gespeichert, das dann in der liste gespeichert wird
+#also: python datenstruktur(liste von dictionaries)--> json string--> in flask response objekt verpackt
     return jsonify([ 
         {
             "titel": p.titel,
@@ -332,77 +333,66 @@ def edit_post (post_id):
 
 
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
-# in der if abfrage wird überprüft, ob die methode GET ist. wenn ja, werden die aktuellen daten des posts in das formular geladen
-    if request.method == 'GET':
 
-            form.title.data = post.titel
-            form.description.data = post.beschreibung
-            form.lost_date.data = post.verlustdatum
-            form.lost_area.data = post.verlustort
-            return render_template('edit_post.html',form=form)
-    else:
+    if request.method == "GET":
+        form.title.data = post.titel
+        form.description.data = post.beschreibung
+        form.lost_date.data = post.verlustdatum
+        form.lost_area.data = post.verlustort
 
-            if form.validate():
+    if form.validate_on_submit():
 
-                post.titel = form.title.data
-                post.beschreibung = form.description.data
-                post.verlustdatum = form.lost_date.data
-                post.verlustort = form.lost_area.data
-
-                db.session.commit()
-
-                flash('Post erfolgreich aktualisiert.','success')
-            else:
-
-                flash('Post konnte nicht aktualisiert werden.','warning')
-
-            return redirect(url_for('profile')) # alte daten werden vorbeigeschickt und die neuen daten werden in der datenbank gespeichert.
+        post.titel = form.title.data
+        post.beschreibung = form.description.data
+        post.verlustdatum = form.lost_date.data
+        post.verlustort = form.lost_area.data
+        db.session.commit()
+        flash('Post erfolgreich aktualisiert.','success')
+        return redirect(url_for('profile')) # alte daten werden vorbeigeschickt und die neuen daten werden in der datenbank gespeichert.
     
-
+    return render_template('edit_post.html',form=form)
 
 @app.route("/search", methods=["GET", "POST"])
-def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen suchbegriff. 
-
-    form = forms.Suchleiste() # es wird ein objekt der klasse Suchleiste erstellt, die in forms.py definiert ist. das objekt enthält das formular
-    posts =[]
-    user=db.session.get(StandardUser, session["user_id"])
+def suche(): 
+    form = forms.Suchleiste() 
+    posts = []
+    user = db.session.get(StandardUser, session.get("user_id"))
 
     if form.validate_on_submit():
         suchbegriff = form.suchfeld.data
-
         result = db.session.execute(
             db.select(Post).where(
                 Post.titel.contains(suchbegriff) | Post.beschreibung.contains(suchbegriff)
             )
         ).scalars()
-
-        for post_object in result:
-            posts.append(post_object)
+        posts = list(result)
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route ("/delete_post/<int:post_id>/") # post löschen entfernt einen post aus der datenbank. 
+@app.route("/delete_post/<int:post_id>/") 
 def delete_post(post_id):
-
     if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
     
     post = db.session.get(Post, post_id)
-
     if not post:
         flash("Post nicht gefunden.", "warning")
         return redirect(url_for("home"))
+    
+    # Berechtigungsprüfung
+    is_admin = session.get("is_admin") == True
+    is_owner = (post.user_id == session.get("user_id"))
 
-    if post.user_id == session["user_id"] or session.get("is_admin"):
+    if is_owner or is_admin:
         db.session.delete(post)
         db.session.commit()
-        flash( "der post wurde erfolgreich gelöscht", "success") #success: grüner kasten
+        flash("Der Post wurde erfolgreich gelöscht.", "success")
     else: 
-         flash( "der post konnte nicht gelöscht werden", "warning") #warning: roter Kasten
+        flash("Du hast keine Berechtigung, diesen Post zu löschen.", "warning")
 
-    return redirect (url_for("home"))
-    # alles starten
+    return redirect(url_for("home"))
+
 if __name__ == "__main__":
-
     app.run(debug=True)
+    

@@ -25,16 +25,18 @@
 
 <body>
 <!-- Navbar bzw collapse menü -->
-<nav class="navbar border-bottom mb-4"></nav>
+<nav class="navbar border-bottom mb-4"></nav> 
+<!--Container für die collapse menü-->
 <div class="container-fluid"></div>
 
 
 
 <!-- Menüinhalt -->
 {% if request.endpoint not in ['login', 'register'] %}
-
+<!-- if Abfrage: wenn der User nicht auf der login oder register Seite ist, dann wird das Menü angezeigt, ansonsten nicht -->
 <nav class="navbar border-bottom mb-3">
 {% if request.endpoint != 'create_post' %}
+<!--if Abfrage: wenn der User nicht auf der create_post Seite ist, dann wird das Logo angezeigt, ansonsten nicht-->
 
     <div class="container-fluid d-flex align-items-center">
 <!--Logo-->
