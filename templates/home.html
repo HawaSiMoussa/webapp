@@ -1,57 +1,28 @@
 {% extends "base.html" %}
 
-{% block TITLE %}
-LostAndFound
-{% endblock %}
+{% block TITLE %}Home - Lost & Found{% endblock %}
 
 {% block CONTENT %}
+<h2>Verlorene Gegenstände</h2>
 
-<form method="POST" action="{{ url_for('suche') }}" class="mb-4">
-    {{ form.csrf_token() }} 
-    <div class="input-group">
-        {{ form.suchfeld(class="form-control", placeholder="Suchen...") }}
-        {{ form.submit(class="btn btn-primary") }}
-    </div>
-</form>
-
-{% for post in posts %}
-    {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
-    <div class="border rounded p-3 mb-4">
-        <strong>
-            <i class="bi bi-person-circle"></i>
-            {{ post.user.benutzername }}
-        </strong>
-
-        <h5 class="mt-3">
-            {{ post.titel }}
-        </h5>
-        <small>
-            <i class="bi bi-info-circle"></i>
-            Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
-        </small>
-        <br>
-        <small class="text-danger">
-            <i class="bi bi-hourglass-split"></i>
-            Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
-        </small>
+{% if posts %}
+    {% for post in posts %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.titel }}</h5>
+            <p class="card-text">{{ post.verlustort }}</p>
             
-        <div class="mt-3 d-flex align-items-center gap-2">
-            <button class="btn btn-outline-secondary btn-sm" type="button" 
-                    data-bs-toggle="collapse" data-bs-target="#details{{ loop.index }}">
-                <i class="bi bi-chevron-down"></i>
-            </button>
-
-            {% if session.get('is_admin') or post.user_id == session.get('user_id') %}
-            <!-- KORREKTUR: hier 'id' statt 'post_id' verwendet -->
-            <a href="{{ url_for('delete_post', id=post.post_id) }}" class="btn btn-danger"> Post löschen</a>
+            {% if session.get('user_id') == post.user_id %}
+                <!-- Hier wird der Löschen-Button nur angezeigt, wenn man der Besitzer ist -->
+                <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-danger btn-sm">
+                    Post löschen
+                </a>
             {% endif %}
-
-            <a href="mailto:{{ post.user.hwr_mail }}?subject={{ ('Yay Gefunden! : ' ~ post.titel)|urlencode }}&body={{('Hallo,' ~'\n\n' ~ 'gute Nachricht: Ich habe möglicherweise deinen verlorenen Gegenstand gefunden' ~ '\n\n' ~ 'Gegenstand: ' ~post.titel ~'\n' ~ 'Verlustort: ' ~ post.verlustort ~ '\n\n' ~ 'Bitte melden dich bei mir.' ~ '\n\n' ~ 'Viele Grüße')|urlencode }}">
-                <i class="bi bi-envelope"></i>
-            </a>
         </div>
     </div>
-    {% endif %}
-{% endfor %}
+    {% endfor %}
+{% else %}
+    <p>Keine Posts gefunden.</p>
+{% endif %}
 
 {% endblock %}
