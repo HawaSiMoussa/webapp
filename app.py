@@ -20,12 +20,12 @@ db.init_app(app) #verknüpft die datenbank mit flask app
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context():
-    db.create_all() 
-    
+with app.app_context (): # flask arbeitsraum
+    db.create_all() # erstellt tabellen und spalten in der datenbank, wenn sie noch nicht existieren. 
+# das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
     admins_to_create = [ 
         {
-            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",  # liste mit wert und schllüssel python liste 
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
@@ -33,22 +33,23 @@ with app.app_context():
     ]
 
     for admin_data in admins_to_create:
-        # Hier muss 'hwr_mail' stehen, so wie es in deiner DB-Klasse heißt
+        # Prüfen, ob der Admin schon in der DB existiert damit die dopplungen verhindert werden
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar()
+        ).scalar() # wir nutzen scalar statt scalars weil wir hier mit scalars probleme hatten und durch scalar werden wir nur ein objekt zurückbekommen und nicht eine liste von objekten
+
         
-        if not exists:
+        if not exists: # hier wird dann ein neuer admin erstellt, wenn er noch nicht existiert
             new_admin = StandardUser(
-                hwr_mail=admin_data["hwr_mail"], # Hier auch 'hwr_mail'
+                hwr_mail=admin_data["hwr_mail"],
                 passwort=admin_data["passwort"],
                 name=admin_data["name"],
                 benutzername=admin_data["benutzername"],
                 is_admin=True
             )
             db.session.add(new_admin)
-    db.session.commit()
 
+    db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
@@ -110,69 +111,98 @@ def register():
 
     return render_template("register.html", form=form)
 
+
+#Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
-    if "user_id" not in session:
+    if "user_id" not in session: #existiert die session des eingeloggten users nicht, wird er auf die login seite weitergeleitet.
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
-    if form.validate_on_submit():
-        user = db.session.get(StandardUser, session["user_id"])
+    if form.validate_on_submit(): #erst bei POST 
+
+        user = db.session.get( #User Objekt erstellt über
+            StandardUser,
+            session["user_id"]
+        )
 
         user.name = form.name.data
         user.benutzername = form.username.data
         user.telefonnummer = form.phone_number.data
 
-        # --- HIER DER CHECK ---
-        # Wir suchen nach einem anderen User, der denselben Benutzernamen hat
-        doppelter_user = db.session.execute(
-            db.select(StandardUser).where(StandardUser.benutzername == user.benutzername)
-        ).scalar()
+        db.session.commit() #Eingabe an DB geschickt
+        
 
-        # Wenn wir einen finden, der NICHT der aktuell eingeloggte User ist -> Fehler!
-        if doppelter_user and doppelter_user.user_id != user.user_id:
-            flash("Dieser Benutzername ist leider schon vergeben!", "danger")
-            return render_template("contact.html", form=form)
-
-        # --- DANN ERST SPEICHERN ---
-        db.session.commit() 
         flash("Daten erfolgreich gespeichert!", "success")
+
         return redirect(url_for("home"))
 
-    # Wenn es ein GET-Request ist, laden wir die bestehenden Daten in das Formular
-    elif request.method == "GET":
-        user = db.session.get(StandardUser, session["user_id"])
-        form.name.data = user.name
-        form.username.data = user.benutzername
-        form.phone_number.data = user.telefonnummer
 
-    return render_template("contact.html", form=form)
+    return render_template(
+        "contact.html",
+        form=form
+    )
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route("/create/", methods=["GET", "POST"])
-def create():
-    form = forms.CreatePostForm()
-    
-    if form.validate_on_submit():
-        # WICHTIG: Hier musst du die user_id mitgeben!
-        new_post = Post(
-            titel=form.titel.data,
-            inhalt=form.inhalt.data,
-            user_id=session["user_id"] # <-- Das hier ist das fehlende Teil!
-        )
-        db.session.add(new_post)
-        db.session.commit()
-        flash("Post erstellt!", "success")
-        return redirect(url_for("home"))
-    
-    # Falls das Formular nicht validiert, gib uns einen Hinweis im Terminal
-    if form.errors:
-        print("Formular-Fehler:", form.errors)
-        
-    return render_template("create.html", form=form)
+@app.route("/create/", methods=["GET", "POST"]) 
+def create_post():
 
+    form = forms.CreatePostForm()
+
+    if request.method == 'GET':
+
+        return render_template(
+            'create_post.html',
+            form=form 
+        )
+
+    else:
+#Validator 
+        if form.validate(): 
+          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
+            aktiver_post = db.session.execute(
+                db.select(Post).where(
+                    Post.user_id == session["user_id"],
+                    Post.status == "laufend" 
+                )
+            ).scalar() 
+
+            if aktiver_post:
+                flash(
+                    "Du hast bereits eine aktive Suchanzeige.",
+                    "warning"
+                )
+                return redirect(url_for("create_post"))
+            # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
+            heute = date.today() 
+            post = Post(
+                user_id=session["user_id"], 
+                titel=form.title.data,
+                beschreibung=form.description.data,
+                verlustdatum=form.lost_date.data,
+                verlustort=form.lost_area.data,
+
+                meldedatum=heute,
+                ablaufdatum=heute + timedelta(days=30),
+
+                status="laufend"
+            )
+
+            db.session.add(post)
+            db.session.commit()
+
+            flash('Post erfolgreich erstellt.', 'success')
+
+        else:
+ # es wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn nicht, werden die fehler angezeigt.
+            print(form.errors)
+
+            if 'lost_date' in form.errors:
+                flash(form.errors['lost_date'][0], 'warning')
+                
+        return redirect(url_for('create_post'))
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
 @app.route ("/close_post/<int:post_id>/")
@@ -189,39 +219,33 @@ def close_post(post_id):
     
     return redirect (url_for("profile"))
 
-from werkzeug.security import check_password_hash
-from flask import flash, redirect, url_for, session, render_template
-
 @app.route('/login/', methods=['GET', 'POST'])
-def login():
-    # Wir greifen direkt auf forms.CreateLogin zu
-    form = forms.CreateLogin() 
-    
-    if request.method == 'POST':
-        print("Versuch Login für: " + str(form.hwrmail.data))
-        user = db.session.execute(
-            db.select(StandardUser).where(StandardUser.hwr_mail == form.hwrmail.data)
-        ).scalar()
-        
-        if user:
-            print("User gefunden: " + str(user.name))
-        else:
-            print("User nicht in DB gefunden!")
+def login(): # in diesem teil wird die login funktion erstellt. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird das formular angezeigt. wenn das formular korrekt ausgefüllt wurde, wird der user eingeloggt und auf die home seite weitergeleitet. wenn das formular nicht korrekt ausgefüllt wurde, wird eine warnung angezeigt und der user bleibt auf der login seite.
+
+    form = forms.CreateLogin() # Nimm das Formular aus forms.py und zeige 
 
     if form.validate_on_submit():
-        user = db.session.execute(
-            db.select(StandardUser).where(StandardUser.hwr_mail == form.hwrmail.data)
-        ).scalar()
-        
-        # Vergleich OHNE Hashing (so wie du es wahrscheinlich gelernt hast)
-        if user and user.passwort == form.passwort.data:
-            session["user_id"] = user.user_id
-            session["is_admin"] = user.is_admin
-            flash("Login erfolgreich!", "success")
-            return redirect(url_for("home"))
-        else:
-            flash("E-Mail oder Passwort falsch!", "danger")
-            
+
+        user = db.session.execute( # execute führt die sql abfrage aus und gibt ein result object zurück
+            db.select(StandardUser).where( #in tabelle standarduser reun
+                StandardUser.hwr_mail == form.hwrmail.data # nimm von der Tabelle alle user dessen hwr mail mit der hwrmail übereinstimmt, die der user im formular eingegeben hat. wenn es keinen user gibt, der diese hwrmail hat, wird None zurückgegeben.
+            )
+        ).scalar() # s weg machen überarbeiten dann geht wohl der fehler
+
+        if user is None:
+            flash("User existiert nicht.", "warning")
+            return redirect(url_for("login"))
+
+        if user.passwort != form.passwort.data:
+            flash("Falsches Passwort!", "warning")
+            return redirect(url_for("login"))
+
+        session["user_id"] = user.user_id
+        session["is_admin"] = user.is_admin
+
+        flash("Login erfolgreich!", "success")
+        return redirect(url_for("home"))
+
     return render_template("login.html", form=form)
 
 #zeigt die daten des eingeloggten users an. die funktion überprüft, ob der user eingeloggt ist. wenn ja, werden die daten des users angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
@@ -345,23 +369,29 @@ def suche():
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route("/delete/<int:id>/", methods=['POST', 'GET'])
-def delete_post(id): # Den Post in der DB finden
-    post = db.session.get(Post, id)
+@app.route("/delete_post/<int:post_id>/") 
+def delete_post(post_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
     
-    # Sicherheitsprüfung:
-    # 1. Ist der User der Besitzer? (post.user_id == session["user_id"])
-    # 2. ODER ist der User ein Admin? (session.get("is_admin"))
-    if post.user_id != session.get("user_id") and not session.get("is_admin"):
-        flash("Du darfst nur deine eigenen Beiträge löschen!", "danger")
+    post = db.session.get(Post, post_id)
+    if not post:
+        flash("Post nicht gefunden.", "warning")
         return redirect(url_for("home"))
+    
+    # Berechtigungsprüfung
+    is_admin = session.get("is_admin") == True
+    is_owner = (post.user_id == session.get("user_id"))
 
-    # Wenn die Prüfung okay ist, löschen wir
-    db.session.delete(post)
-    db.session.commit()
-    flash("Beitrag erfolgreich gelöscht!", "success")
+    if is_owner or is_admin:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Der Post wurde erfolgreich gelöscht.", "success")
+    else: 
+        flash("Du hast keine Berechtigung, diesen Post zu löschen.", "warning")
+
     return redirect(url_for("home"))
 
-
 if __name__ == "__main__":
-     app.run(debug=True)
+    app.run(debug=True)
