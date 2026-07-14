@@ -46,15 +46,9 @@ class CreatePostForm(FlaskForm): #FlaskForm geerbt
                 "Verlustdatum darf nicht in der Zukunft liegen."
             )
 
-# Login-Formular 
+# Login-Formular # ÄNDERE DIESEN TEIL IN DEINER FORMS.PY
 class CreateLogin(FlaskForm):
-
-    campus = SelectField(
-        "Campus",
-        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
-        validators=[InputRequired()]
-    )
-
+    # Campus entfernt, da beim Login nicht nötig
     hwrmail = EmailField(
         "HWR-Mail",
         validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|student\.hwr-berlin\.de|dot\.hwr-berlin\.de)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
@@ -63,10 +57,6 @@ class CreateLogin(FlaskForm):
     passwort = PasswordField(
         "Passwort",
         validators=[InputRequired(), Length(min=8)]
-    )
-
-    benachrichtigung = BooleanField(
-        "Benachrichtigungen erlauben"
     )
 
     submit = SubmitField("Login")
