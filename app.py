@@ -345,9 +345,8 @@ def suche():
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
-def delete_post(id):
-    # Den Post in der DB finden
+@app.route("/delete/<int:id>/", methods=['POST', 'GET'])
+def delete_post(id): # Den Post in der DB finden
     post = db.session.get(Post, id)
     
     # Sicherheitsprüfung:
