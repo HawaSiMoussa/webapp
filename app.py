@@ -110,39 +110,45 @@ def register():
 
     return render_template("register.html", form=form)
 
-
-#Kontaktformular hier kann der user seine kontaktinformationen eingeben. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/contact/", methods=["GET","POST"])
 def contact():
-    if "user_id" not in session: #existiert die session des eingeloggten users nicht, wird er auf die login seite weitergeleitet.
+    if "user_id" not in session:
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
     form = forms.ContactForm()
 
-    if form.validate_on_submit(): #erst bei POST 
-
-        user = db.session.get( #User Objekt erstellt über
-            StandardUser,
-            session["user_id"]
-        )
+    if form.validate_on_submit():
+        user = db.session.get(StandardUser, session["user_id"])
 
         user.name = form.name.data
         user.benutzername = form.username.data
         user.telefonnummer = form.phone_number.data
 
-        db.session.commit() #Eingabe an DB geschickt
-        
+        # --- HIER DER CHECK ---
+        # Wir suchen nach einem anderen User, der denselben Benutzernamen hat
+        doppelter_user = db.session.execute(
+            db.select(StandardUser).where(StandardUser.benutzername == user.benutzername)
+        ).scalar()
 
+        # Wenn wir einen finden, der NICHT der aktuell eingeloggte User ist -> Fehler!
+        if doppelter_user and doppelter_user.user_id != user.user_id:
+            flash("Dieser Benutzername ist leider schon vergeben!", "danger")
+            return render_template("contact.html", form=form)
+
+        # --- DANN ERST SPEICHERN ---
+        db.session.commit() 
         flash("Daten erfolgreich gespeichert!", "success")
-
         return redirect(url_for("home"))
 
+    # Wenn es ein GET-Request ist, laden wir die bestehenden Daten in das Formular
+    elif request.method == "GET":
+        user = db.session.get(StandardUser, session["user_id"])
+        form.name.data = user.name
+        form.username.data = user.benutzername
+        form.phone_number.data = user.telefonnummer
 
-    return render_template(
-        "contact.html",
-        form=form
-    )
+    return render_template("contact.html", form=form)
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/create/", methods=["GET", "POST"]) 
