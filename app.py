@@ -219,33 +219,34 @@ def close_post(post_id):
     
     return redirect (url_for("profile"))
 
+from werkzeug.security import check_password_hash
+from flask import flash, redirect, url_for, session, render_template
+
 @app.route('/login/', methods=['GET', 'POST'])
-def login(): # in diesem teil wird die login funktion erstellt. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird das formular angezeigt. wenn das formular korrekt ausgefüllt wurde, wird der user eingeloggt und auf die home seite weitergeleitet. wenn das formular nicht korrekt ausgefüllt wurde, wird eine warnung angezeigt und der user bleibt auf der login seite.
+def login():
+    form = CreateLogin()
+    
+    # DEBUG-Teil (bleibt drin, um zu sehen was passiert)
+    if request.method == 'POST':
+        print(f"Formulardaten: E-Mail={form.hwrmail.data}")
+        user = StandardUser.query.filter_by(hwrmail=form.hwrmail.data).first()
+        if user:
+            print(f"User gefunden: {user.name}")
+        else:
+            print("User wurde in der Datenbank nicht gefunden!")
 
-    form = forms.CreateLogin() # Nimm das Formular aus forms.py und zeige 
-
+    # Hier passiert der eigentliche Login
     if form.validate_on_submit():
-
-        user = db.session.execute( # execute führt die sql abfrage aus und gibt ein result object zurück
-            db.select(StandardUser).where( #in tabelle standarduser reun
-                StandardUser.hwr_mail == form.hwrmail.data # nimm von der Tabelle alle user dessen hwr mail mit der hwrmail übereinstimmt, die der user im formular eingegeben hat. wenn es keinen user gibt, der diese hwrmail hat, wird None zurückgegeben.
-            )
-        ).scalar() # s weg machen überarbeiten dann geht wohl der fehler
-
-        if user is None:
-            flash("User existiert nicht.", "warning")
-            return redirect(url_for("login"))
-
-        if user.passwort != form.passwort.data:
-            flash("Falsches Passwort!", "warning")
-            return redirect(url_for("login"))
-
-        session["user_id"] = user.user_id
-        session["is_admin"] = user.is_admin
-
-        flash("Login erfolgreich!", "success")
-        return redirect(url_for("home"))
-
+        user = StandardUser.query.filter_by(hwrmail=form.hwrmail.data).first()
+        
+        # Prüfung: Existiert User UND stimmt das Passwort (als Hash) überein?
+        if user and check_password_hash(user.passwort, form.passwort.data):
+            session["user_id"] = user.user_id # Speichert den User in der Session
+            flash("Erfolgreich eingeloggt!", "success")
+            return redirect(url_for("home")) # Ziel-Seite nach Login
+        else:
+            flash("E-Mail oder Passwort falsch!", "danger")
+            
     return render_template("login.html", form=form)
 
 #zeigt die daten des eingeloggten users an. die funktion überprüft, ob der user eingeloggt ist. wenn ja, werden die daten des users angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
@@ -397,6 +398,7 @@ def delete_post(post_id):
         flash("Du hast keine Berechtigung, diesen Post zu löschen.", "warning")
 
     return redirect(url_for("home"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
