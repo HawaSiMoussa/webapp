@@ -20,28 +20,15 @@ db.init_app(app) #verknüpft die datenbank mit flask app
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context (): # flask arbeitsraum
-    db.create_all() # erstellt tabellen und spalten in der datenbank, wenn sie noch nicht existieren. 
-# das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
-    admins_to_create = [ 
-        {
-            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",  # liste mit wert und schllüssel python liste 
-            "passwort": "Sarah12345678",
-            "name": "Sarah Tayem",
-            "benutzername": "Sarahtayem"
-        }, 
-    ]
-
-    for admin_data in admins_to_create:
-        # Prüfen, ob der Admin schon in der DB existiert damit die dopplungen verhindert werden
+for admin_data in admins_to_create:
+        # Hier muss 'hwrmail' stehen (so wie du es im Model definiert hast)
         exists = db.session.execute(
-            db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar() # wir nutzen scalar statt scalars weil wir hier mit scalars probleme hatten und durch scalar werden wir nur ein objekt zurückbekommen und nicht eine liste von objekten
-
+            db.select(StandardUser).where(StandardUser.hwrmail == admin_data["hwr_mail"])
+        ).scalar()
         
-        if not exists: # hier wird dann ein neuer admin erstellt, wenn er noch nicht existiert
+        if not exists:
             new_admin = StandardUser(
-                hwr_mail=admin_data["hwr_mail"],
+                hwrmail=admin_data["hwr_mail"], # Hier auch 'hwrmail'
                 passwort=admin_data["passwort"],
                 name=admin_data["name"],
                 benutzername=admin_data["benutzername"],
@@ -49,7 +36,7 @@ with app.app_context (): # flask arbeitsraum
             )
             db.session.add(new_admin)
 
-    db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
+        db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
@@ -224,26 +211,31 @@ from flask import flash, redirect, url_for, session, render_template
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    form = CreateLogin()
+    # Wir greifen direkt auf forms.CreateLogin zu
+    form = forms.CreateLogin() 
     
-    # DEBUG-Teil (bleibt drin, um zu sehen was passiert)
     if request.method == 'POST':
-        print(f"Formulardaten: E-Mail={form.hwrmail.data}")
-        user = StandardUser.query.filter_by(hwrmail=form.hwrmail.data).first()
-        if user:
-            print(f"User gefunden: {user.name}")
-        else:
-            print("User wurde in der Datenbank nicht gefunden!")
-
-    # Hier passiert der eigentliche Login
-    if form.validate_on_submit():
-        user = StandardUser.query.filter_by(hwrmail=form.hwrmail.data).first()
+        print("Versuch Login für: " + str(form.hwrmail.data))
+        user = db.session.execute(
+            db.select(StandardUser).where(StandardUser.hwr_mail == form.hwrmail.data)
+        ).scalar()
         
-        # Prüfung: Existiert User UND stimmt das Passwort (als Hash) überein?
-        if user and check_password_hash(user.passwort, form.passwort.data):
-            session["user_id"] = user.user_id # Speichert den User in der Session
-            flash("Erfolgreich eingeloggt!", "success")
-            return redirect(url_for("home")) # Ziel-Seite nach Login
+        if user:
+            print("User gefunden: " + str(user.name))
+        else:
+            print("User nicht in DB gefunden!")
+
+    if form.validate_on_submit():
+        user = db.session.execute(
+            db.select(StandardUser).where(StandardUser.hwr_mail == form.hwrmail.data)
+        ).scalar()
+        
+        # Vergleich OHNE Hashing (so wie du es wahrscheinlich gelernt hast)
+        if user and user.passwort == form.passwort.data:
+            session["user_id"] = user.user_id
+            session["is_admin"] = user.is_admin
+            flash("Login erfolgreich!", "success")
+            return redirect(url_for("home"))
         else:
             flash("E-Mail oder Passwort falsch!", "danger")
             
@@ -401,4 +393,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+     app.run(debug=True)
