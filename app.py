@@ -152,7 +152,7 @@ def contact():
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/create/", methods=["GET", "POST"])
-def create_post():
+def create():
     form = forms.CreatePostForm()
     
     if form.validate_on_submit():
