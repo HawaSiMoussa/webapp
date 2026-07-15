@@ -49,6 +49,12 @@ class CreatePostForm(FlaskForm): #FlaskForm geerbt
 # Login-Formular # ÄNDERE DIESEN TEIL IN DEINER FORMS.PY
 class CreateLogin(FlaskForm):
     # Campus entfernt, da beim Login nicht nötig
+
+    campus = SelectField(
+        "Campus",
+        choices=[("Schöneberg", "Schöneberg"), ("Lichtenberg", "Lichtenberg"), ("Startup Incubator", "Startup Incubator")],
+        validators=[InputRequired()]
+    )
     hwrmail = EmailField(
         "HWR-Mail",
         validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|stud\.hwr-berlin\.de|dot\.hwr-berlin\.de)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
