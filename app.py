@@ -58,18 +58,15 @@ def start():
 #Feed bzw. Home Seite der zeigt alle aktuell aktiven und nicht beendete Posts an.
 @app.route("/home")
 def home():
-# nur die eingeloggten user können die home seite sehen, sonst werden sie auf die login seite weitergeleitet:
     if "user_id" not in session:
-
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-    form = forms.Suchleiste()
-    user = db.session.get(StandardUser,session["user_id"])
     
-    posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                           ).scalars()  # hier werden alle posts aus der datenbank geholt, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der home.html datei angezeigt.
-
-
+    form = forms.Suchleiste()
+    user = db.session.get(StandardUser, session["user_id"])
+    
+    # ÄNDERUNG: Wir holen ALLE Posts, um zu sehen, ob sie überhaupt da sind
+    posts = db.session.execute(db.select(Post)).scalars().all() 
 
     return render_template("home.html", posts=posts, form=form, user=user)
 
