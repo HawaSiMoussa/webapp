@@ -381,6 +381,35 @@ def delete_post(post_id):
          flash( "der post konnte nicht gelöscht werden", "warning") #warning: roter Kasten
 
     return redirect (url_for("home"))
+@app.route("/send_fundbuero_mail/<int:post_id>/", methods=["POST"])
+def send_fundbuero_mail(post_id):
+
+    if "user_id" not in session or "fundbuero_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    post = db.session.get(Post, post_id)
+
+
+    if post is None:
+        flash("Der Post existiert nicht.", "warning")
+        return redirect(url_for("home"))
+    
+    if post.fundbuero_id != session["fundbuero_id"]:
+        flash("Dieser Post gehört nicht zu deinem Fundbüro.", "warning")
+        return redirect(url_for("home"))
+
+    msg = Message(
+        subject="Gefunden: " + post.titel,
+        recipients=[post.user.hwr_mail]
+    )
+    msg.body = post.fundbuero.standardtext
+
+    mail.send(msg)
+
+    flash("Mail wurde verschickt.", "success")
+    return redirect(url_for("home"))
+
     # alles starten
 if __name__ == "__main__":
 
