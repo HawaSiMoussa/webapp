@@ -50,4 +50,16 @@ Registrieren
 </form>
 
 {% endblock %}
+<!-- FÜGE DIESEN BLOCK HIER EIN -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, errors in form.errors.items() %}
+                {% for error in errors %}
+                    <li>{{ field }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 

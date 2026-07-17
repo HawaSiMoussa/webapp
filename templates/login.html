@@ -20,17 +20,17 @@ Login
     <form method="post">
 
         {{ form.hidden_tag() }}
+         <div class="mb-3">
+    {{ form.campus.label(class="form-label") }}
+    {{ form.campus(class="form-select") }}
+</div>
 
-        <div class="mb-3">
-            {{ form.campus.label(class="form-label") }}
-            {{ form.campus(class="form-select") }}
-        </div>
 
         <div class="mb-3">
             {{ form.hwrmail.label(class="form-label") }}
             {{ form.hwrmail(class="form-control") }}
         </div>
-
+       
         <div class="mb-3">
             {{ form.passwort.label(class="form-label") }}
             {{ form.passwort(class="form-control") }}
@@ -59,4 +59,4 @@ Login
 
 </div>
 
-{% endblock %}
+{% endblock %} 

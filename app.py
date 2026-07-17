@@ -25,16 +25,16 @@ mail = Mail(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context ():
-    db.create_all() # 
+with app.app_context (): # flask arbeitsraum
+    db.create_all() # erstellt tabellen und spalten in der datenbank, wenn sie noch nicht existieren. 
 # das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
-    admins_to_create = [
+    admins_to_create = [ 
         {
-            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",  # liste mit wert und schllüssel python liste 
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        },
+        }, 
     ]
 
     for admin_data in admins_to_create:
@@ -63,18 +63,15 @@ def start():
 #Feed bzw. Home Seite der zeigt alle aktuell aktiven und nicht beendete Posts an.
 @app.route("/home")
 def home():
-# nur die eingeloggten user können die home seite sehen, sonst werden sie auf die login seite weitergeleitet:
     if "user_id" not in session:
-
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
-    form = forms.Suchleiste()
-    user = db.session.get(StandardUser,session["user_id"])
     
-    posts = db.session.execute(db.select(Post).where(Post.ablaufdatum>=date.today(), Post.status == "laufend")
-                           ).scalars()  # hier werden alle posts aus der datenbank geholt, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der home.html datei angezeigt.
-
-
+    form = forms.Suchleiste()
+    user = db.session.get(StandardUser, session["user_id"])
+    
+    # ÄNDERUNG: Wir holen ALLE Posts, um zu sehen, ob sie überhaupt da sind
+    posts = db.session.execute(db.select(Post)).scalars().all() 
 
     return render_template("home.html", posts=posts, form=form, user=user)
 
@@ -329,6 +326,14 @@ def api_posts():
 def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
+    if not post:
+         return redirect(url_for("home"))
+
+    if post.user_id != session["user_id"] and not session.get("is_admin"):
+        flash("Du hast keine Berechtigung, diesen Post zu bearbeiten.", "warning")
+        return redirect(url_for("home"))
+
+
     form = forms.CreatePostForm()# suchanzeige bearbeuten auch für später
 
     if request.method == "GET":
@@ -350,35 +355,45 @@ def edit_post (post_id):
     return render_template('edit_post.html',form=form)
 
 @app.route("/search", methods=["GET", "POST"])
-def suche(): # durchsucht titel und beschreibung der posts nach dem eingegebenen suchbegriff. 
-
-    form = forms.Suchleiste() # es wird ein objekt der klasse Suchleiste erstellt, die in forms.py definiert ist. das objekt enthält das formular
-    posts =[]
-    user=db.session.get(StandardUser, session["user_id"])
+def suche(): 
+    form = forms.Suchleiste() 
+    posts = []
+    user = db.session.get(StandardUser, session.get("user_id"))
 
     if form.validate_on_submit():
         suchbegriff = form.suchfeld.data
-
         result = db.session.execute(
             db.select(Post).where(
                 Post.titel.contains(suchbegriff) | Post.beschreibung.contains(suchbegriff)
             )
         ).scalars()
-
-    for post_object in result:            posts.append(post_object)
+        posts = list(result)
 
     return render_template("suche.html", posts=posts, form=form, user=user)
 
-@app.route ("/delete_post/<int:post_id>/") # post löschen entfernt einen post aus der datenbank. 
+@app.route("/delete_post/<int:post_id>/") 
 def delete_post(post_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+    
     post = db.session.get(Post, post_id)
+    if not post:
+        flash("Post nicht gefunden.", "warning")
+        return redirect(url_for("home"))
+    
+    # Berechtigungsprüfung
+    is_admin = session.get("is_admin") == True
+    is_owner = (post.user_id == session.get("user_id"))
 
-    if post:
+    if is_owner or is_admin:
         db.session.delete(post)
         db.session.commit()
-        flash( "der post wurde erfolgreich gelöscht", "success") #success: grüner kasten
+        flash("Der Post wurde erfolgreich gelöscht.", "success")
     else: 
-         flash( "der post konnte nicht gelöscht werden", "warning") #warning: roter Kasten
+        flash("Du hast keine Berechtigung, diesen Post zu löschen.", "warning")
+
+    return redirect(url_for("home"))
 
     return redirect (url_for("home"))
 @app.route("/send_fundbuero_mail/<int:post_id>/", methods=["POST"])
@@ -412,5 +427,4 @@ def send_fundbuero_mail(post_id):
 
     # alles starten
 if __name__ == "__main__":
-
     app.run(debug=True)
