@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block TITLE %}
+{{ post.titel }}
+{% endblock %}
+
+{% block CONTENT %}
+<--Zurück zum Feed Button -->
+<a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-sm mb-3">
+    <i class="bi bi-arrow-left"></i> Zurück
+</a>
+
+<div class="border rounded p-3 mb-4">
+<-- Username des Users, der den Post erstellt hat -->
+    <strong>
+        <i class="bi bi-person-circle"></i>
+        {{ post.user.benutzername }}
+    </strong>
+<--Post Titel -->
+    <h5 class="mt-3">{{ post.titel }}</h5>
+<-- Meldedatum und Ablaufdatum -->
+    <small>
+        <i class="bi bi-info-circle"></i>
+        Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
+    </small>
+    <br>
+    <small class="text-danger">
+        <i class="bi bi-hourglass-split"></i>
+        Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
+    </small>
+<-- Beschreibung, Verlustort und Verlustdatum -->
+    <p class="mt-3">
+        <strong>Beschreibung:</strong><br>
+        {{ post.beschreibung }}
+    </p>
+
+    <p>
+        <strong>Verlustort:</strong><br>
+        {{ post.verlustort }}
+    </p>
+
+    <p>
+        <strong>Verlustdatum:</strong><br>
+        {{ post.verlustdatum }}
+    </p>
+<-- Views anzeigen -->
+    <small class="text-muted">
+        <i class="bi bi-eye"></i> {{ post.views }} mal angesehen
+    </small>
+
+</div>
+
+{% endblock %}

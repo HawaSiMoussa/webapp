@@ -14,9 +14,9 @@ LostAndFound
     </div>
 </form>
 
-<!-- Hier beginnt die Schleife -->
+<!-- Hier beginnt die Schleife um alle posts mit den zugehörigen Infos zu holen -->
 {% for post in posts %}
-    <!-- Nur anzeigen, wenn Admin oder gleicher Campus -->
+    <!-- Admin sieht alle Posts, normale User nur posts ihres Campusses -->
     {% if session.get('is_admin') or post.user.campus_id == user.campus_id %}
         
         <div class="border rounded p-3 mb-4">
@@ -28,7 +28,7 @@ LostAndFound
 
             <!-- Titel -->
             <h5 class="mt-3">{{ post.titel }}</h5>
-            
+            <-- Meldedatum und Ablaufdatum -->
             <small>
                 <i class="bi bi-info-circle"></i>
                 Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
@@ -39,7 +39,7 @@ LostAndFound
                 Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
             </small>
             
-            <!-- Buttons + Status -->
+            <!-- Post löschen button (admin kann alle löschen, normaler user nur seinen) -->
             <div class="mt-3 d-flex align-items-center gap-2">
                 {% if session.get('is_admin') or post.user_id == session.get('user_id') %}
                     <a href="{{url_for('delete_post', post_id=post.post_id)}}" class="btn btn-danger btn-sm">Post löschen</a>
