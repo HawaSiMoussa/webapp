@@ -1,12 +1,11 @@
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, timedelta
-db = SQLAlchemy()
- 
-#sqlalchemy um alle datenbank-funktionen zugriff zu haben(db.model, db.session, db.Column...)
+
 db = SQLAlchemy()
 migrate = Migrate()
 
+#sqlalchemy um alle datenbank-funktionen zugriff zu haben(db.model, db.session, db.Column...)
 #Erstellen der Campus, StandardUser, Fundbuero und Post Klassen
 
 #Model:  klasse keine normale python klasse sondern wird zu einer echten tabelle on der datenbank
@@ -27,6 +26,7 @@ class StandardUser(db.Model):
     __tablename__ = "standardUser"
 
     user_id = db.Column( db.Integer, primary_key=True )
+    fundbuero_id = db.Column( db.Integer, db.ForeignKey("fundbuero.fundbuero_id"), nullable=True)
 
     campus_id = db.Column( db.String, db.ForeignKey("campus.campus_id") )
 
