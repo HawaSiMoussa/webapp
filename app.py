@@ -5,15 +5,12 @@ from flask_bootstrap import Bootstrap5
 from flask import request 
 from flask import jsonify
 from datetime import date, timedelta
+import os
+from flask_mail import Mail, Message
+from mail import Config
 
 app = Flask(__name__)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-
-app.config['MAIL_USERNAME'] = 'useto.test.169@gmail.com'
-app.config['MAIL_PASSWORD'] = 'famr lhrw ysyr wbvn'
-app.config['MAIL_DEFAULT_SENDER'] = 'useto.test.169@gmail.com'
+app.config.from_object(Config)
 
 app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SECRET_KEY='secret_key_just_for_dev_environment',#session
@@ -24,6 +21,7 @@ app.config.from_mapping( #nutzung von datenbank , sicherheit und session
 )
  #hier mit app verknüfen
 db.init_app(app) #verknüpft die datenbank mit flask app
+mail = Mail(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
