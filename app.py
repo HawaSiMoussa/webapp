@@ -120,7 +120,12 @@ def home():
     user = db.session.get(StandardUser, session["user_id"])
     
     # ÄNDERUNG: Wir holen ALLE Posts, um zu sehen, ob sie überhaupt da sind
-    posts = db.session.execute(db.select(Post)).scalars().all() 
+    posts = db.session.execute(
+    db.select(Post).where(
+        Post.ablaufdatum >= date.today(),
+        Post.status == "laufend"
+    )
+).scalars()
 
     return render_template("home.html", posts=posts, form=form, user=user)
 
