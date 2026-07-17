@@ -49,6 +49,9 @@ LostAndFound
                 <a href="mailto:{{ post.user.hwr_mail }}?subject=Gefunden: {{ post.titel|urlencode }}&body=Hallo, ich habe deinen Gegenstand gefunden." class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-envelope"></i> Kontakt
                 </a>
+                <a href="{{ url_for('post_detail', post_id=post.post_id) }}" class="btn btn-outline-secondary btn-sm">
+                 <i class="bi bi-chevron-down"></i>
+</a>
             </div>
         </div>
 

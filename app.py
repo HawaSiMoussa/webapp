@@ -448,5 +448,22 @@ def delete_post(post_id):
 
     return redirect(url_for("home"))
 
+@app.route("/post/<int:post_id>/")
+def post_detail(post_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    post = db.session.get(Post, post_id)
+
+    if post is None:
+        flash("Diesen Post gibt es nicht (mehr).", "warning")
+        return redirect(url_for("home"))
+
+    post.views = (post.views or 0) + 1
+    db.session.commit()
+
+    return render_template("post_detail.html", post=post)
+
 if __name__ == "__main__":
     app.run(debug=True)
