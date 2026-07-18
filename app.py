@@ -57,63 +57,7 @@ with app.app_context():
     db.session.commit()
 
     fundbueros_to_create = [
-        {
-            "fundbuero_id": 1,
-            "campus_id": "Schöneberg",
-            "raum": "Haus A, Raum A 0.31",
-        "name": "Pforte Haus A",
-        "telefonnummer": "+49 30 30877-1400",
-        "email": "pfortea@hwr-berlin.de",
-        "standardtext": (
-            "Hallo,\n\n"
-            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus A\n"
-            "Campus Schöneberg, Haus A, Raum A 0.31\n"
-            "Badensche Straße 52, 10825 Berlin\n"
-            "Telefon: +49 30 30877-1400\n\n"
-            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
-            "Viele Grüße\n"
-            "Pforte Haus A"
-        )
-    },
-        {
-            "fundbuero_id": 2,
-            "campus_id": "Lichtenberg",
-            "raum": "Haus B, Raum B 0.21",
-        "name": "Pforte Haus B",
-        "telefonnummer": "+49 30 30877-1222",
-        "email": "pforteb@hwr-berlin.de",
-        "standardtext": (
-            "Hallo,\n\n"
-            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus B\n"
-            "Campus Schöneberg, Haus B, Raum B 0.21\n"
-            "Badensche Straße 50-51, 10825 Berlin\n"
-            "Telefon: +49 30 30877-1222\n\n"
-            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
-            "Viele Grüße\n"
-            "Pforte Haus B"
-        )
-        },
-         {
-        "fundbuero_id": 3,
-        "campus_id": "Schöneberg",
-        "raum": "Haus E, Raum E 1.09",
-        "name": "Pforte Haus E",
-        "telefonnummer": "+49 30 30877-1430",
-        "email": "pfortee@hwr-berlin.de",
-        "standardtext": (
-            "Hallo,\n\n"
-            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus E\n"
-            "Campus Schöneberg, Haus E, Raum E 1.09\n"
-            "Babelsberger Straße 14-16, 10715 Berlin\n"
-            "Telefon: +49 30 30877-1430\n\n"
-            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
-            "Viele Grüße\n"
-            "Pforte Haus E"
-        )
-    },
+        
     {
         "fundbuero_id": 1,
         "campus_id": "Schöneberg",
@@ -199,10 +143,6 @@ with app.app_context():
             db.session.add(new_fundbuero)
     db.session.commit()
 
-    fundbuero_users_to_create = [
-        {"hwr_mail": "fundbuero.schoeneberg@stud.hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Fundbüro Schöneberg", "benutzername": "fundbuero_schoeneberg", "fundbuero_id": 1},
-        {"hwr_mail": "fundbuero.lichtenberg@stud.hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Fundbüro Lichtenberg", "benutzername": "fundbuero_lichtenberg", "fundbuero_id": 2},
-    ]
 
     for benutzer_daten in fundbuero_users_to_create:
         exists = db.session.execute(
