@@ -60,22 +60,137 @@ with app.app_context():
         {
             "fundbuero_id": 1,
             "campus_id": "Schöneberg",
-            "raum": "Raum 101",
-            "name": "Fundbüro Schöneberg",
-            "telefonnummer": "030 30877 0",
-            "email": "fundbuero.schoeneberg@stud.hwr-berlin.de",
-            "standardtext": "Hallo,\n\ndein Gegenstand wurde bei uns im Fundbüro Schöneberg abgegeben."
-        },
+            "raum": "Haus A, Raum A 0.31",
+        "name": "Pforte Haus A",
+        "telefonnummer": "+49 30 30877-1400",
+        "email": "pfortea@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus A\n"
+            "Campus Schöneberg, Haus A, Raum A 0.31\n"
+            "Badensche Straße 52, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1400\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus A"
+        )
+    },
         {
             "fundbuero_id": 2,
             "campus_id": "Lichtenberg",
-            "raum": "Raum 205",
-            "name": "Fundbüro Lichtenberg",
-            "telefonnummer": "030 30877 1",
-            "email": "fundbuero.lichtenberg@stud.hwr-berlin.de",
-            "standardtext": "Hallo,\n\ndein Gegenstand wurde bei uns im Fundbüro Lichtenberg abgegeben."
-        }
-    ]
+            "raum": "Haus B, Raum B 0.21",
+        "name": "Pforte Haus B",
+        "telefonnummer": "+49 30 30877-1222",
+        "email": "pforteb@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus B\n"
+            "Campus Schöneberg, Haus B, Raum B 0.21\n"
+            "Badensche Straße 50-51, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1222\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus B"
+        )
+        },
+         {
+        "fundbuero_id": 3,
+        "campus_id": "Schöneberg",
+        "raum": "Haus E, Raum E 1.09",
+        "name": "Pforte Haus E",
+        "telefonnummer": "+49 30 30877-1430",
+        "email": "pfortee@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus E\n"
+            "Campus Schöneberg, Haus E, Raum E 1.09\n"
+            "Babelsberger Straße 14-16, 10715 Berlin\n"
+            "Telefon: +49 30 30877-1430\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus E"
+        )
+    },
+    {
+        "fundbuero_id": 1,
+        "campus_id": "Schöneberg",
+        "raum": "Haus A, Raum A 0.31",
+        "name": "Pforte Haus A",
+        "telefonnummer": "+49 30 30877-1400",
+        "email": "pfortea@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus A\n"
+            "Campus Schöneberg, Haus A, Raum A 0.31\n"
+            "Badensche Straße 52, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1400\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus A"
+        )
+    },
+    {
+        "fundbuero_id": 2,
+        "campus_id": "Schöneberg",
+        "raum": "Haus B, Raum B 0.21",
+        "name": "Pforte Haus B",
+        "telefonnummer": "+49 30 30877-1222",
+        "email": "pforteb@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus B\n"
+            "Campus Schöneberg, Haus B, Raum B 0.21\n"
+            "Badensche Straße 50-51, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1222\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus B"
+        )
+    },
+    {
+        "fundbuero_id": 3,
+        "campus_id": "Schöneberg",
+        "raum": "Haus E, Raum E 1.09",
+        "name": "Pforte Haus E",
+        "telefonnummer": "+49 30 30877-1430",
+        "email": "pfortee@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus E\n"
+            "Campus Schöneberg, Haus E, Raum E 1.09\n"
+            "Babelsberger Straße 14-16, 10715 Berlin\n"
+            "Telefon: +49 30 30877-1430\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus E"
+        )
+    },
+    {
+        "fundbuero_id": 4,
+        "campus_id": "Lichtenberg",
+        "raum": "Haus 1, Raum 1.0069",
+        "name": "Hausmeister Lichtenberg",
+        "telefonnummer": "+49 30 30877-2519",
+        "email": "michael.boersel@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Campus Lichtenberg, Haus 1, Raum 1.0069\n"
+            "Alt-Friedrichsfelde 60, 10315 Berlin\n"
+            "Telefon: +49 30 30877-2519\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Campus Lichtenberg"
+        )
+    }
+
+         ]
 
     for fundbuero_daten in fundbueros_to_create:
         exists = db.session.get(Fundbuero, fundbuero_daten["fundbuero_id"])
