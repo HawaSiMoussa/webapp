@@ -57,7 +57,6 @@ with app.app_context():
     db.session.commit()
 
     fundbueros_to_create = [
-        
     {
         "fundbuero_id": 1,
         "campus_id": "Schöneberg",
@@ -135,7 +134,14 @@ with app.app_context():
     }
 
          ]
+    
 
+    fundbuero_users_to_create = [
+        {"hwr_mail": "pfortea@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus A", "benutzername": "pforte_haus_a", "fundbuero_id": 1},
+        {"hwr_mail": "pforteb@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus B", "benutzername": "pforte_haus_b", "fundbuero_id": 2},
+        {"hwr_mail": "pfortee@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus E", "benutzername": "pforte_haus_e", "fundbuero_id": 3},
+        {"hwr_mail": "michael.boersel@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Hausmeister Lichtenberg", "benutzername": "hausmeister_lichtenberg", "fundbuero_id": 4},
+    ]
     for fundbuero_daten in fundbueros_to_create:
         exists = db.session.get(Fundbuero, fundbuero_daten["fundbuero_id"])
         if not exists:
