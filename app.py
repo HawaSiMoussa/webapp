@@ -579,8 +579,8 @@ def fundbuero_dashboard():
             Post.fundbuero_id == session["fundbuero_id"],
             Post.status == "laufend"
         )
-    ).scalars()
- return render_template("fundbuero_dashboard.html", fundbuero=fundbuero, posts=posts)
+        ).scalars()
+    return render_template("fundbuero_dashboard.html", fundbuero=fundbuero, posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)
