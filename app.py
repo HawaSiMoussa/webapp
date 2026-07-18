@@ -357,7 +357,7 @@ def login(): # in diesem teil wird die login funktion erstellt. die funktion üb
             flash("User existiert nicht.", "warning")
             return redirect(url_for("login"))
 
-        if not check_password_hash(user.password, form.passwort.data):
+        if not check_password_hash(user.passwort, form.passwort.data):
             flash("Falsches Passwort!", "warning")
             return redirect(url_for("login"))
 
@@ -533,10 +533,7 @@ def post_detail(post_id):
 
     return render_template("post_detail.html", post=post)
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
-    @app.route("/extend_post/<int:post_id>")
+@app.route("/extend_post/<int:post_id>")
 def extend_post(post_id):
 
     # Post anhand der ID laden
@@ -560,3 +557,9 @@ def extend_post(post_id):
     flash("Post wurde erfolgreich um 30 Tage verlängert.", "success")
 
     return redirect(url_for("profile"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+    
