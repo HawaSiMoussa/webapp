@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap5
 from flask import request 
 from flask import jsonify
 from datetime import date, timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
