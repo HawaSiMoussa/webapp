@@ -580,7 +580,7 @@ def fundbuero_dashboard():
             Post.status == "laufend"
         )
         ).scalars()
-    return render_template("fundbuero_dashboard.html", fundbuero=fundbuero, posts=posts)
+    return render_template("profile_fb.html", fundbuero=fundbuero, posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)
