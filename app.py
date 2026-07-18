@@ -184,7 +184,7 @@ def home():
     
     form = forms.Suchleiste()
     user = db.session.get(StandardUser, session["user_id"])
-    
+    fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
     
     posts = db.session.execute(
     db.select(Post).where(
@@ -193,7 +193,7 @@ def home():
     )
 ).scalars()
 
-    return render_template("home.html", posts=posts, form=form, user=user)
+    return render_template("home.html", posts=posts, form=form, user=user, fundbuero=fundbuero)
 
 # jetzt wird eine register funktion erstellt, die es den usern ermöglicht, sich zu registrieren. die funktion überprüft, ob die eingegebene email bereits in der datenbank existiert. wenn ja, wird eine warnung angezeigt. wenn nein, wird ein neuer user erstellt und in der datenbank gespeichert. danach wird der user automatisch eingeloggt und auf die contact seite weitergeleitet.
 @app.route('/register/', methods=['GET', 'POST'])
