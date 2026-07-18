@@ -566,6 +566,22 @@ def send_fundbuero_mail(post_id):
     flash("Mail wurde verschickt.", "success")
     return redirect(url_for("home"))
 
+@app.route("/fundbuero/")
+def fundbuero_dashboard():
+    if "fundbuero_id" not in session or session["fundbuero_id"] is None:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
+
+    posts = db.session.execute(
+        db.select(Post).where(
+            Post.fundbuero_id == session["fundbuero_id"],
+            Post.status == "laufend"
+        )
+    ).scalars()
+
+    return render_template("profile_fb.html", fundbuero=fundbuero, posts=posts)
     # alles starten
 if __name__ == "__main__":
     app.run(debug=True)
