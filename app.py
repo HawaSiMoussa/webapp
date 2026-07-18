@@ -39,7 +39,7 @@ with app.app_context():
         if not exists:
             new_admin = StandardUser(
                 hwr_mail=admin_data["hwr_mail"],
-                passwort=admin_data["passwort"],
+                passwort=generate_password_hash(admin_data["passwort"]),
                 name=admin_data["name"],
                 benutzername=admin_data["benutzername"],
                 is_admin=True
@@ -159,7 +159,7 @@ with app.app_context():
         if not exists:
             new_fundbuero_user = StandardUser(
                 hwr_mail=benutzer_daten["hwr_mail"],
-                passwort=benutzer_daten["passwort"],
+                passwort=generate_password_hash(benutzer_daten["passwort"]),
                 name=benutzer_daten["name"],
                 benutzername=benutzer_daten["benutzername"],
                 fundbuero_id=benutzer_daten["fundbuero_id"]
