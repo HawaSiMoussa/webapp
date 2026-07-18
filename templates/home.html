@@ -17,7 +17,7 @@ LostAndFound
 <!-- Hier beginnt die Schleife um alle posts mit den zugehörigen Infos zu holen -->
 {% for post in posts %}
     <!-- Admin sieht alle Posts, normale User nur posts ihres Campusses -->
-    {% if session.get('is_admin') or post.user.campus_id == user.campus_id or post.user_id == fundbuero.campus_id %}
+    {% if session.get('is_admin') or post.user.campus_id == user.campus_id or %}
         
         <div class="border rounded p-3 mb-4">
             <!-- Username -->
