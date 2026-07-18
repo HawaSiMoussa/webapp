@@ -515,6 +515,7 @@ def delete_post(post_id):
 
     return redirect(url_for("home"))
 
+#Post verlängern
 @app.route("/post/<int:post_id>/")
 def post_detail(post_id):
     if "user_id" not in session:
@@ -534,3 +535,28 @@ def post_detail(post_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+    @app.route("/extend_post/<int:post_id>")
+def extend_post(post_id):
+
+    # Post anhand der ID laden
+    post = db.session.get(Post, post_id)
+
+    # Existiert der Post?
+    if post is None:
+        flash("Post nicht gefunden.", "warning")
+        return redirect(url_for("profile"))
+
+    # Nur der Besitzer oder ein Admin darf verlängern
+    if post.user_id != session["user_id"] and not session.get("is_admin"):
+        flash("Keine Berechtigung.", "danger")
+        return redirect(url_for("profile"))
+
+    # Ablaufdatum um 30 Tage verlängern
+    post.ablaufdatum += timedelta(days=30)
+
+    db.session.commit()
+
+    flash("Post wurde erfolgreich um 30 Tage verlängert.", "success")
+
+    return redirect(url_for("profile"))

@@ -134,6 +134,10 @@ Profil
                         Schließen
 
                         </a>
+                       <a href="{{ url_for('extend_post', post_id=post.post_id) }}"
+                       class="btn btn-primary btn-sm">
+                        Verlängern
+                         </a> 
                     </div>
                 </div>
             {%endfor%}
