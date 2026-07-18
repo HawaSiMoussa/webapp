@@ -74,6 +74,7 @@ https://www.iditect.com/faq/python/how-to-get-current-url-in-jinja2flask.html
 | 04 | ChatGPT | Testdaten erstellen | `lostandfound.sqlite` | "Gib mit bitte 5 Beispielpost nach diesem Schema" + Screenshot von unserem Formular|
 |05|ChatGPT| Hilfe bei der UI mit Bootstrap | `home.html`, `profile.html`, `base.html`, `create_post.html` | "Welche Bootstrap-Klassen gibt es für Buttons und Container?“
 | 06| ChatGPT | Vor dem Erfahren über Bootstrap Icons nutze ich Emojis für die Icons| `home.html`| "Bitte gebe mir ein Emoji für eine Navigation bar, wo drei striche unterienander sind also, wie du hier im Scribble siehst", "Ich brauche ein Emoji für die Mail Funktion, also ein Brief Emoji und auch ein Auge für die Views|
+| 07| ChatGPT | Löschen von falschen/alten Testaccounts| app.py| "Ich brauche eine app route um alle bestehenden funbüros aus der datenbank zu löschen" + ein vorschlag wie die route aussehen sollte--> diese wurde dann angepasst|
 
 
 
