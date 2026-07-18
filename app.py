@@ -581,16 +581,6 @@ def fundbuero_dashboard():
         )
     ).scalars()
 
-@app.route("/dev/reset_fundbueros/")
-def reset_fundbueros():
-    db.session.execute(
-        db.delete(StandardUser).where(StandardUser.fundbuero_id.isnot(None))
-    )
-    db.session.execute(db.delete(Fundbuero))
-    db.session.commit()
 
-    return "Fundbüro-Daten gelöscht. Starte die App neu (Strg+C, dann python app.py erneut), damit der Seed-Code sie neu anlegt."
-    return render_template("profile_fb.html", fundbuero=fundbuero, posts=posts)
-    # alles starten
 if __name__ == "__main__":
     app.run(debug=True)
