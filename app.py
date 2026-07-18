@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, flash, session
 import forms
-from db import db, Post, StandardUser, migrate
+from db import db, Post, StandardUser, migrate, Campus, Fundbuero
 from flask_bootstrap import Bootstrap5
 from flask import request 
 from flask import jsonify
@@ -25,26 +25,22 @@ mail = Mail(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
-with app.app_context (): # flask arbeitsraum
-    db.create_all() # erstellt tabellen und spalten in der datenbank, wenn sie noch nicht existieren. 
-# das ist der admin account der automatisch erstellt wird, wenn die app gestartet wird:
-    admins_to_create = [ 
+with app.app_context():
+    admins_to_create = [ # wir setzen sarahs account als den admin der dann auch sachen löchen kann etc
         {
-            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",  # liste mit wert und schllüssel python liste 
+            "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
             "passwort": "Sarah12345678",
             "name": "Sarah Tayem",
             "benutzername": "Sarahtayem"
-        }, 
+        },
     ]
 
     for admin_data in admins_to_create:
-        # Prüfen, ob der Admin schon in der DB existiert damit die dopplungen verhindert werden
         exists = db.session.execute(
             db.select(StandardUser).where(StandardUser.hwr_mail == admin_data["hwr_mail"])
-        ).scalar() # wir nutzen scalar statt scalars weil wir hier mit scalars probleme hatten und durch scalar werden wir nur ein objekt zurückbekommen und nicht eine liste von objekten
+        ).scalar()
 
-        
-        if not exists: # hier wird dann ein neuer admin erstellt, wenn er noch nicht existiert
+        if not exists:
             new_admin = StandardUser(
                 hwr_mail=admin_data["hwr_mail"],
                 passwort=admin_data["passwort"],
@@ -54,7 +50,126 @@ with app.app_context (): # flask arbeitsraum
             )
             db.session.add(new_admin)
 
-    db.session.commit() # jetzt werden die änderungen in der datenbank gespeichert
+    db.session.commit()
+
+    campus_liste = ["Schöneberg", "Lichtenberg"]
+
+    for campus_name in campus_liste:
+        exists = db.session.get(Campus, campus_name)
+        if not exists:
+            new_campus = Campus(campus_id=campus_name, ort=campus_name)
+            db.session.add(new_campus)
+    db.session.commit()
+
+    fundbueros_to_create = [
+    {
+        "fundbuero_id": 1,
+        "campus_id": "Schöneberg",
+        "raum": "Haus A, Raum A 0.31",
+        "name": "Pforte Haus A",
+        "telefonnummer": "+49 30 30877-1400",
+        "email": "pfortea@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus A\n"
+            "Campus Schöneberg, Haus A, Raum A 0.31\n"
+            "Badensche Straße 52, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1400\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus A"
+        )
+    },
+    {
+        "fundbuero_id": 2,
+        "campus_id": "Schöneberg",
+        "raum": "Haus B, Raum B 0.21",
+        "name": "Pforte Haus B",
+        "telefonnummer": "+49 30 30877-1222",
+        "email": "pforteb@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus B\n"
+            "Campus Schöneberg, Haus B, Raum B 0.21\n"
+            "Badensche Straße 50-51, 10825 Berlin\n"
+            "Telefon: +49 30 30877-1222\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus B"
+        )
+    },
+    {
+        "fundbuero_id": 3,
+        "campus_id": "Schöneberg",
+        "raum": "Haus E, Raum E 1.09",
+        "name": "Pforte Haus E",
+        "telefonnummer": "+49 30 30877-1430",
+        "email": "pfortee@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Pforte Haus E\n"
+            "Campus Schöneberg, Haus E, Raum E 1.09\n"
+            "Babelsberger Straße 14-16, 10715 Berlin\n"
+            "Telefon: +49 30 30877-1430\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Pforte Haus E"
+        )
+    },
+    {
+        "fundbuero_id": 4,
+        "campus_id": "Lichtenberg",
+        "raum": "Haus 1, Raum 1.0069",
+        "name": "Hausmeister Lichtenberg",
+        "telefonnummer": "+49 30 30877-2519",
+        "email": "michael.boersel@hwr-berlin.de",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Campus Lichtenberg, Haus 1, Raum 1.0069\n"
+            "Alt-Friedrichsfelde 60, 10315 Berlin\n"
+            "Telefon: +49 30 30877-2519\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Campus Lichtenberg"
+        )
+    }
+
+         ]
+    
+
+    fundbuero_users_to_create = [
+        {"hwr_mail": "pfortea@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus A", "benutzername": "pforte_haus_a", "fundbuero_id": 1},
+        {"hwr_mail": "pforteb@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus B", "benutzername": "pforte_haus_b", "fundbuero_id": 2},
+        {"hwr_mail": "pfortee@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus E", "benutzername": "pforte_haus_e", "fundbuero_id": 3},
+        {"hwr_mail": "michael.boersel@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Hausmeister Lichtenberg", "benutzername": "hausmeister_lichtenberg", "fundbuero_id": 4},
+    ]
+    for fundbuero_daten in fundbueros_to_create:
+        exists = db.session.get(Fundbuero, fundbuero_daten["fundbuero_id"])
+        if not exists:
+            new_fundbuero = Fundbuero(**fundbuero_daten)
+            db.session.add(new_fundbuero)
+    db.session.commit()
+
+
+    for benutzer_daten in fundbuero_users_to_create:
+        exists = db.session.execute(
+            db.select(StandardUser).where(StandardUser.hwr_mail == benutzer_daten["hwr_mail"])
+        ).scalar()
+
+        if not exists:
+            new_fundbuero_user = StandardUser(
+                hwr_mail=benutzer_daten["hwr_mail"],
+                passwort=benutzer_daten["passwort"],
+                name=benutzer_daten["name"],
+                benutzername=benutzer_daten["benutzername"],
+                fundbuero_id=benutzer_daten["fundbuero_id"]
+            )
+            db.session.add(new_fundbuero_user)
+    db.session.commit()
 
 @app.route("/") # in der startseite werden die user auf die login seite weitergeleitet
 def start():
@@ -70,8 +185,13 @@ def home():
     form = forms.Suchleiste()
     user = db.session.get(StandardUser, session["user_id"])
     
-    # ÄNDERUNG: Wir holen ALLE Posts, um zu sehen, ob sie überhaupt da sind
-    posts = db.session.execute(db.select(Post)).scalars().all() 
+    
+    posts = db.session.execute(
+    db.select(Post).where(
+        Post.ablaufdatum >= date.today(),
+        Post.status == "laufend"
+    )
+).scalars()
 
     return render_template("home.html", posts=posts, form=form, user=user)
 
@@ -97,14 +217,17 @@ def register():
         user = StandardUser( # hier wird ein neuer user erstellt und in der datenbank gespeichert.
             hwr_mail=form.hwrmail.data,
             passwort=form.passwort.data,
-           campus_id=form.campus.data
-        )
+            campus_id=form.campus.data,
+            is_admin=False
+     )
+
 
         db.session.add(user)
         db.session.commit()
 
         session["user_id"] = user.user_id
         session["campus_id"] = user.campus_id
+        session["is_admin"] = False
 
         flash("Account erstellt!", "success")
         return redirect(url_for("contact"))
@@ -244,6 +367,7 @@ def login(): # in diesem teil wird die login funktion erstellt. die funktion üb
 
         session["user_id"] = user.user_id
         session["is_admin"] = user.is_admin
+        session ["fundbuero_id"] = user.fundbuero_id
 
         flash("Login erfolgreich!", "success")
         return redirect(url_for("home"))
