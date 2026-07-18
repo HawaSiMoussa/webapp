@@ -267,28 +267,21 @@ def contact():
     )
 
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
-@app.route("/create/", methods=["GET", "POST"]) 
+@app.route("/create/", methods=["GET", "POST"])
 def create_post():
 
     form = forms.CreatePostForm()
 
-    if request.method == 'GET':
+    if form.validate_on_submit():
 
-        return render_template(
-            'create_post.html',
-            form=form 
-        )
+        if not session.get("is_admin"):
 
-    else:
-#Validator 
-        if form.validate(): 
-          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
-                    Post.status == "laufend" 
+                    Post.status == "laufend"
                 )
-            ).scalar() 
+            ).scalar()
 
             if aktiver_post:
                 flash(
@@ -296,34 +289,38 @@ def create_post():
                     "warning"
                 )
                 return redirect(url_for("create_post"))
-            # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
-            heute = date.today() 
-            post = Post(
-                user_id=session["user_id"], 
-                titel=form.title.data,
-                beschreibung=form.description.data,
-                verlustdatum=form.lost_date.data,
-                verlustort=form.lost_area.data,
 
-                meldedatum=heute,
-                ablaufdatum=heute + timedelta(days=30),
+        heute = date.today()
 
-                status="laufend"
-            )
+        post = Post(
+            user_id=session["user_id"],
+            titel=form.title.data,
+            beschreibung=form.description.data,
+            verlustdatum=form.lost_date.data,
+            verlustort=form.lost_area.data,
+            meldedatum=heute,
+            ablaufdatum=heute + timedelta(days=30),
+            status="laufend"
+        )
 
-            db.session.add(post)
-            db.session.commit()
+        db.session.add(post)
+        db.session.commit()
 
-            flash('Post erfolgreich erstellt.', 'success')
+        flash("Post erfolgreich erstellt.", "success")
+        return redirect(url_for("create_post"))
 
-        else:
- # es wird überprüft, ob das formular korrekt ausgefüllt wurde. wenn nicht, werden die fehler angezeigt.
-            print(form.errors)
+    # Formular wurde abgeschickt, enthält aber Fehler
+    if request.method == "POST":
+        print(form.errors)
 
-            if 'lost_date' in form.errors:
-                flash(form.errors['lost_date'][0], 'warning')
-                
-        return redirect(url_for('create_post'))
+        if "lost_date" in form.errors:
+            flash(form.errors["lost_date"][0], "warning")
+
+    # GET-Anfrage oder ungültiges Formular
+    return render_template(
+        "create_post.html",
+        form=form
+    )
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
 @app.route ("/close_post/<int:post_id>/")
