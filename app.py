@@ -212,7 +212,7 @@ def register():
 
         user = StandardUser( # hier wird ein neuer user erstellt und in der datenbank gespeichert.
             hwr_mail=form.hwrmail.data,
-            passwort=form.passwort.data,
+            password=generate_password_hash(form.password.data), #passwort wird gehashed gespeichert
             campus_id=form.campus.data,
             is_admin=False
      )
@@ -357,7 +357,7 @@ def login(): # in diesem teil wird die login funktion erstellt. die funktion üb
             flash("User existiert nicht.", "warning")
             return redirect(url_for("login"))
 
-        if user.passwort != form.passwort.data:
+        if not check_password_hash(user.password, form.password.data):
             flash("Falsches Passwort!", "warning")
             return redirect(url_for("login"))
 
