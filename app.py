@@ -408,11 +408,12 @@ def profile():
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
     
+    user = db.session.get(StandardUser, session["user_id"] ) 
     if user is None:
         session.clear()
         flash("Dein Account existiert nicht mehr.", "warning")
         return redirect(url_for("login"))
-    user = db.session.get(StandardUser, session["user_id"] ) 
+    
 
     posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars() # das holt alle posts des eingeloggten users aus der datenbank, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der profile.html datei angezeigt.
     return render_template("profile.html", user=user, posts= posts)
