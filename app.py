@@ -7,8 +7,10 @@ from flask import jsonify
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from mail import Config
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -27,6 +29,7 @@ migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
+    db.create_all
     admins_to_create = [ # wir setzen sarahs account als den admin der dann auch sachen löchen kann etc
         {
             "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
@@ -303,9 +306,9 @@ def create_post():
     else:
 #Validator 
         if form.validate(): 
-          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
-            aktiver_post = db.session.execute(
-                db.select(Post).where(
+            if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
+                    aktiver_post = db.session.execute(
+                    db.select(Post).where(
                     Post.user_id == session["user_id"],
                     Post.status == "laufend"
                 )
@@ -339,8 +342,8 @@ def create_post():
         return redirect(url_for("create_post"))
 
     # Formular wurde abgeschickt, enthält aber Fehler
-    if request.method == "POST":
-        print(form.errors)
+        if request.method == "POST":
+          print(form.errors)
 
         if "lost_date" in form.errors:
             flash(form.errors["lost_date"][0], "warning")
