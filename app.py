@@ -486,7 +486,7 @@ def api_posts():
 def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
-    if not post:
+    if post is None:
          return redirect(url_for("home"))
 
     if post.user_id != session["user_id"] and not session.get("is_admin"):
@@ -538,7 +538,7 @@ def delete_post(post_id):
         return redirect(url_for("login"))
     
     post = db.session.get(Post, post_id)
-    if not post:
+    if post is None:
         flash("Post nicht gefunden.", "warning")
         return redirect(url_for("home"))
     
