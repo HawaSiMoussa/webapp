@@ -434,7 +434,7 @@ def edit_profile():
 @app.route("/logout") # löscht die session des eingeloggten users und leitet ihn auf die login seite weiter.
 def logout():
 
-    session.pop("user_id", None)
+    session.clear()
 
     flash( "Erfolgreich ausgeloggt.", "success")
 
