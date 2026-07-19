@@ -36,7 +36,6 @@ class StandardUser(db.Model):
 
     telefonnummer = db.Column(db.String)
 
-    standardtext = db.Column(db.Text)
 
     passwort = db.Column(db.String,nullable=False)
 
