@@ -576,7 +576,7 @@ def post_detail(post_id):
 @app.route("/send_fundbuero_mail/<int:post_id>/", methods=["POST"])
 def send_fundbuero_mail(post_id):
 
-    if "user_id" not in session or "fundbuero_id" not in session:
+    if "user_id" not in session or not session.get("fundbuero_id"):
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
@@ -604,7 +604,7 @@ def send_fundbuero_mail(post_id):
 
 @app.route("/fundbuero/")
 def fundbuero_dashboard():
-    if "fundbuero_id" not in session or session["fundbuero_id"] is None:
+    if not session.get("fundbuero_id"):
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
 
