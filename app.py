@@ -275,7 +275,9 @@ def contact():
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/create/", methods=["GET", "POST"]) 
 def create_post():
-
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
     form = forms.CreatePostForm()
     user = db.session.get(StandardUser, session["user_id"])
 
