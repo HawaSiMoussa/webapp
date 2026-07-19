@@ -5,20 +5,20 @@
 {% endblock %}
 
 {% block CONTENT %}
-<--Zurück zum Feed Button -->
+<!--Zurück zum Feed Button -->
 <a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-sm mb-3">
     <i class="bi bi-arrow-left"></i> Zurück
 </a>
 
 <div class="border rounded p-3 mb-4">
-<-- Username des Users, der den Post erstellt hat -->
+<!-- Username des Users, der den Post erstellt hat -->
     <strong>
         <i class="bi bi-person-circle"></i>
         {{ post.user.benutzername }}
     </strong>
-<--Post Titel -->
+<!--Post Titel -->
     <h5 class="mt-3">{{ post.titel }}</h5>
-<-- Meldedatum und Ablaufdatum -->
+<!-- Meldedatum und Ablaufdatum -->
     <small>
         <i class="bi bi-info-circle"></i>
         Meldedatum: {{ post.meldedatum.strftime('%d.%m.%Y') }}
@@ -28,7 +28,7 @@
         <i class="bi bi-hourglass-split"></i>
         Ablaufdatum: {{ post.ablaufdatum.strftime('%d.%m.%Y') }}
     </small>
-<-- Beschreibung, Verlustort und Verlustdatum -->
+<!-- Beschreibung, Verlustort und Verlustdatum -->
     <p class="mt-3">
         <strong>Beschreibung:</strong><br>
         {{ post.beschreibung }}
@@ -43,7 +43,7 @@
         <strong>Verlustdatum:</strong><br>
         {{ post.verlustdatum }}
     </p>
-<-- Views anzeigen -->
+<!-- Views anzeigen -->
     <small class="text-muted">
         <i class="bi bi-eye"></i> {{ post.views }} mal angesehen
     </small>
