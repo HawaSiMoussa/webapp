@@ -79,9 +79,15 @@
                 <i class="bi bi-house"></i> Home
             </a>
 
-            <a href="{{ url_for('profile') }}" class="d-block mb-2">
-                <i class="bi bi-person"></i> Profil
-            </a>
+           {% if session.get('fundbuero_id') %}
+    <a href="{{ url_for('fundbuero_dashboard') }}" class="d-block mb-2">
+        <i class="bi bi-building"></i> Dashboard
+    </a>
+{% else %}
+    <a href="{{ url_for('profile') }}" class="d-block mb-2">
+        <i class="bi bi-person-circle"></i> Profil
+    </a>
+{% endif %}
 
             <a href="{{ url_for('create_post') }}" class="d-block mb-2">
     <i class="bi bi-plus-lg"></i> Post erstellen

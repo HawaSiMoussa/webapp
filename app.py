@@ -6,8 +6,12 @@ from flask import request
 from flask import jsonify
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from flask_mail import Mail, Message
+from mail import Config
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
 app.config.from_mapping( #nutzung von datenbank , sicherheit und session
     SECRET_KEY='secret_key_just_for_dev_environment',#session
@@ -18,6 +22,7 @@ app.config.from_mapping( #nutzung von datenbank , sicherheit und session
 )
  #hier mit app verknüfen
 db.init_app(app) #verknüpft die datenbank mit flask app
+mail = Mail(app)
 migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
@@ -62,57 +67,57 @@ with app.app_context():
         "fundbuero_id": 1,
         "campus_id": "Schöneberg",
         "raum": "Haus A, Raum A 0.31",
-        "name": "Pforte Haus A",
+        "name": "Pförtner Haus A",
         "telefonnummer": "+49 30 30877-1400",
         "email": "pfortea@hwr-berlin.de",
         "standardtext": (
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus A\n"
+            "Pförtner Haus A\n"
             "Campus Schöneberg, Haus A, Raum A 0.31\n"
             "Badensche Straße 52, 10825 Berlin\n"
             "Telefon: +49 30 30877-1400\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
             "Viele Grüße\n"
-            "Pforte Haus A"
+            "Pförtner Haus A"
         )
     },
     {
         "fundbuero_id": 2,
         "campus_id": "Schöneberg",
         "raum": "Haus B, Raum B 0.21",
-        "name": "Pforte Haus B",
+        "name": "Pförtner Haus B",
         "telefonnummer": "+49 30 30877-1222",
         "email": "pforteb@hwr-berlin.de",
         "standardtext": (
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus B\n"
+            "Pförtner Haus B\n"
             "Campus Schöneberg, Haus B, Raum B 0.21\n"
             "Badensche Straße 50-51, 10825 Berlin\n"
             "Telefon: +49 30 30877-1222\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
             "Viele Grüße\n"
-            "Pforte Haus B"
+            "Pförtner Haus B"
         )
     },
     {
         "fundbuero_id": 3,
         "campus_id": "Schöneberg",
         "raum": "Haus E, Raum E 1.09",
-        "name": "Pforte Haus E",
+        "name": "Pförtner Haus E",
         "telefonnummer": "+49 30 30877-1430",
         "email": "pfortee@hwr-berlin.de",
         "standardtext": (
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Pforte Haus E\n"
+            "Pförtner Haus E\n"
             "Campus Schöneberg, Haus E, Raum E 1.09\n"
             "Babelsberger Straße 14-16, 10715 Berlin\n"
             "Telefon: +49 30 30877-1430\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
             "Viele Grüße\n"
-            "Pforte Haus E"
+            "Pförtner Haus E"
         )
     },
     {
@@ -130,7 +135,7 @@ with app.app_context():
             "Telefon: +49 30 30877-2519\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
             "Viele Grüße\n"
-            "Campus Lichtenberg"
+            "Hausmeister Campus Lichtenberg"
         )
     }
 
@@ -179,9 +184,13 @@ def home():
         return redirect(url_for("login"))
     
     form = forms.Suchleiste()
+    csrf_form = forms.CSRFOnlyForm()
     user = db.session.get(StandardUser, session["user_id"])
-    
-    
+    fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
     posts = db.session.execute(
     db.select(Post).where(
         Post.ablaufdatum >= date.today(),
@@ -189,7 +198,7 @@ def home():
     )
 ).scalars()
 
-    return render_template("home.html", posts=posts, form=form, user=user)
+    return render_template("home.html", posts=posts, form=form, user=user, fundbuero=fundbuero, csrf_form=csrf_form)
 
 # jetzt wird eine register funktion erstellt, die es den usern ermöglicht, sich zu registrieren. die funktion überprüft, ob die eingegebene email bereits in der datenbank existiert. wenn ja, wird eine warnung angezeigt. wenn nein, wird ein neuer user erstellt und in der datenbank gespeichert. danach wird der user automatisch eingeloggt und auf die contact seite weitergeleitet.
 @app.route('/register/', methods=['GET', 'POST'])
@@ -223,6 +232,7 @@ def register():
 
         session["user_id"] = user.user_id
         session["campus_id"] = user.campus_id
+        session["fundbuero_id"] = None
         session["is_admin"] = False
 
         flash("Account erstellt!", "success")
@@ -269,13 +279,31 @@ def contact():
 # der user kann hier eine neue suchanzeige erstellen. die funktion überprüft, ob der user eingeloggt ist. wenn ja, wird das formular angezeigt. wenn nein, wird der user auf die login seite weitergeleitet.
 @app.route("/create/", methods=["GET", "POST"])
 def create_post():
-
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
     form = forms.CreatePostForm()
+    user = db.session.get(StandardUser, session["user_id"])
 
-    if form.validate_on_submit():
+    form.fundbuero_id.choices = [
+        (f.fundbuero_id, f.name)
+        for f in db.session.execute(
+            db.select(Fundbuero).where(Fundbuero.campus_id == user.campus_id)
+        ).scalars()
+    ]
 
-        if not session.get("is_admin"):
 
+    if request.method == 'GET':
+
+        return render_template(
+            'create_post.html',
+            form=form 
+        )
+
+    else:
+#Validator 
+        if form.validate(): 
+          if not session.get("is_admin"): #HAWA -->session.get("is_admin") überprüft, ob der eingeloggte user ein admin ist. wenn ja, wird er auf die home seite weitergeleitet. wenn nein, wird er auf die create_post seite weitergeleitet.
             aktiver_post = db.session.execute(
                 db.select(Post).where(
                     Post.user_id == session["user_id"],
@@ -289,19 +317,20 @@ def create_post():
                     "warning"
                 )
                 return redirect(url_for("create_post"))
+            # das heutige datum wird hier gespeichert, damit es später für die ablaufdatum berechnung verwendet werden kann.
+            heute = date.today() 
+            post = Post(
+                user_id=session["user_id"], 
+                titel=form.title.data,
+                beschreibung=form.description.data,
+                verlustdatum=form.lost_date.data,
+                verlustort=form.lost_area.data,
+                fundbuero_id=form.fundbuero_id.data, 
+                meldedatum=heute,
+                ablaufdatum=heute + timedelta(days=30),
 
-        heute = date.today()
-
-        post = Post(
-            user_id=session["user_id"],
-            titel=form.title.data,
-            beschreibung=form.description.data,
-            verlustdatum=form.lost_date.data,
-            verlustort=form.lost_area.data,
-            meldedatum=heute,
-            ablaufdatum=heute + timedelta(days=30),
-            status="laufend"
-        )
+                status="laufend"
+            )
 
         db.session.add(post)
         db.session.commit()
@@ -323,10 +352,20 @@ def create_post():
     )
     
 # die anzeige kann hier geschlossen werden, wenn der user sein gegenstand gefunden hat.  der status des posts wird auf "gefunden" gesetzt und der post wird in der datenbank gespeichert. Momentan fehlt noch user check
-@app.route ("/close_post/<int:post_id>/")
+@app.route ("/close_post/<int:post_id>/", methods=["POST"])
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
     post = db.session.get(Post, post_id)
+    if post is None:
+        flash("Diesen Post gibt es nicht (mehr).", "warning")
+        return redirect(url_for("profile"))
+
+    if post.user_id != session["user_id"] and not session.get("is_admin"):
+        flash("Das ist nicht dein Post!", "warning")
+        return redirect(url_for("profile"))
 
     post.status ="gefunden"
  
@@ -361,6 +400,7 @@ def login(): # in diesem teil wird die login funktion erstellt. die funktion üb
         session["user_id"] = user.user_id
         session["is_admin"] = user.is_admin
         session ["fundbuero_id"] = user.fundbuero_id
+        session["campus_id"] = user.campus_id
 
         flash("Login erfolgreich!", "success")
         return redirect(url_for("home"))
@@ -375,6 +415,11 @@ def profile():
         return redirect(url_for("login"))
     
     user = db.session.get(StandardUser, session["user_id"] ) 
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
+    
 
     posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars() # das holt alle posts des eingeloggten users aus der datenbank, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der profile.html datei angezeigt.
     return render_template("profile.html", user=user, posts= posts)
@@ -391,7 +436,12 @@ def edit_profile():
     user = db.session.get(
         StandardUser,
         session["user_id"]
-    )#
+    )
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
+
     #obj ist ein parameter aus der flaskforms bibliothek
     form = forms.EditProfileForm(obj=user) #obj=user sorgt dafür, dass die aktuellen daten des users im formular angezeigt werden, wenn die seite geladen wird
     if form.validate_on_submit(): # wenn das formular korrekt ausgefüllt wurde
@@ -416,7 +466,7 @@ def edit_profile():
 @app.route("/logout") # löscht die session des eingeloggten users und leitet ihn auf die login seite weiter.
 def logout():
 
-    session.pop("user_id", None)
+    session.clear()
 
     flash( "Erfolgreich ausgeloggt.", "success")
 
@@ -443,7 +493,7 @@ def api_posts():
 def edit_post (post_id):
 
     post = db.session.get(Post,post_id)
-    if not post:
+    if post is None:
          return redirect(url_for("home"))
 
     if post.user_id != session["user_id"] and not session.get("is_admin"):
@@ -495,7 +545,7 @@ def delete_post(post_id):
         return redirect(url_for("login"))
     
     post = db.session.get(Post, post_id)
-    if not post:
+    if post is None:
         flash("Post nicht gefunden.", "warning")
         return redirect(url_for("home"))
     
@@ -555,6 +605,56 @@ def extend_post(post_id):
 
     return redirect(url_for("profile"))
 
+
+   
+@app.route("/send_fundbuero_mail/<int:post_id>/", methods=["POST"])
+def send_fundbuero_mail(post_id):
+
+    if "user_id" not in session or not session.get("fundbuero_id"):
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    post = db.session.get(Post, post_id)
+
+
+    if post is None:
+        flash("Der Post existiert nicht.", "warning")
+        return redirect(url_for("home"))
+    
+    if post.fundbuero_id != session["fundbuero_id"]:
+        flash("Dieser Post gehört nicht zu deinem Fundbüro.", "warning")
+        return redirect(url_for("home"))
+
+    msg = Message(
+        subject="Gefunden: " + post.titel,
+        recipients=[post.user.hwr_mail]
+    )
+    msg.body = post.fundbuero.standardtext
+
+    mail.send(msg)
+
+    flash("Mail wurde verschickt.", "success")
+    return redirect(url_for("home"))
+
+@app.route("/fundbuero/")
+def fundbuero_dashboard():
+    if not session.get("fundbuero_id"):
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+
+    fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
+    if fundbuero is None:
+        session.clear()
+        flash("Dieses Fundbüro existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
+
+    posts = db.session.execute(
+        db.select(Post).where(
+            Post.fundbuero_id == session["fundbuero_id"],
+            Post.status == "laufend"
+        )
+        ).scalars()
+    return render_template("profile_fb.html", fundbuero=fundbuero, posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)

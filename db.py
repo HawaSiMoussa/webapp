@@ -36,7 +36,6 @@ class StandardUser(db.Model):
 
     telefonnummer = db.Column(db.String)
 
-    standardtext = db.Column(db.Text)
 
     passwort = db.Column(db.String,nullable=False)
 
@@ -63,10 +62,6 @@ class Fundbuero(db.Model):
     telefonnummer = db.Column(db.String)
 
     email = db.Column(db.String)
-
-    meldedatum = db.Column(db.Date,default=date.today)
-
-    ablaufdatum = db.Column(db.Date)
 
     standardtext = db.Column(db.Text)
 
