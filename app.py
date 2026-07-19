@@ -228,6 +228,7 @@ def register():
 
         session["user_id"] = user.user_id
         session["campus_id"] = user.campus_id
+        session["fundbuero_id"] = None
         session["is_admin"] = False
 
         flash("Account erstellt!", "success")
