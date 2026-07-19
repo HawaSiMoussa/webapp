@@ -186,7 +186,10 @@ def home():
     csrf_form = forms.CSRFOnlyForm()
     user = db.session.get(StandardUser, session["user_id"])
     fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
-    
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
     posts = db.session.execute(
     db.select(Post).where(
         Post.ablaufdatum >= date.today(),
@@ -346,6 +349,10 @@ def create_post():
 @app.route ("/close_post/<int:post_id>/")
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
+    if post is None:
+        flash("Diesen Post gibt es nicht (mehr).", "warning")
+        return redirect(url_for("profile"))
+
     post = db.session.get(Post, post_id)
 
     post.status ="gefunden"
@@ -395,6 +402,10 @@ def profile():
         flash("Bitte zuerst einloggen!", "warning")
         return redirect(url_for("login"))
     
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
     user = db.session.get(StandardUser, session["user_id"] ) 
 
     posts = db.session.execute( db.select(Post).where(Post.user_id == user.user_id, Post.status == "laufend")).scalars() # das holt alle posts des eingeloggten users aus der datenbank, die noch nicht abgelaufen sind und deren status "laufend" ist. die posts werden dann in der profile.html datei angezeigt.
@@ -412,7 +423,12 @@ def edit_profile():
     user = db.session.get(
         StandardUser,
         session["user_id"]
-    )#
+    )
+    if user is None:
+        session.clear()
+        flash("Dein Account existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
+
     #obj ist ein parameter aus der flaskforms bibliothek
     form = forms.EditProfileForm(obj=user) #obj=user sorgt dafür, dass die aktuellen daten des users im formular angezeigt werden, wenn die seite geladen wird
     if form.validate_on_submit(): # wenn das formular korrekt ausgefüllt wurde
@@ -587,6 +603,10 @@ def fundbuero_dashboard():
         return redirect(url_for("login"))
 
     fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
+    if fundbuero is None:
+        session.clear()
+        flash("Dieses Fundbüro existiert nicht mehr.", "warning")
+        return redirect(url_for("login"))
 
     posts = db.session.execute(
         db.select(Post).where(
