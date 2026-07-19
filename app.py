@@ -183,6 +183,7 @@ def home():
         return redirect(url_for("login"))
     
     form = forms.Suchleiste()
+    csrf_form = forms.CSRFOnlyForm()
     user = db.session.get(StandardUser, session["user_id"])
     fundbuero = db.session.get(Fundbuero, session["fundbuero_id"])
     
@@ -193,7 +194,7 @@ def home():
     )
 ).scalars()
 
-    return render_template("home.html", posts=posts, form=form, user=user, fundbuero=fundbuero)
+    return render_template("home.html", posts=posts, form=form, user=user, fundbuero=fundbuero, csrf_form=csrf_form)
 
 # jetzt wird eine register funktion erstellt, die es den usern ermöglicht, sich zu registrieren. die funktion überprüft, ob die eingegebene email bereits in der datenbank existiert. wenn ja, wird eine warnung angezeigt. wenn nein, wird ein neuer user erstellt und in der datenbank gespeichert. danach wird der user automatisch eingeloggt und auf die contact seite weitergeleitet.
 @app.route('/register/', methods=['GET', 'POST'])
@@ -275,6 +276,15 @@ def contact():
 def create_post():
 
     form = forms.CreatePostForm()
+    user = db.session.get(StandardUser, session["user_id"])
+
+    form.fundbuero_id.choices = [
+        (f.fundbuero_id, f.name)
+        for f in db.session.execute(
+            db.select(Fundbuero).where(Fundbuero.campus_id == user.campus_id)
+        ).scalars()
+    ]
+
 
     if request.method == 'GET':
 
@@ -308,7 +318,7 @@ def create_post():
                 beschreibung=form.description.data,
                 verlustdatum=form.lost_date.data,
                 verlustort=form.lost_area.data,
-
+                fundbuero_id=form.fundbuero_id.data, 
                 meldedatum=heute,
                 ablaufdatum=heute + timedelta(days=30),
 

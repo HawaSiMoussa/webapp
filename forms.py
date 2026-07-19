@@ -36,6 +36,12 @@ class CreatePostForm(FlaskForm): #FlaskForm geerbt
         "Verlustort",
         validators=[InputRequired()]
     )
+    fundbuero_id = SelectField(
+        "Zuständiges Fundbüro",
+        coerce=int,
+        validators=[InputRequired()]
+    )
+
 
     submit = SubmitField("Veröffentlichen")
 
@@ -124,3 +130,6 @@ class EditProfileForm(FlaskForm):
     )
 
     submit = SubmitField("Änderungen speichern")
+
+class CSRFOnlyForm(FlaskForm):
+    pass

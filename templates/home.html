@@ -7,7 +7,7 @@ LostAndFound
 {% block CONTENT %}
 
 <form method="POST" action="{{ url_for('suche') }}" class="mb-4">
-    {{ form.csrf_token() }} 
+  <input type="hidden" name="csrf_token" value="{{ csrf_form.csrf_token._value() }}">
     <div class="input-group">
         {{ form.suchfeld(class="form-control", placeholder="Suchen...") }}
         {{ form.submit(class="btn btn-primary") }}
@@ -48,9 +48,9 @@ LostAndFound
                 <!-- E-Mail -->
                 {% if session.get('fundbuero_id') %}
     <form method="POST" action="{{ url_for('send_fundbuero_mail', post_id=post.post_id) }}" class="d-inline">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="csrf_token" value="{{  csrf_form.csrf_token._value()}}">
         <button type="submit" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-envelope"></i> Kontakt
+            <i class="bi bi-envelope"></i> Jetzt Kontaktieren
         </button>
     </form>
 {% else %}
