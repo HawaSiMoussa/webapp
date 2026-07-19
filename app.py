@@ -379,6 +379,7 @@ def login(): # in diesem teil wird die login funktion erstellt. die funktion üb
         session["user_id"] = user.user_id
         session["is_admin"] = user.is_admin
         session ["fundbuero_id"] = user.fundbuero_id
+        session["campus_id"] = user.campus_id
 
         flash("Login erfolgreich!", "success")
         return redirect(url_for("home"))
