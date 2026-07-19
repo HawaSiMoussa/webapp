@@ -64,10 +64,6 @@ class Fundbuero(db.Model):
 
     email = db.Column(db.String)
 
-    meldedatum = db.Column(db.Date,default=date.today)
-
-    ablaufdatum = db.Column(db.Date)
-
     standardtext = db.Column(db.Text)
 
     campus = db.relationship("Campus",back_populates="fundbueros")
