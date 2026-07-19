@@ -349,11 +349,17 @@ def create_post():
 @app.route ("/close_post/<int:post_id>/")
 #grad nur auf get gesetzt muss aber post sein, weil am status was geändert wird
 def close_post(post_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst einloggen!", "warning")
+        return redirect(url_for("login"))
+    post = db.session.get(Post, post_id)
     if post is None:
         flash("Diesen Post gibt es nicht (mehr).", "warning")
         return redirect(url_for("profile"))
 
-    post = db.session.get(Post, post_id)
+    if post.user_id != session["user_id"] and not session.get("is_admin"):
+        flash("Das ist nicht dein Post!", "warning")
+        return redirect(url_for("profile"))
 
     post.status ="gefunden"
  
