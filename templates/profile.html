@@ -124,10 +124,16 @@ Profil
                         Schließen
 
                         </a>
-                       <a href="{{ url_for('extend_post', post_id=post.post_id) }}"
-                       class="btn btn-primary btn-sm">
-                        Verlängern
-                         </a> 
+                       <form action="{{ url_for('extend_post', post_id=post.post_id) }}"
+                             method="post"
+                             class="d-inline">
+
+                        <button type="submit" class="btn btn-primary btn-sm">
+                       Verlängern
+                        </button>
+
+                     </form>
+                     
                     </div>
                 </div>
             {%endfor%}
