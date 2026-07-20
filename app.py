@@ -607,7 +607,7 @@ def post_detail(post_id):
 
     return render_template("post_detail.html", post=post)
 
-@app.route("/extend_post/<int:post_id>")
+@app.route("/extend_post/<int:post_id>/", methods=["POST"])
 def extend_post(post_id):
     if "user_id" not in session:
      flash("Bitte zuerst einloggen!", "warning")
