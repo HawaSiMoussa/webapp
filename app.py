@@ -284,7 +284,7 @@ def contact():
 
         user.name = form.name.data
         user.benutzername = form.username.data
-        user.telefonnummer = form.phone_number.data
+        
 
         db.session.commit() #Eingabe an DB geschickt
         
