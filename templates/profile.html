@@ -133,7 +133,8 @@ Profil
             {%endfor%}
         {% else %}
 
-                    <p>Kein aktiver Post vorhanden.</p>
+                    <p> Hast du was verloren?
+        <a href="{{ url_for('create_post') }}">Erstelle hier einen Post</a></p>
 
      {% endif %}
 
