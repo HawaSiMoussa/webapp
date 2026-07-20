@@ -92,10 +92,6 @@ class RegisterForm(FlaskForm):
         validators=[InputRequired(), Length(min=8)]
     )
 
-    benachrichtigung = BooleanField(
-        "Benachrichtigung erlauben"
-    )
-
     submit = SubmitField("Registrieren")
     
     # Suchleiste
