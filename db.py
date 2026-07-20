@@ -30,7 +30,9 @@ class StandardUser(db.Model):
 
     campus_id = db.Column( db.String, db.ForeignKey("campus.campus_id") )
 
-    name = db.Column( db.String)
+    vorname = db.Column( db.String)
+
+    nachname = db.Column( db.String)
 
     benutzername = db.Column( db.String, unique=True)
 
