@@ -54,6 +54,8 @@ class Fundbuero(db.Model):
 
     campus_id = db.Column(db.String,db.ForeignKey("campus.campus_id"))
 
+    name = db.Column(db.String)
+
     raum = db.Column(db.String)
 
     telefonnummer = db.Column(db.String)
