@@ -7,7 +7,6 @@ from datetime import date
 class ContactForm(FlaskForm):
     name = StringField("Name", validators=[InputRequired()])
     username = StringField("Benutzername", validators=[InputRequired()])
-    phone_number = StringField("Telefonnummer", validators=[InputRequired()])
     submit = SubmitField("Registrieren")
 
 
