@@ -363,7 +363,7 @@ def create_post():
 
     
     #print(form.errors) --> nur während dem programmieren genutzt
-    
+
     # Formular wurde abgeschickt, enthält aber Fehler
     if request.method == "POST":
      for errors in form.errors.values():
