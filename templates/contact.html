@@ -17,8 +17,13 @@ Registrierung
     {{ form.csrf_token }}
 
     <div class="mb-3">
-        {{ form.name.label }}
-        {{ form.name(class="form-control") }}
+        {{ form.vorname.label }}
+        {{ form.vorname(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.nachname.label }}
+        {{ form.nachname(class="form-control") }}
     </div>
 
     <div class="mb-3">
