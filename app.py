@@ -56,7 +56,7 @@ with app.app_context():
 
     db.session.commit()
 
-    campus_liste = ["Schöneberg", "Lichtenberg"]
+    campus_liste = ["Schöneberg", "Lichtenberg", "Startup Incubator"]
 
     for campus_name in campus_liste:
         exists = db.session.get(Campus, campus_name)
@@ -69,7 +69,7 @@ with app.app_context():
     {
         "fundbuero_id": 1,
         "campus_id": "Schöneberg",
-        "raum": "Haus A, Raum A 0.31",
+        "raum": "Haus A, Raum: A 0.31",
         "name": "Pförtner Haus A",
         "telefonnummer": "+49 30 30877-1400",
         "email": "pfortea@hwr-berlin.de",
@@ -88,7 +88,7 @@ with app.app_context():
     {
         "fundbuero_id": 2,
         "campus_id": "Schöneberg",
-        "raum": "Haus B, Raum B 0.21",
+        "raum": "Haus B, Raum: B 0.21",
         "name": "Pförtner Haus B",
         "telefonnummer": "+49 30 30877-1222",
         "email": "pforteb@hwr-berlin.de",
@@ -96,7 +96,7 @@ with app.app_context():
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
             "Pförtner Haus B\n"
-            "Campus Schöneberg, Haus B, Raum B 0.21\n"
+            "Campus Schöneberg, Haus B, Raum: B 0.21\n"
             "Badensche Straße 50-51, 10825 Berlin\n"
             "Telefon: +49 30 30877-1222\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
@@ -107,7 +107,7 @@ with app.app_context():
     {
         "fundbuero_id": 3,
         "campus_id": "Schöneberg",
-        "raum": "Haus E, Raum E 1.09",
+        "raum": "Haus E, Raum: E 1.09",
         "name": "Pförtner Haus E",
         "telefonnummer": "+49 30 30877-1430",
         "email": "pfortee@hwr-berlin.de",
@@ -115,7 +115,7 @@ with app.app_context():
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
             "Pförtner Haus E\n"
-            "Campus Schöneberg, Haus E, Raum E 1.09\n"
+            "Campus Schöneberg, Haus E, Raum: E 1.09\n"
             "Babelsberger Straße 14-16, 10715 Berlin\n"
             "Telefon: +49 30 30877-1430\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
@@ -126,14 +126,14 @@ with app.app_context():
     {
         "fundbuero_id": 4,
         "campus_id": "Lichtenberg",
-        "raum": "Haus 1, Raum 1.0069",
+        "raum": "Haus 1, Raum: 1.0069",
         "name": "Hausmeister Lichtenberg",
         "telefonnummer": "+49 30 30877-2519",
         "email": "michael.boersel@hwr-berlin.de",
         "standardtext": (
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Campus Lichtenberg, Haus 1, Raum 1.0069\n"
+            "Campus Lichtenberg, Haus 1, Raum: 1.0069\n"
             "Alt-Friedrichsfelde 60, 10315 Berlin\n"
             "Telefon: +49 30 30877-2519\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
@@ -145,14 +145,14 @@ with app.app_context():
     {
         "fundbuero_id": 5,
         "campus_id": "Startup Incubator",
-        "raum": "Haus 1, Raum Sekretariat",
+        "raum": "Haus 1, Raum: Sekretariat",
         "name": "Startup Incubator Sekretariat",
         "telefonnummer": "+49 30 30877-0",
         "email": "berlinL65@cic.com",
         "standardtext": (
             "Hallo,\n\n"
             "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
-            "Campus Startup Incubator, Haus 1, Raum Sekretariat\n"
+            "Campus Startup Incubator, Haus 1, Raum: Sekretariat\n"
             "Lohnmühlenstraße 65, 12435 Berlin\n"
             "Telefon: +49 30 30877-0\n\n"
             "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
