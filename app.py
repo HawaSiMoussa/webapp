@@ -282,7 +282,8 @@ def contact():
             session["user_id"]
         )
 
-        user.name = form.name.data
+        user.vorname = form.vorname.data
+        user.nachname = form.nachname.data
         user.benutzername = form.username.data
         
 
@@ -363,7 +364,7 @@ def create_post():
 
     
     #print(form.errors) --> nur während dem programmieren genutzt
-    
+
     # Formular wurde abgeschickt, enthält aber Fehler
     if request.method == "POST":
      for errors in form.errors.values():

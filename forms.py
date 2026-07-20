@@ -5,7 +5,8 @@ from datetime import date
 
 # Kontaktformular 1.2
 class ContactForm(FlaskForm):
-    name = StringField("Name", validators=[InputRequired()])
+    vorname = StringField("Vorame", validators=[InputRequired()])
+    nachname = StringField("Nachname", validators=[InputRequired()])
     username = StringField("Benutzername", validators=[InputRequired()])
     submit = SubmitField("Registrieren")
 
