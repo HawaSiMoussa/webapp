@@ -60,6 +60,7 @@ class Fundbuero(db.Model):
 
     telefonnummer = db.Column(db.String)
 
+    email = db.Column(db.String, unique=True,nullable=False)
 
     standardtext = db.Column(db.Text)
 
