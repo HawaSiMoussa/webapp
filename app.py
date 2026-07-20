@@ -282,8 +282,7 @@ def contact():
             session["user_id"]
         )
 
-        user.vorname = form.vorname.data
-        user.nachname = form.nachname.data
+        user.name = form.name.data
         user.benutzername = form.username.data
         
 
