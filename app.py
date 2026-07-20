@@ -362,8 +362,7 @@ def create_post():
         return redirect(url_for("create_post"))
 
     # Formular wurde abgeschickt, enthält aber Fehler
-        if request.method == "POST":
-          print(form.errors)
+
 
         if "lost_date" in form.errors:
             flash(form.errors["lost_date"][0], "warning")
