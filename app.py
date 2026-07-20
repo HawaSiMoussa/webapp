@@ -29,7 +29,7 @@ migrate.init_app(app, db)
 bootstrap = Bootstrap5(app)
 
 with app.app_context():
-    db.create_all
+    db.create_all()
     admins_to_create = [ # wir setzen sarahs account als den admin der dann auch sachen löchen kann etc
         {
             "hwr_mail": "s_tayem24@stud.hwr-berlin.de",
@@ -284,7 +284,7 @@ def contact():
 
         user.name = form.name.data
         user.benutzername = form.username.data
-        user.telefonnummer = form.phone_number.data
+        
 
         db.session.commit() #Eingabe an DB geschickt
         
