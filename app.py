@@ -362,11 +362,12 @@ def create_post():
         return redirect(url_for("create_post"))
 
     # Formular wurde abgeschickt, enthält aber Fehler
+    #print(form.errors) --> nur während dem programmieren genutzt
 
+    for errors in form.errors.values():
+        flash(errors[0], "warning")
 
-        if "lost_date" in form.errors:
-            flash(form.errors["lost_date"][0], "warning")
-
+    
     # GET-Anfrage oder ungültiges Formular
     return render_template(
         "create_post.html",
