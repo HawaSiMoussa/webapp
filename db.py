@@ -56,11 +56,8 @@ class Fundbuero(db.Model):
 
     raum = db.Column(db.String)
 
-    name = db.Column(db.String)
-
     telefonnummer = db.Column(db.String)
 
-    email = db.Column(db.String)
 
     standardtext = db.Column(db.Text)
 
