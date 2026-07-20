@@ -140,6 +140,25 @@ with app.app_context():
             "Viele Grüße\n"
             "Hausmeister Campus Lichtenberg"
         )
+    },
+
+    {
+        "fundbuero_id": 5,
+        "campus_id": "Startup Incubator",
+        "raum": "Haus 1, Raum Sekretariat",
+        "name": "Startup Incubator Sekretariat",
+        "telefonnummer": "+49 30 30877-0",
+        "email": "berlinL65@cic.com",
+        "standardtext": (
+            "Hallo,\n\n"
+            "dein Gegenstand wurde bei uns abgegeben und liegt zur Abholung bereit.\n\n"
+            "Campus Startup Incubator, Haus 1, Raum Sekretariat\n"
+            "Lohnmühlenstraße 65, 12435 Berlin\n"
+            "Telefon: +49 30 30877-0\n\n"
+            "Bitte bring nach Möglichkeit einen Nachweis mit, dass der Gegenstand dir gehört.\n\n"
+            "Viele Grüße\n"
+            "Startup Incubator Sekretariat"
+        )
     }
 
          ]
@@ -150,6 +169,7 @@ with app.app_context():
         {"hwr_mail": "pforteb@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus B", "benutzername": "pforte_haus_b", "fundbuero_id": 2},
         {"hwr_mail": "pfortee@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Pforte Haus E", "benutzername": "pforte_haus_e", "fundbuero_id": 3},
         {"hwr_mail": "michael.boersel@hwr-berlin.de", "passwort": "Fundbuero123456", "name": "Hausmeister Lichtenberg", "benutzername": "hausmeister_lichtenberg", "fundbuero_id": 4},
+        {"hwr_mail": "berlinL65@cic.com", "passwort": "Fundbuero123456", "name": "Startup Incubator Sekretariat", "benutzername": "startup_incubator_sekretariat", "fundbuero_id": 5}
     ]
     for fundbuero_daten in fundbueros_to_create:
         exists = db.session.get(Fundbuero, fundbuero_daten["fundbuero_id"])

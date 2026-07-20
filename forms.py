@@ -63,7 +63,7 @@ class CreateLogin(FlaskForm):
     )
     hwrmail = EmailField(
         "HWR-Mail",
-        validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|stud\.hwr-berlin\.de|dot\.hwr-berlin\.de)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
+        validators=[InputRequired(), Email(), Regexp(r'^[a-zA-Z0-9._%+-]+@(hwr-berlin\.de|stud\.hwr-berlin\.de|dot\.hwr-berlin\.de|cic\.com)$', message="Bitte geben Sie ihre gültige HWR-Mail-Adresse ein.")]
     )
 
     passwort = PasswordField(
