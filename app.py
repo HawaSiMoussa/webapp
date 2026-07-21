@@ -475,7 +475,6 @@ def edit_profile():
 
         user.benutzername = form.benutzername.data
         user.name = form.name.data
-        user.telefonnummer = form.telefonnummer.data
         user.campus_id = form.campus_id.data
 # .data repräsentiert die daten, die der user im formular eingegeben hat. 
         flash(

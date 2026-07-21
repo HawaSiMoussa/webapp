@@ -111,9 +111,6 @@ class EditProfileForm(FlaskForm):
         validators=[InputRequired()]
     )
 
-    telefonnummer = StringField(
-        "Telefonnummer"
-    )
 
     campus_id = SelectField(
         "Campus",
