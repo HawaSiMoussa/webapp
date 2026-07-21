@@ -360,7 +360,7 @@ def create_post():
         db.session.commit()
 
         flash("Post erfolgreich erstellt.", "success")
-        return redirect(url_for("create_post"))
+        return redirect(url_for("home"))
 
     
     #print(form.errors) --> nur während dem programmieren genutzt
