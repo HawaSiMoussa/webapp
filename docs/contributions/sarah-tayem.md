@@ -28,6 +28,7 @@ Mir ist weiterhin bewusst, dass ich, sofern ich zur Erstellung dieser Arbeit KI-
 2. [# DD-08: Verwendung von Mailto statt Flask-Mail ](../design-decisions/dd-08.md)
 3. [# DD-9: Views eines Posts tracken](../design-decisions/dd-09.md)
 3. [# DD-10:Keine differenzierung zwischen Fundbüro und Standarduser](../design-decisions/dd-10.md)
+4. [# DD-11: Entfernung des Telefonnummer-Feldes](../design-decisions/dd-11.md)
 
 ## My Top-3 Contributions
 
