@@ -477,6 +477,8 @@ def edit_profile():
         user.name = form.name.data
         user.campus_id = form.campus_id.data
 # .data repräsentiert die daten, die der user im formular eingegeben hat. 
+        db.session.commit()
+#Änderungen werden in der datenbank speichern
         flash(
             "Profil erfolgreich aktualisiert!",
             "success"
